@@ -49,6 +49,15 @@
                 </div>
 
                 <div class="flex items-center gap-5">
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="flex flex-col items-center gap-2 group">
+                            <div class="bg-red-100 group-hover:bg-red-200 p-5 rounded-3xl transition-all shadow-md group-hover:scale-110">
+                                <span class="material-symbols-outlined nav-icon text-red-500">logout</span>
+                            </div>
+                            <span class="text-xl font-bold text-red-500">الخروج</span>
+                        </button>
+                    </form>
                     <div class="flex flex-col items-center bg-white dark:bg-[#322820] px-7 py-4 rounded-full shadow-md border-2 border-primary/20">
                         <span class="text-primary text-3xl font-bold">8</span>
                         <span class="material-symbols-outlined text-yellow-400 text-3xl">stars</span>

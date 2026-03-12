@@ -55,4 +55,14 @@
                     <span class="absolute top-2 right-4 size-2 bg-red-500 rounded-full"></span>
                 </button>
             </div>
+
+            <div class="px-4 pb-4">
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="flex w-full items-center justify-center gap-3 rounded-xl bg-red-50 py-3 text-red-600 transition-colors hover:bg-red-100">
+                        <span class="material-symbols-outlined">logout</span>
+                        تسجيل الخروج
+                    </button>
+                </form>
+            </div>
         </aside>

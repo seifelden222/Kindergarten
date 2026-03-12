@@ -25,6 +25,7 @@ return new class extends Migration
                 'specialist',
                 'teacher',
                 'guardian',
+                'child',
             ])->default('guardian');
 
             // بيانات إضافية عامة

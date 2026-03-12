@@ -80,21 +80,21 @@
                                     <span class="material-symbols-outlined text-lg">family_restroom</span>
                                     ولي أمر
                                 </span>
-                                <input checked class="hidden" name="role_preview" type="radio" value="guardian" />
+                                <input @checked(old('role', 'guardian') === 'guardian') class="hidden" name="role" type="radio" value="guardian" />
                             </label>
                             <label class="flex h-full grow cursor-pointer items-center justify-center overflow-hidden rounded-lg px-2 text-sm font-bold text-[#638863] transition-all has-[:checked]:bg-white has-[:checked]:text-[#0ea60e] has-[:checked]:shadow-md">
                                 <span class="flex items-center gap-2 truncate">
                                     <span class="material-symbols-outlined text-lg">school</span>
                                     معلم
                                 </span>
-                                <input class="hidden" name="role_preview" type="radio" value="teacher" />
+                                <input @checked(old('role') === 'teacher') class="hidden" name="role" type="radio" value="teacher" />
                             </label>
-                            <label class="flex h-full grow cursor-not-allowed items-center justify-center overflow-hidden rounded-lg px-2 text-sm font-bold text-[#b2bdb2]">
+                            <label class="flex h-full grow cursor-pointer items-center justify-center overflow-hidden rounded-lg px-2 text-sm font-bold text-[#638863] transition-all has-[:checked]:bg-white has-[:checked]:text-[#0ea60e] has-[:checked]:shadow-md">
                                 <span class="flex items-center gap-2 truncate">
                                     <span class="material-symbols-outlined text-lg">face</span>
                                     طفل
                                 </span>
-                                <input class="hidden" disabled type="radio" value="child" />
+                                <input @checked(old('role') === 'child') class="hidden" name="role" type="radio" value="child" />
                             </label>
                         </div>
                     </div>
