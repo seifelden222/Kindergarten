@@ -3,9 +3,8 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>لوحة تحكم ولي الأمر - نظام إدارة الحضانة</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..900&display=swap" rel="stylesheet" />
@@ -46,7 +45,7 @@
 
 <body class="bg-background-light dark:bg-background-dark text-[#111811] dark:text-white min-h-screen">
     <div class="flex h-screen overflow-hidden">
-        <x-parent-sidebar />
+        <x-parent-sidebar active-page="dashboard" />
         <main class="flex-1 overflow-y-auto scroll-smooth">
             <div class="max-w-6xl mx-auto p-8">
                 <header class="flex flex-wrap justify-between items-end gap-6 mb-8">
@@ -102,7 +101,6 @@
                         <span class="w-2 h-8 bg-primary rounded-full"></span>
                         أطفالي المسجلين
                     </h3>
-                    <a class="text-sm font-bold text-primary hover:underline" href="#">عرض جميع التفاصيل</a>
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
                     <div class="bg-white dark:bg-[#1a2e1a] rounded-2xl overflow-hidden border border-[#dce5dc] dark:border-[#2d402d] shadow-md flex">
@@ -185,13 +183,26 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-4 bg-background-light/50 dark:bg-white/5 text-center">
-                        <button class="text-sm font-bold text-[#638863] hover:text-primary transition-colors">مشاهدة المزيد من الأنشطة</button>
-                    </div>
                 </div>
             </div>
         </main>
     </div>
+
+    <script src="parent-functions.js"></script>
+    <script>
+        // ربط أزرار التقرير اليومي في الصفحة الرئيسية
+        document.querySelectorAll('button').forEach(button => {
+            if (button.textContent.includes('عرض التقرير اليومي')) {
+                button.onclick = function() {
+                    const childCard = this.closest('.bg-white, .dark\\:bg-\\[\\#1a2e1a\\]');
+                    const childName = childCard?.querySelector('h4')?.textContent || 'الطفل';
+                    showDailyReport(childName);
+                };
+            }
+        });
+    </script>
+    <script src="{{ asset('js/parent-functions.js') }}"></script>
+
 </body>
 
 </html>

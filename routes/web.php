@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Teacher\LevelController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -59,7 +60,9 @@ Route::group(['prefix' => 'parent', 'middleware' => ['auth', 'role:guardian']], 
 
 // teacher routes
 Route::group(['prefix' => 'teacher', 'middleware' => ['auth', 'role:teacher']], function () {
-    Route::view('/levels', 'teacher.levels')->name('teacher.levels');
+    Route::resource('levels', LevelController::class)
+        ->except(['create'])
+        ->names('teacher.levels');
     Route::view('/messages', 'teacher.messages')->name('teacher.messages');
     Route::view('/reports', 'teacher.reports')->name('teacher.reports');
     Route::view('/teacherdashboard', 'teacher.teacherdashboard')->name('teacher.teacherdashboard');

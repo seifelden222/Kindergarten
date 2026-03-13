@@ -40,13 +40,25 @@
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
         }
+
+        /* تكبير الأيقونات */
+        .text-5xl .material-symbols-outlined,
+        .text-6xl .material-symbols-outlined {
+            font-size: 5rem;
+        }
+
+        /* تأثيرات hover للبطاقات */
+        .hover\\:scale-105:hover {
+            transform: scale(1.08);
+            box-shadow: 0 20px 40px rgba(244, 140, 37, 0.3);
+        }
     </style>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark min-h-screen">
+    <script src="child-functions.js"></script>
     <!-- Top Navigation Bar -->
-<x-child-navbar />
-
+    <x-child-navbar />
 
     <div class="px-4 lg:px-40 flex justify-center">
         <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
@@ -203,6 +215,8 @@
     </div>
     </div>
     </div>
+    <script src="{{ asset('js/child-functions.js') }}"></script>
+
 </body>
 
 </html>

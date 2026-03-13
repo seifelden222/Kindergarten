@@ -45,20 +45,13 @@
 
 <body class="bg-background-light dark:bg-background-dark text-[#111811] dark:text-white min-h-screen">
     <div class="flex h-screen overflow-hidden">
-        <x-parent-sidebar active="absence" />
+        <x-parent-sidebar active-page="activities" />
 
         <main class="flex-1 overflow-y-auto scroll-smooth">
             <div class="max-w-6xl mx-auto p-8">
                 <header class="flex flex-wrap justify-between items-center gap-6 mb-10">
                     <h2 class="text-3xl font-black tracking-tight">الأنشطة</h2>
-                    <div class="flex gap-3">
-                        <button class="px-4 py-2 bg-white dark:bg-[#1a2e1a] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl text-sm font-bold hover:bg-gray-50 transition-colors">
-                            هذا الأسبوع
-                        </button>
-                        <button class="px-4 py-2 bg-primary text-[#111811] rounded-xl text-sm font-bold hover:brightness-110 transition-colors shadow-lg shadow-primary/20">
-                            الشهر الحالي
-                        </button>
-                    </div>
+
                 </header>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-7 mb-12">
@@ -151,15 +144,13 @@
                     </div>
                 </div>
 
-                <div class="text-center py-8">
-                    <button class="px-8 py-3 bg-primary text-[#111811] font-bold rounded-xl hover:brightness-110 transition-colors shadow-lg shadow-primary/20">
-                        عرض أنشطة الشهر الماضي
-                    </button>
-                </div>
+
 
             </div>
         </main>
     </div>
+
+    <script src="{{ asset('js/parent-functions.js') }}"></script>
 </body>
 
 </html>

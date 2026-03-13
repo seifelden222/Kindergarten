@@ -45,7 +45,7 @@
 
 <body class="bg-background-light dark:bg-background-dark text-[#111811] dark:text-white min-h-screen">
     <div class="flex h-screen overflow-hidden">
-        <x-parent-sidebar active="absence" />
+        <x-parent-sidebar active-page="absence" />
 
         <main class="flex-1 overflow-y-auto scroll-smooth">
             <div class="max-w-6xl mx-auto p-8">
@@ -53,12 +53,15 @@
                 <header class="flex flex-wrap justify-between items-center gap-6 mb-10">
                     <h2 class="text-3xl font-black tracking-tight">الحضور والغياب</h2>
                     <div class="flex gap-3 items-center">
-                        <select class="px-4 py-2 bg-white dark:bg-[#1a2e1a] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/50">
-                            <option>أكتوبر 2025</option>
-                            <option>سبتمبر 2025</option>
-                            <option>أغسطس 2025</option>
+                        <select id="monthFilter" onchange="filterByMonth(this.value)" class="px-4 py-2 bg-white dark:bg-[#1a2e1a] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/50">
+                            <option value="2025-10">أكتوبر 2025</option>
+                            <option value="2025-09">سبتمبر 2025</option>
+                            <option value="2025-08">أغسطس 2025</option>
+                            <option value="2025-07">يوليو 2025</option>
+                            <option value="2025-06">يونيو 2025</option>
+                            <option value="2025-05">مايو 2025</option>
                         </select>
-                        <button class="px-5 py-2 bg-primary text-[#111811] rounded-xl text-sm font-bold hover:brightness-110 transition-colors shadow-lg shadow-primary/20">
+                        <button onclick="printAttendanceReport()" class="px-5 py-2 bg-primary text-[#111811] rounded-xl text-sm font-bold hover:brightness-110 transition-colors shadow-lg shadow-primary/20">
                             طباعة التقرير
                         </button>
                     </div>
@@ -136,9 +139,6 @@
                         </table>
                     </div>
 
-                    <div class="p-4 bg-gray-50/50 dark:bg-white/5 text-center border-t border-[#dce5dc] dark:border-[#2d402d]">
-                        <button class="text-sm font-bold text-primary hover:underline">عرض جميع أيام الشهر</button>
-                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -188,6 +188,24 @@
             </div>
         </main>
     </div>
+
+    <script src="parent-functions.js"></script>
+    <script>
+        // ربط زر طباعة التقرير والفلتر
+        document.addEventListener('DOMContentLoaded', function() {
+            const printBtn = document.querySelector('button[onclick*="printAttendanceReport"]');
+            if (printBtn) printBtn.onclick = printAttendanceReport;
+
+            const monthFilter = document.getElementById('monthFilter');
+            if (monthFilter) {
+                monthFilter.onchange = function() {
+                    filterByMonth(this.value);
+                };
+            }
+        });
+    </script>
+    <script src="{{ asset('js/parent-functions.js') }}"></script>
+
 </body>
 
 </html>

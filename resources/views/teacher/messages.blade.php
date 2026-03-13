@@ -3,8 +3,9 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>الرسائل - نظام إدارة الحضانة</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..900&display=swap" rel="stylesheet" />
@@ -47,8 +48,7 @@
 
     <div class="flex h-screen">
 
-        <x-teacher-sidebar active="levels" />
-
+        <x-teacher-sidebar active="messages" />
         <div class="flex-1 flex flex-col overflow-hidden">
             <main class="flex-1 overflow-y-auto py-8 px-6 md:px-10">
                 <div class="max-w-[1200px] mx-auto flex flex-col gap-8">
@@ -196,6 +196,7 @@
         </button>
     </div>
 
+    <script src="{{ asset('js/teacher-functions.js') }}"></script>
 </body>
 
 </html>

@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>التنبيهات - نظام إدارة الحضانة</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..900&display=swap" rel="stylesheet" />
@@ -45,8 +45,7 @@
 
 <body class="bg-background-light dark:bg-background-dark text-[#111811] dark:text-white min-h-screen">
     <div class="flex h-screen overflow-hidden">
-        <x-parent-sidebar />
-
+        <x-parent-sidebar active-page="notification" />
         <main class="flex-1 overflow-y-auto scroll-smooth">
             <div class="max-w-6xl mx-auto p-8">
 
@@ -74,8 +73,9 @@
                             <p class="text-base font-medium mb-3">غياب مفاجئ لـ ليلى أحمد اليوم دون إبلاغ مسبق</p>
                             <p class="text-sm text-[#638863] dark:text-[#a3c2a3] mb-4">يرجى التواصل مع إدارة الحضانة في أقرب وقت ممكن لتوضيح سبب الغياب.</p>
                             <div class="flex gap-4">
-                                <button class="px-5 py-2 bg-red-600 text-white text-sm font-bold rounded-xl hover:brightness-110 transition-colors">الاتصال بالحضانة</button>
-                                <button class="px-5 py-2 bg-gray-200 dark:bg-[#2d402d] text-sm font-bold rounded-xl hover:bg-gray-300 dark:hover:bg-[#3a523a] transition-colors">تأجيل التذكير</button>
+                                <button onclick="callNursery()" class="px-5 py-2 bg-red-600 text-white text-sm font-bold rounded-xl hover:brightness-110 transition-colors">الاتصال بالحضانة</button>
+                                <button onclick="snoozeReminder()" class="px-5 py-2 bg-gray-200 dark:bg-[#2d402d] text-sm font-bold rounded-xl hover:bg-gray-300 dark:hover:bg-[#3a523a] transition-colors">تأجيل التذكير</button>
+                                <button onclick="showNotificationDetails('غياب مفاجئ', 'غياب مفاجئ لـ ليلى أحمد اليوم دون إبلاغ مسبق. يرجى التواصل مع إدارة الحضانة في أقرب وقت ممكن لتوضيح سبب الغياب.')" class="px-5 py-2 bg-background-light dark:bg-[#112111] text-sm font-bold rounded-xl hover:bg-gray-200 dark:hover:bg-[#1e3a1e] transition-colors">عرض التفاصيل</button>
                             </div>
                         </div>
                     </div>
@@ -92,8 +92,8 @@
                             <p class="text-base font-medium mb-3">موعد التقييم الشهري للأطفال</p>
                             <p class="text-sm text-[#638863] dark:text-[#a3c2a3] mb-4">سيتم إجراء التقييم الشهري يوم الأحد القادم الموافق ٢ نوفمبر من الساعة ٩ صباحاً حتى ١٢ ظهراً. يرجى الحضور في الموعد المحدد.</p>
                             <div class="flex gap-3 mt-4">
-                                <button class="px-5 py-2 bg-primary text-[#111811] text-sm font-bold rounded-xl hover:brightness-110 transition-colors">إضافة إلى التقويم</button>
-                                <button class="px-5 py-2 bg-background-light dark:bg-[#112111] text-sm font-bold rounded-xl hover:bg-gray-200 dark:hover:bg-[#1e3a1e] transition-colors">عرض التفاصيل</button>
+                                <button onclick="addToCalendar('التقييم الشهري', '٢ نوفمبر')" class="px-5 py-2 bg-primary text-[#111811] text-sm font-bold rounded-xl hover:brightness-110 transition-colors">إضافة إلى التقويم</button>
+                                <button onclick="showNotificationDetails('موعد التقييم الشهري', 'سيتم إجراء التقييم الشهري يوم الأحد القادم الموافق ٢ نوفمبر من الساعة ٩ صباحاً حتى ١٢ ظهراً. يرجى الحضور في الموعد المحدد. سيتم تقييم المهارات الأكاديمية والاجتماعية والحركية للأطفال.')" class="px-5 py-2 bg-background-light dark:bg-[#112111] text-sm font-bold rounded-xl hover:bg-gray-200 dark:hover:bg-[#1e3a1e] transition-colors">عرض التفاصيل</button>
                             </div>
                         </div>
                     </div>
@@ -110,6 +110,9 @@
                             <p class="text-base font-medium mb-3">تغيير في قائمة وجبة الغداء اليوم</p>
                             <p class="text-sm text-[#638863] dark:text-[#a3c2a3] mb-4">تم تعديل وجبة الغداء اليوم لتصبح: رز بالدجاج + خضار مشوية + زبادي بالعسل بدلاً من المعكرونة بالصلصة.</p>
                             <p class="text-sm text-[#638863] dark:text-[#a3c2a3]">يرجى إبلاغنا في حال وجود حساسية غذائية لم يتم الإفصاح عنها مسبقاً.</p>
+                            <div class="flex gap-3 mt-4">
+                                <button onclick="showNotificationDetails('تحديث وجبة اليوم', 'تم تعديل وجبة الغداء اليوم لتصبح: رز بالدجاج + خضار مشوية + زبادي بالعسل بدلاً من المعكرونة بالصلصة. يرجى إبلاغنا في حال وجود حساسية غذائية لم يتم الإفصاح عنها مسبقاً.')" class="px-5 py-2 bg-background-light dark:bg-[#112111] text-sm font-bold rounded-xl hover:bg-gray-200 dark:hover:bg-[#1e3a1e] transition-colors">عرض التفاصيل</button>
+                            </div>
                         </div>
                     </div>
 
@@ -124,19 +127,39 @@
                         <div class="p-6">
                             <p class="text-base font-medium mb-3">موعد تسليم التقرير الطبي الدوري</p>
                             <p class="text-sm text-[#638863] dark:text-[#a3c2a3] mb-4">يُرجى تسليم التقرير الطبي المحدث لكلا الطفلين (ليلى وعمر) قبل نهاية الأسبوع القادم.</p>
+                            <div class="flex gap-3 mt-4">
+                                <button onclick="showNotificationDetails('تذكير بموعد', 'يُرجى تسليم التقرير الطبي المحدث لكلا الطفلين (ليلى وعمر) قبل نهاية الأسبوع القادم. التقرير يجب أن يتضمن: الفحص الطبي العام، التطعيمات، أي أدوية دورية، وأي ملاحظات صحية خاصة.')" class="px-5 py-2 bg-background-light dark:bg-[#112111] text-sm font-bold rounded-xl hover:bg-gray-200 dark:hover:bg-[#1e3a1e] transition-colors">عرض التفاصيل</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="text-center py-10">
-                    <button class="px-8 py-3 bg-primary text-[#111811] font-bold rounded-xl hover:brightness-110 transition-colors shadow-lg shadow-primary/20">
-                        عرض المزيد من التنبيهات
-                    </button>
                 </div>
 
             </div>
         </main>
     </div>
+
+    <script src="parent-functions.js"></script>
+    <script>
+        // ربط أزرار الإشعارات
+        document.querySelectorAll('button').forEach(btn => {
+            const btnText = btn.textContent.trim();
+
+            if (btnText.includes('تحديد الكل كمقروء')) {
+                btn.onclick = markAllAsRead;
+            } else if (btnText.includes('الاتصال بالحضانة')) {
+                btn.onclick = callNursery;
+            } else if (btnText.includes('تأجيل التذكير')) {
+                btn.onclick = snoozeReminder;
+            } else if (btnText.includes('إضافة إلى التقويم')) {
+                const originalOnclick = btn.getAttribute('onclick');
+                if (!originalOnclick) {
+                    btn.onclick = () => addToCalendar('موعد', 'تاريخ');
+                }
+            }
+            // أزرار عرض التفاصيل تم ربطها مباشرة في HTML
+        });
+    </script>
+    <script src="{{ asset('js/parent-functions.js') }}"></script>
 </body>
 
 </html>

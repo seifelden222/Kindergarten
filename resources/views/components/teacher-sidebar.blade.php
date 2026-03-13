@@ -1,4 +1,12 @@
-        @php($user = auth()->user())
+        @props(['active' => ''])
+
+        @php
+            $user = auth()->user();
+
+            $navItemClasses = static fn (string $item): string => $active === $item
+                ? 'flex items-center gap-3 px-5 py-3 rounded-xl bg-primary/10 text-primary font-bold'
+                : 'flex items-center gap-3 px-5 py-3 rounded-xl text-[#638863] dark:text-[#a0b0a0] transition-colors hover:bg-primary/10 hover:text-primary';
+        @endphp
 
         <aside class="w-72 bg-white dark:bg-[#1a2a1a] border-l border-[#dce5dc] dark:border-[#2a3a2a] flex flex-col">
             <div class="p-6 border-b border-[#dce5dc] dark:border-[#2a3a2a] flex items-center gap-4">
@@ -22,19 +30,19 @@
             </div>
 
             <nav class="flex flex-col gap-2 px-4 flex-1">
-                <a class="flex items-center gap-3 px-5 py-3 rounded-xl text-[#638863] dark:text-[#a0b0a0] hover:bg-primary/10 hover:text-primary transition-colors" href="{{route('teacher.teacherdashboard')}}">
+                <a class="{{ $navItemClasses('dashboard') }}" href="{{ route('teacher.teacherdashboard') }}">
                     <span class="material-symbols-outlined">home</span>
                     الرئيسية
                 </a>
-                <a class="flex items-center gap-3 px-5 py-3 rounded-xl bg-primary/10 text-primary font-bold" href="{{route('teacher.levels')}}">
+                <a class="{{ $navItemClasses('levels') }}" href="{{ route('teacher.levels.index') }}">
                     <span class="material-symbols-outlined">groups</span>
                     الفصول
                 </a>
-                <a class="flex items-center gap-3 px-5 py-3 rounded-xl text-[#638863] dark:text-[#a0b0a0] hover:bg-primary/10 hover:text-primary transition-colors" href="{{route('teacher.reports')}}">
+                <a class="{{ $navItemClasses('reports') }}" href="{{ route('teacher.reports') }}">
                     <span class="material-symbols-outlined">description</span>
                     التقارير
                 </a>
-                <a class="flex items-center gap-3 px-5 py-3 rounded-xl text-[#638863] dark:text-[#a0b0a0] hover:bg-primary/10 hover:text-primary transition-colors" href="{{route('teacher.messages')}}">
+                <a class="{{ $navItemClasses('messages') }}" href="{{ route('teacher.messages') }}">
                     <span class="material-symbols-outlined">chat_bubble</span>
                     الرسائل
                 </a>

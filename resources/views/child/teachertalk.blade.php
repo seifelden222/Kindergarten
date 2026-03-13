@@ -55,32 +55,32 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+
+        /* تكبير الأيقونات في الأزرار */
+        button .material-symbols-outlined {
+            font-size: 3rem;
+        }
+
+        .w-24.h-24 .material-symbols-outlined {
+            font-size: 4rem;
+        }
+
+        /* تأثيرات hover للأزرار */
+        button:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
     </style>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark text-[#111811] dark:text-white transition-colors duration-300">
+    <script src="child-functions.js"></script>
     <div class="relative flex min-h-screen flex-col">
         <!-- Top Navigation Bar -->
         <x-child-navbar />
 
-
         <main class="flex-1 max-w-4xl mx-auto w-full flex flex-col p-4 gap-6">
-            <div class="flex flex-col items-center gap-3 py-6 bg-white/50 dark:bg-zinc-900/50 rounded-3xl border border-white dark:border-zinc-800">
-                <div class="relative">
-                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-32 w-32 border-4 border-primary shadow-lg" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAD3Pv2uS97igaPuIEp9CmDUTTJolnkZpkM95CWiDiD_EixK8AeaS_tRHT4mdhbnmnahmOiUD715S8gpJwL1eIjrKcZsKG4uiZUtkSVbacveTJS5X8xpPDnsWCtZWP29piFzHILrQiBxOSCFkL5_NBOhsLOaLV5zDxrivEpVvHn77W3kRZ3YoydhbfqZxBkfBN642yeCpqjjDFbxlLXUIEf11Wwtyol_6st_CObjrgDeQ2iJljKA_58ApI03G_M-u7_jxHdrZtWsEDR");'>
-                    </div>
-                    <div class="absolute bottom-1 right-1 bg-primary text-white p-1 rounded-full border-2 border-white dark:border-zinc-900">
-                        <span class="material-symbols-outlined !text-sm">verified</span>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <h2 class="text-2xl font-bold">المعلمة سارة</h2>
-                    <p class="text-primary font-medium flex items-center justify-center gap-1">
-                        <span class="w-2 h-2 bg-primary rounded-full"></span>
-                        متصلة الآن
-                    </p>
-                </div>
-            </div>
+            <x-child-navbar />
             <div class="message-stream space-y-4 px-2">
                 <div class="flex items-end gap-3 justify-start">
                     <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-12 h-12 shrink-0 border-2 border-primary" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAZy0GS4vz_pj55ok6xgwbRnSwyGl6oHxN_i5OoEJHgn4ektfjxhbYtVavWDo1tfQ3DQOxXINK-z1zZysjuGg4OdfAQUE5wqjz2-NfcBFM5PvMn2UAZ8ZyaMjtVhOLeVktYT4gVz-h9FCbdHylOh0p3xXvuiLfsMcJfkdQsj9gwjzZ626r4TYhm8RKnJmRN9b0k9ZvJTO26tBtsLAKlEkoVvNyNJ_F0c3ravHTI5QnRazNLe7iATyXyjkY4QwNX72CN4C9SbstUzD7N");'></div>
@@ -161,6 +161,8 @@
             <div class="h-80"></div>
         </main>
     </div>
+    <script src="{{ asset('js/child-functions.js') }}"></script>
+
 </body>
 
 </html>

@@ -74,6 +74,11 @@ class User extends Authenticatable
         return $this->hasMany(BehavioralNote::class);
     }
 
+    public function levels(): HasMany
+    {
+        return $this->hasMany(Level::class);
+    }
+
     public function dashboardRoute(): string
     {
         return match ($this->role) {

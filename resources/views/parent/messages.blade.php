@@ -45,7 +45,7 @@
 
 <body class="bg-background-light dark:bg-background-dark text-[#111811] dark:text-white min-h-screen">
     <div class="flex h-screen overflow-hidden">
-        <x-parent-sidebar active="absence" />
+        <x-parent-sidebar active="messages" />
 
         <main class="flex-1 overflow-y-auto scroll-smooth">
             <div class="max-w-6xl mx-auto p-8">
@@ -67,7 +67,7 @@
                             <h3 class="font-bold text-lg">المحادثات</h3>
                         </div>
                         <div class="divide-y divide-[#dce5dc] dark:divide-[#2d402d] max-h-[70vh] overflow-y-auto">
-                            <a href="#" class="block p-4 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors bg-primary/5">
+                            <a href="#" onclick="event.preventDefault(); switchChat('أ. سارة محمد', 'معلمة الصف التمهيدي أ', 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800&auto=format&fit=crop&q=80')" class="block p-4 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors bg-primary/5">
                                 <div class="flex items-center gap-3">
                                     <div class="w-12 h-12 rounded-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800&auto=format&fit=crop&q=80')"></div>
                                     <div class="flex-1 min-w-0">
@@ -81,7 +81,7 @@
                                 </div>
                             </a>
 
-                            <a href="#" class="block p-4 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+                            <a href="#" onclick="event.preventDefault(); switchChat('إدارة الحضانة', 'قسم الإدارة', 'https://images.unsplash.com/photo-1552058544-f2b08422138a?w=800&auto=format&fit=crop&q=80')" class="block p-4 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
                                 <div class="flex items-center gap-3">
                                     <div class="w-12 h-12 rounded-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1552058544-f2b08422138a?w=800&auto=format&fit=crop&q=80')"></div>
                                     <div class="flex-1 min-w-0">
@@ -94,7 +94,7 @@
                                 </div>
                             </a>
 
-                            <a href="#" class="block p-4 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+                            <a href="#" onclick="event.preventDefault(); switchChat('أ. نورا علي', 'معلمة النشاط', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=80')" class="block p-4 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
                                 <div class="flex items-center gap-3">
                                     <div class="w-12 h-12 rounded-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=80')"></div>
                                     <div class="flex-1 min-w-0">
@@ -179,6 +179,60 @@
             </div>
         </main>
     </div>
+
+    <script src="parent-functions.js"></script>
+    <script>
+        // ربط أزرار الرسائل
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Messages page loaded');
+
+            // ربط زر الإرسال
+            const sendBtn = document.querySelector('.p-5.border-t button[class*="bg-primary"]');
+            if (sendBtn) {
+                sendBtn.onclick = function(e) {
+                    e.preventDefault();
+                    console.log('Send button clicked');
+                    sendMessage();
+                };
+                console.log('Send button connected');
+            }
+
+            // ربط حقل الإدخال
+            const messageInput = document.querySelector('input[placeholder*="اكتب رسالتك"]');
+            if (messageInput) {
+                messageInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        console.log('Enter pressed');
+                        sendMessage();
+                    }
+                });
+                console.log('Message input connected');
+            }
+
+            // ربط زر المرفقات
+            const attachBtn = document.querySelector('.p-5.border-t button:first-child');
+            if (attachBtn) {
+                attachBtn.onclick = function(e) {
+                    e.preventDefault();
+                    console.log('Attach button clicked');
+                    attachFile();
+                };
+                console.log('Attach button connected');
+            }
+
+            // ربط زر رسالة جديدة
+            const newMsgBtn = document.querySelector('header button[class*="bg-primary"]');
+            if (newMsgBtn) {
+                newMsgBtn.onclick = function(e) {
+                    e.preventDefault();
+                    composeNewMessage();
+                };
+                console.log('New message button connected');
+            }
+        });
+    </script>
+    <script src="{{ asset('js/parent-functions.js') }}"></script>
 </body>
 
 </html>

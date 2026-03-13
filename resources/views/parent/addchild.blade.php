@@ -45,8 +45,7 @@
 
 <body class="bg-background-light dark:bg-background-dark text-[#111811] dark:text-white min-h-screen">
     <div class="flex h-screen overflow-hidden">
-        <x-parent-sidebar active="absence" />
-        </aside>
+        <x-parent-sidebar active-page="addchild" />
 
         <main class="flex-1 overflow-y-auto scroll-smooth">
             <div class="max-w-4xl mx-auto p-8">
@@ -165,6 +164,18 @@
             </div>
         </main>
     </div>
+
+    <script src="parent-functions.js"></script>
+    <script>
+        // ربط نموذج إضافة طفل
+        const form = document.querySelector('form');
+        if (form) {
+            form.onsubmit = handleAddChild;
+            const cancelBtn = document.querySelector('button[type="button"]');
+            if (cancelBtn) cancelBtn.onclick = cancelAddChild;
+        }
+    </script>
+    <script src="{{ asset('js/parent-functions.js') }}"></script>
 </body>
 
 </html>

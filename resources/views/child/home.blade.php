@@ -45,14 +45,27 @@
         .nav-icon {
             font-size: 3.5rem;
         }
+
+        /* تكبير الأيقونات في البطاقات */
+        .bg-white .material-symbols-outlined,
+        .bg-gradient-to-br .material-symbols-outlined {
+            font-size: 4rem;
+        }
+
+        /* تأثيرات hover للبطاقات */
+        .bg-white:hover,
+        .bg-gradient-to-br:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(244, 140, 37, 0.3);
+        }
     </style>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark text-[#181411] dark:text-white min-h-screen">
+    <script src="child-functions.js"></script>
 
     <!-- Top Navigation Bar -->
     <x-child-navbar />
-
 
     <!-- Main Content -->
     <div class="max-w-[1200px] mx-auto px-6 py-12">
@@ -106,6 +119,7 @@
         </section>
 
     </div>
+    <script src="{{ asset('js/child-functions.js') }}"></script>
 
 </body>
 

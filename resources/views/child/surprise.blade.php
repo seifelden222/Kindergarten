@@ -46,15 +46,29 @@
             transform: scale(1.05) rotate(2deg);
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+
+        /* تكبير الأيقونات في البطاقات */
+        .size-32 .material-symbols-outlined {
+            font-size: 5rem;
+        }
+
+        /* تأثيرات إضافية */
+        .gift-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gift-card:active {
+            transform: scale(0.95);
+        }
     </style>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark min-h-screen">
+    <script src="child-functions.js"></script>
     <div class="layout-container flex h-full grow flex-col">
         <!-- Top Navigation Bar -->
-<x-child-navbar />
-
-
+        <x-child-navbar />
         <main class="flex-1 overflow-y-auto pb-10">
             <div class="px-6 md:px-40 py-8">
                 <div class="layout-content-container flex flex-col max-w-[960px] mx-auto text-center">
@@ -139,6 +153,7 @@
             </button>
         </div>
     </div>
+    <script src="{{ asset('js/child-functions.js') }}"></script>
 </body>
 
 </html>

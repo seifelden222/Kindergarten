@@ -41,12 +41,23 @@
         body {
             font-family: 'Cairo', sans-serif;
         }
+
+        /* تكبير الأيقونات في البطاقات */
+        .bg-white .material-symbols-outlined {
+            font-size: 5rem;
+        }
+
+        /* تأثيرات hover للبطاقات */
+        .group:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(244, 140, 37, 0.4);
+        }
     </style>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark text-[#181411] dark:text-white min-h-screen">
-    <!-- Top Navigation Bar -->
-<x-child-navbar />
+    <script src="child-functions.js"></script>
+    <x-child-navbar />
 
     <div class="max-w-[1200px] mx-auto px-6 py-8">
 
@@ -170,6 +181,8 @@
             </button>
         </div>
     </div>
+    <script src="{{ asset('js/child-functions.js') }}"></script>
+
 </body>
 
 </html>

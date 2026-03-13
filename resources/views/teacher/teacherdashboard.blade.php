@@ -47,7 +47,7 @@
 
     <div class="flex h-screen">
 
-        <x-teacher-sidebar active="levels" />
+        <x-teacher-sidebar active="dashboard" />
 
         <div class="flex-1 flex flex-col overflow-hidden">
             <main class="flex-1 overflow-y-auto py-8 px-6 md:px-10">
@@ -283,6 +283,7 @@
             </div>
         </div>
     </div>
+    <script src={{asset("js/teacher-functions.js")}}></script>
 
 </body>
 
