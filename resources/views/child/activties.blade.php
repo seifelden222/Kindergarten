@@ -177,7 +177,7 @@
         <div class="fixed bottom-10 left-10">
             <button class="bg-primary text-white p-8 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center gap-3">
                 <span class="material-symbols-outlined text-4xl">home</span>
-                <a href="home.html"><span class="text-2xl font-bold ml-2">الرئيسية</span></a>
+                <a href="{{route('child.home')}}"><span class="text-2xl font-bold ml-2">الرئيسية</span></a>
             </button>
         </div>
     </div>
