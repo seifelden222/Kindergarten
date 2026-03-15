@@ -252,7 +252,7 @@
                 <div class="flex flex-col gap-4">
                     <h4 class="text-lg font-bold dark:text-white">روابط سريعة</h4>
                     <nav class="flex flex-col gap-2">
-                        <a class="text-[#638863] dark:text-gray-400 hover:text-primary text-sm transition-colors" href="index.html">الرئيسية</a>
+                        <a class="text-[#638863] dark:text-gray-400 hover:text-primary text-sm transition-colors" href="{{ url('/') }}">الرئيسية</a>
                         <a class="text-[#638863] dark:text-gray-400 hover:text-primary text-sm transition-colors" href="contactus.html">تواصل معنا</a>
 
                     </nav>

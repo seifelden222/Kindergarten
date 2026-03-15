@@ -56,11 +56,11 @@
                     <div class="flex gap-3">
                         <button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-[#1a2e1a] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl font-bold text-sm hover:bg-gray-50 transition-colors">
                             <span class="material-symbols-outlined text-xl">person_add</span>
-                            <a href="addchild.html"><span>إضافة طفل</span></a>
+                            <a href="{{route('parent.addchild')}}"><span>إضافة طفل</span></a>
                         </button>
                         <button class="flex items-center gap-2 px-6 py-2 bg-primary text-[#111811] rounded-xl font-bold text-sm hover:brightness-110 transition-colors shadow-lg shadow-primary/20">
                             <span class="material-symbols-outlined text-xl">payments</span>
-                            <span><a href="payment.html">دفع الرسوم</a></span>
+                            <span><a href="{{route('parent.payment')}}">دفع الرسوم</a></span>
                         </button>
                     </div>
                 </header>
