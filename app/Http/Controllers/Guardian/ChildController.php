@@ -8,7 +8,6 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class ChildController extends Controller
 {
@@ -20,8 +19,8 @@ class ChildController extends Controller
 
         User::create([
             'name' => $fullName,
-            'email' => sprintf('child_%s@kindergarten.local', Str::uuid()),
-            'password' => Hash::make(Str::password(16)),
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
             'role' => 'child',
             'guardian_id' => $request->user()->id,
             'gender' => $validated['gender'],
@@ -37,6 +36,6 @@ class ChildController extends Controller
 
         return redirect()
             ->route('parent.addchild')
-            ->with('status', "تم حفظ بيانات {$fullName} في قاعدة البيانات بنجاح.");
+            ->with('status', "تم حفظ بيانات {$fullName} وإنشاء بيانات دخول الطفل بنجاح.");
     }
 }

@@ -91,6 +91,12 @@
                             </div>
 
                             <div>
+                                <label class="block text-sm font-medium mb-2">البريد الإلكتروني للطفل <span class="text-red-500">*</span></label>
+                                <input type="email" name="email" value="{{ old('email') }}" placeholder="child@example.com" required class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
+                                <x-input-error :messages="$errors->get('email')" class="mt-2 text-sm text-red-600" />
+                            </div>
+
+                            <div>
                                 <label class="block text-sm font-medium mb-2">الجنس <span class="text-red-500">*</span></label>
                                 <select name="gender" required class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
                                     <option value="">اختر الجنس</option>
@@ -128,6 +134,17 @@
                                     <option value="الفصل ج" @selected(old('classroom_name') === 'الفصل ج')>الفصل ج</option>
                                 </select>
                                 <x-input-error :messages="$errors->get('classroom_name')" class="mt-2 text-sm text-red-600" />
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium mb-2">كلمة المرور للطفل <span class="text-red-500">*</span></label>
+                                <input type="password" name="password" placeholder="8 أحرف أو أكثر" required class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
+                                <x-input-error :messages="$errors->get('password')" class="mt-2 text-sm text-red-600" />
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium mb-2">تأكيد كلمة المرور <span class="text-red-500">*</span></label>
+                                <input type="password" name="password_confirmation" placeholder="أعد كتابة كلمة المرور" required class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
                             </div>
 
                         </div>

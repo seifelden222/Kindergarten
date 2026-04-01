@@ -17,8 +17,11 @@ class LevelFactory extends Factory
      */
     public function definition(): array
     {
+        $levelTheme = $this->faker->randomElement(['الزهور', 'الفراشات', 'النجوم', 'الأبطال', 'الطيور']);
+        $levelSuffix = $this->faker->unique()->numberBetween(1, 9999);
+
         return [
-            'name' => 'فصل '.$this->faker->unique()->randomElement(['الزهور', 'الفراشات', 'النجوم', 'الأبطال', 'الطيور']),
+            'name' => "فصل {$levelTheme} {$levelSuffix}",
             'children_count' => $this->faker->numberBetween(5, 30),
             'status' => $this->faker->randomElement(['active', 'inactive']),
             'accent_color' => $this->faker->randomElement(['#0ea60e', '#3b82f6', '#a855f7', '#f97316']),

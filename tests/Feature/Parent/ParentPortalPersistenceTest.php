@@ -12,10 +12,13 @@ it('stores a child in the database for the authenticated guardian', function () 
         ->post(route('parent.addchild.store'), [
             'first_name' => 'ليلى',
             'last_name' => 'أحمد',
+            'email' => 'child-login@example.com',
             'gender' => 'female',
             'birth_date' => '2021-05-10',
             'level_name' => 'تمهيدي أول (أ)',
             'classroom_name' => 'الفصل أ',
+            'password' => 'password123',
+            'password_confirmation' => 'password123',
             'allergies' => 'حساسية من الفول السوداني',
             'chronic_diseases' => 'الربو',
             'medications' => 'بخاخ عند الحاجة',
@@ -29,6 +32,7 @@ it('stores a child in the database for the authenticated guardian', function () 
 
     expect($child)->not->toBeNull();
     expect($child?->name)->toBe('ليلى أحمد');
+    expect($child?->email)->toBe('child-login@example.com');
     expect($child?->age)->toBeInt();
     expect($child?->level_name)->toBe('تمهيدي أول (أ)');
     expect($child?->classroom_name)->toBe('الفصل أ');

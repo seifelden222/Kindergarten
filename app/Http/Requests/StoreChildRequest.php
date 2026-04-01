@@ -24,10 +24,12 @@ class StoreChildRequest extends FormRequest
         return [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
             'gender' => ['required', 'string', 'in:male,female'],
             'birth_date' => ['required', 'date', 'after_or_equal:'.now()->subYears(12)->toDateString(), 'before:today'],
             'level_name' => ['required', 'string', 'max:255'],
             'classroom_name' => ['required', 'string', 'max:255'],
+            'password' => ['required', 'string', 'confirmed', 'min:8'],
             'allergies' => ['nullable', 'string', 'max:1000'],
             'chronic_diseases' => ['nullable', 'string', 'max:255'],
             'medications' => ['nullable', 'string', 'max:255'],
@@ -39,12 +41,18 @@ class StoreChildRequest extends FormRequest
         return [
             'first_name.required' => 'يرجى إدخال الاسم الأول للطفل.',
             'last_name.required' => 'يرجى إدخال اسم العائلة للطفل.',
+            'email.required' => 'يرجى إدخال البريد الإلكتروني للطفل.',
+            'email.email' => 'صيغة البريد الإلكتروني غير صحيحة.',
+            'email.unique' => 'هذا البريد الإلكتروني مستخدم بالفعل.',
             'gender.required' => 'يرجى اختيار الجنس.',
             'birth_date.required' => 'يرجى إدخال تاريخ الميلاد.',
             'birth_date.after_or_equal' => 'تاريخ الميلاد غير مناسب لطفل في مرحلة الحضانة.',
             'birth_date.before' => 'تاريخ الميلاد يجب أن يكون قبل اليوم.',
             'level_name.required' => 'يرجى اختيار المستوى الدراسي.',
             'classroom_name.required' => 'يرجى اختيار الفصل.',
+            'password.required' => 'يرجى إدخال كلمة مرور للطفل.',
+            'password.confirmed' => 'تأكيد كلمة المرور غير مطابق.',
+            'password.min' => 'كلمة المرور يجب ألا تقل عن 8 أحرف.',
         ];
     }
 }
