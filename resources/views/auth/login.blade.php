@@ -52,27 +52,16 @@
             <div class="flex flex-col justify-center p-8 md:p-12">
                 <div class="mb-8">
                     <h1 class="pb-2 text-[32px] font-bold leading-tight tracking-tight text-[#111811]">مرحباً بك مجدداً</h1>
-                    <p class="text-base font-normal leading-normal text-[#638863]">يرجى اختيار نوع الحساب وتسجيل الدخول للمتابعة</p>
+                    <p class="text-base font-normal leading-normal text-[#638863]">سجّل دخولك ببياناتك، وسيتم توجيهك تلقائيًا إلى البوابة المناسبة حسب نوع الحساب.</p>
                 </div>
 
-                <div class="mb-8">
-                    <div class="flex h-12 items-center justify-center rounded-xl bg-[#f0f4f0] p-1">
-                        <label class="flex h-full grow cursor-pointer items-center justify-center overflow-hidden rounded-xl px-2 text-sm font-medium leading-normal text-[#638863] transition-all has-[:checked]:bg-white has-[:checked]:text-[#111811] has-[:checked]:shadow-sm">
-                            <span class="truncate">ولي أمر</span>
-                            <input checked class="invisible w-0" name="role_preview" type="radio" value="parent" />
-                        </label>
-                        <label class="flex h-full grow cursor-pointer items-center justify-center overflow-hidden rounded-xl px-2 text-sm font-medium leading-normal text-[#638863] transition-all has-[:checked]:bg-white has-[:checked]:text-[#111811] has-[:checked]:shadow-sm">
-                            <span class="truncate">معلم</span>
-                            <input class="invisible w-0" name="role_preview" type="radio" value="teacher" />
-                        </label>
-                        <label class="flex h-full grow cursor-pointer items-center justify-center overflow-hidden rounded-xl px-2 text-sm font-medium leading-normal text-[#638863] transition-all has-[:checked]:bg-white has-[:checked]:text-[#111811] has-[:checked]:shadow-sm">
-                            <span class="truncate">مدير</span>
-                            <input class="invisible w-0" name="role_preview" type="radio" value="admin" />
-                        </label>
-                        <label class="flex h-full grow cursor-pointer items-center justify-center overflow-hidden rounded-xl px-2 text-sm font-medium leading-normal text-[#638863] transition-all has-[:checked]:bg-white has-[:checked]:text-[#111811] has-[:checked]:shadow-sm">
-                            <span class="truncate">طفل</span>
-                            <input class="invisible w-0" name="role_preview" type="radio" value="child" />
-                        </label>
+                <div class="mb-8 rounded-2xl border border-[#dce5dc] bg-[#f6fbf6] px-4 py-4 text-sm text-[#4a5f4a]">
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined rounded-full bg-white p-2 text-[#0ea60e] shadow-sm">account_circle</span>
+                        <div class="space-y-1">
+                            <p class="font-bold text-[#111811]">دخول موحد</p>
+                            <p>لا تحتاج لاختيار ولي أمر أو معلم أو طفل قبل تسجيل الدخول، فالنظام يتعرف على الحساب تلقائيًا.</p>
+                        </div>
                     </div>
                 </div>
 

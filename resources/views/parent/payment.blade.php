@@ -48,11 +48,20 @@
 <x-parent-sidebar active="payment" />
         <main class="flex-1 overflow-y-auto scroll-smooth">
             <div class="max-w-5xl mx-auto p-8">
+                @php
+                    $children = auth()->user()?->children()->where('role', 'child')->orderBy('name')->get() ?? collect();
+                @endphp
+
+                @if (session('status'))
+                    <div class="mb-6 rounded-2xl border border-green-200 bg-green-50 px-5 py-4 text-sm font-medium text-green-700">
+                        {{ session('status') }}
+                    </div>
+                @endif
 
                 <header class="flex flex-wrap justify-between items-center gap-6 mb-12">
                     <h2 class="text-3xl font-black tracking-tight">دفع الرسوم</h2>
                     <div class="flex gap-3">
-                        <button class="px-5 py-2 bg-white dark:bg-[#1a2e1a] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl text-sm font-bold hover:bg-gray-50 dark:hover:bg-white/10 transition-colors flex items-center gap-2">
+                        <button id="payment-history-button" type="button" class="px-5 py-2 bg-white dark:bg-[#1a2e1a] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl text-sm font-bold hover:bg-gray-50 dark:hover:bg-white/10 transition-colors flex items-center gap-2">
                             <span class="material-symbols-outlined">history</span>
                             سجل الدفعات
                         </button>
@@ -133,7 +142,8 @@
                         <div class="p-6 border-b border-[#dce5dc] dark:border-[#2d402d]">
                             <h3 class="text-xl font-bold">ملخص الحساب</h3>
                         </div>
-                        <div class="p-6 space-y-6">
+                        <form class="p-6 space-y-6" method="POST" action="{{ route('parent.payment.store') }}">
+                            @csrf
                             <div class="space-y-4">
                                 <div class="flex justify-between text-sm">
                                     <span class="text-[#638863] dark:text-[#a3c2a3]">رصيد المحفظة</span>
@@ -149,8 +159,42 @@
                                 </div>
                             </div>
 
-                            <div class="pt-6">
-                                <button class="w-full py-4 bg-primary text-[#111811] font-bold text-lg rounded-xl hover:brightness-110 transition-colors shadow-lg shadow-primary/30">
+                            <div class="space-y-4 pt-2">
+                                <div>
+                                    <label class="mb-2 block text-sm font-medium">الطفل المرتبط بالدفع</label>
+                                    <select name="child_id" class="w-full rounded-xl border border-[#dce5dc] bg-background-light px-4 py-3 dark:border-[#2d402d] dark:bg-[#112111] focus:outline-none focus:ring-2 focus:ring-primary/50">
+                                        <option value="">الدفع لكل الأطفال / الفاتورة العامة</option>
+                                        @foreach ($children as $child)
+                                            <option value="{{ $child->id }}" @selected(old('child_id') == $child->id)>{{ $child->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <x-input-error :messages="$errors->get('child_id')" class="mt-2 text-sm text-red-600" />
+                                </div>
+
+                                <div>
+                                    <label class="mb-2 block text-sm font-medium">المبلغ المدفوع</label>
+                                    <input type="number" name="amount" min="1" step="0.01" value="{{ old('amount', '3050') }}" class="w-full rounded-xl border border-[#dce5dc] bg-background-light px-4 py-3 dark:border-[#2d402d] dark:bg-[#112111] focus:outline-none focus:ring-2 focus:ring-primary/50">
+                                    <x-input-error :messages="$errors->get('amount')" class="mt-2 text-sm text-red-600" />
+                                </div>
+
+                                <div>
+                                    <label class="mb-2 block text-sm font-medium">طريقة الدفع</label>
+                                    <select name="payment_method" class="w-full rounded-xl border border-[#dce5dc] bg-background-light px-4 py-3 dark:border-[#2d402d] dark:bg-[#112111] focus:outline-none focus:ring-2 focus:ring-primary/50">
+                                        <option value="card" @selected(old('payment_method') === 'card')>بطاقة ائتمان / خصم</option>
+                                        <option value="bank_transfer" @selected(old('payment_method') === 'bank_transfer')>تحويل بنكي</option>
+                                        <option value="fawry" @selected(old('payment_method', 'fawry') === 'fawry')>فوري / كروت الدفع</option>
+                                    </select>
+                                    <x-input-error :messages="$errors->get('payment_method')" class="mt-2 text-sm text-red-600" />
+                                </div>
+
+                                <div>
+                                    <label class="mb-2 block text-sm font-medium">ملاحظات إضافية</label>
+                                    <textarea name="notes" rows="3" class="w-full rounded-xl border border-[#dce5dc] bg-background-light px-4 py-3 dark:border-[#2d402d] dark:bg-[#112111] focus:outline-none focus:ring-2 focus:ring-primary/50">{{ old('notes') }}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="pt-2">
+                                <button type="submit" class="w-full py-4 bg-primary text-[#111811] font-bold text-lg rounded-xl hover:brightness-110 transition-colors shadow-lg shadow-primary/30">
                                     دفع ٣,٠٥٠ ج.م الآن
                                 </button>
                             </div>
@@ -158,7 +202,7 @@
                             <div class="text-center pt-4">
                                 <a href="#" class="text-sm text-primary hover:underline">الدفع الجزئي متاح</a>
                             </div>
-                        </div>
+                        </form>
                     </div>
 
                 </div>
@@ -171,22 +215,16 @@
         </main>
     </div>
 
-    <script src="parent-functions.js"></script>
     <script>
-        // ربط أزرار الدفع
-        document.querySelectorAll('button').forEach(btn => {
-            if (btn.textContent.includes('سجل الدفعات')) btn.onclick = showPaymentHistory;
-            if (btn.textContent.includes('دفع') && btn.textContent.includes('ج.م')) {
-                btn.onclick = function() {
-                    const amountText = this.textContent.match(/[\d,]+/)?.[0];
-                    const amount = parseInt(amountText?.replace(/,/g, '') || '3050');
-                    processPayment(amount);
-                };
+        document.addEventListener('DOMContentLoaded', function () {
+            const historyButton = document.getElementById('payment-history-button');
+
+            if (historyButton) {
+                historyButton.addEventListener('click', showPaymentHistory);
             }
         });
     </script>
-
-        <script src="{{ asset('js/parent-functions.js') }}"></script>
+    <script src="{{ asset('js/parent-functions.js') }}"></script>
 
 </body>
 

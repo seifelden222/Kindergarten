@@ -64,7 +64,7 @@
             <div class="p-8 md:p-12">
                 <div class="mb-8">
                     <h2 class="mb-2 text-3xl font-black text-[#111811]">إنشاء حساب جديد</h2>
-                    <p class="text-[#638863]">انضم إلينا اليوم، العملية لن تستغرق أكثر من دقيقة.</p>
+                    <p class="text-[#638863]">يتم إنشاء الحسابات الجديدة لأولياء الأمور فقط، ثم يمكنك متابعة الأطفال من نفس البوابة بسهولة.</p>
                 </div>
 
                 <x-auth-session-status class="mb-4 rounded-xl border border-[#dce5dc] bg-[#f6f8f6] px-4 py-3 text-sm text-[#638863]" :status="session('status')" />
@@ -72,30 +72,13 @@
                 <form class="space-y-5" method="POST" action="{{ route('register') }}">
                     @csrf
 
-                    <div class="space-y-2">
-                        <p class="text-sm font-semibold text-[#111811]">نوع الحساب</p>
-                        <div class="flex h-12 w-full items-center justify-center rounded-xl bg-[#f0f4f0] p-1">
-                            <label class="flex h-full grow cursor-pointer items-center justify-center overflow-hidden rounded-lg px-2 text-sm font-bold text-[#638863] transition-all has-[:checked]:bg-white has-[:checked]:text-[#0ea60e] has-[:checked]:shadow-md">
-                                <span class="flex items-center gap-2 truncate">
-                                    <span class="material-symbols-outlined text-lg">family_restroom</span>
-                                    ولي أمر
-                                </span>
-                                <input @checked(old('role', 'guardian') === 'guardian') class="hidden" name="role" type="radio" value="guardian" />
-                            </label>
-                            <label class="flex h-full grow cursor-pointer items-center justify-center overflow-hidden rounded-lg px-2 text-sm font-bold text-[#638863] transition-all has-[:checked]:bg-white has-[:checked]:text-[#0ea60e] has-[:checked]:shadow-md">
-                                <span class="flex items-center gap-2 truncate">
-                                    <span class="material-symbols-outlined text-lg">school</span>
-                                    معلم
-                                </span>
-                                <input @checked(old('role') === 'teacher') class="hidden" name="role" type="radio" value="teacher" />
-                            </label>
-                            <label class="flex h-full grow cursor-pointer items-center justify-center overflow-hidden rounded-lg px-2 text-sm font-bold text-[#638863] transition-all has-[:checked]:bg-white has-[:checked]:text-[#0ea60e] has-[:checked]:shadow-md">
-                                <span class="flex items-center gap-2 truncate">
-                                    <span class="material-symbols-outlined text-lg">face</span>
-                                    طفل
-                                </span>
-                                <input @checked(old('role') === 'child') class="hidden" name="role" type="radio" value="child" />
-                            </label>
+                    <div class="rounded-2xl border border-[#dce5dc] bg-[#f6fbf6] px-4 py-4">
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined rounded-full bg-white p-2 text-[#0ea60e] shadow-sm">family_restroom</span>
+                            <div class="space-y-1">
+                                <p class="text-sm font-bold text-[#111811]">نوع الحساب: ولي أمر</p>
+                                <p class="text-sm text-[#638863]">لوحة المتابعة والرسوم وإضافة الأطفال والتواصل كلها ستظهر لك مباشرة بعد إنشاء الحساب.</p>
+                            </div>
                         </div>
                     </div>
 

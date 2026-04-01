@@ -81,12 +81,12 @@
                             </h2>
                         </div>
                         <div class="flex gap-4">
-                            <button class="flex min-w-[160px] cursor-pointer items-center justify-center rounded-xl h-14 px-6 bg-primary text-[#111811] text-lg font-bold hover:scale-105 transition-transform">
-                                <span class="truncate"><a href="login.html">انضم إلينا الآن</a></span>
-                            </button>
-                            <button class="flex min-w-[160px] cursor-pointer items-center justify-center rounded-xl h-14 px-6 border-2 border-primary text-primary text-lg font-bold hover:bg-primary/10 transition-colors">
+                            <a class="flex min-w-[160px] items-center justify-center rounded-xl h-14 px-6 bg-primary text-[#111811] text-lg font-bold hover:scale-105 transition-transform" href="{{ route('register') }}">
+                                <span class="truncate">انضم الآن</span>
+                            </a>
+                            <a class="flex min-w-[160px] items-center justify-center rounded-xl h-14 px-6 border-2 border-primary text-primary text-lg font-bold hover:bg-primary/10 transition-colors" href="#features">
                                 <span class="truncate">تعرف على المزيد</span>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -115,7 +115,7 @@
                     </div>
                 </div>
             </section>
-            <section class="px-4 md:px-20 lg:px-40 py-20">
+            <section class="px-4 md:px-20 lg:px-40 py-20" id="features">
                 <div class="flex flex-col gap-12 @container">
                     <div class="flex flex-col gap-4 text-center items-center">
                         <h1 class="text-[#111811] dark:text-white tracking-light text-[32px] font-bold leading-tight @[480px]:text-4xl @[480px]:font-black">
@@ -253,7 +253,7 @@
                     <h4 class="text-lg font-bold dark:text-white">روابط سريعة</h4>
                     <nav class="flex flex-col gap-2">
                         <a class="text-[#638863] dark:text-gray-400 hover:text-primary text-sm transition-colors" href="{{ url('/') }}">الرئيسية</a>
-                        <a class="text-[#638863] dark:text-gray-400 hover:text-primary text-sm transition-colors" href="contactus.html">تواصل معنا</a>
+                        <a class="text-[#638863] dark:text-gray-400 hover:text-primary text-sm transition-colors" href="{{ url('/contactus') }}">تواصل معنا</a>
 
                     </nav>
                 </div>

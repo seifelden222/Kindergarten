@@ -55,6 +55,12 @@
                     <p class="text-[#638863] dark:text-[#a3c2a3] text-lg">أدخل بيانات الطفل لتسجيله في النظام</p>
                 </header>
 
+                @if (session('status'))
+                    <div class="mb-6 rounded-2xl border border-green-200 bg-green-50 px-5 py-4 text-sm font-medium text-green-700">
+                        {{ session('status') }}
+                    </div>
+                @endif
+
                 <div class="bg-white dark:bg-[#1a2e1a] rounded-2xl border border-[#dce5dc] dark:border-[#2d402d] shadow-md overflow-hidden">
 
                     <div class="p-8 border-b border-[#dce5dc] dark:border-[#2d402d] bg-gray-50/50 dark:bg-black/10">
@@ -67,54 +73,61 @@
                         </div>
                     </div>
 
-                    <form class="p-8 space-y-10">
+                    <form class="p-8 space-y-10" method="POST" action="{{ route('parent.addchild.store') }}">
+                        @csrf
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-7">
 
                             <div>
                                 <label class="block text-sm font-medium mb-2">الاسم الأول <span class="text-red-500">*</span></label>
-                                <input type="text" placeholder="مثال: ليلى" required class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
+                                <input type="text" name="first_name" value="{{ old('first_name') }}" placeholder="مثال: ليلى" required class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
+                                <x-input-error :messages="$errors->get('first_name')" class="mt-2 text-sm text-red-600" />
                             </div>
 
                             <div>
                                 <label class="block text-sm font-medium mb-2">اسم العائلة <span class="text-red-500">*</span></label>
-                                <input type="text" placeholder="مثال: أحمد" required class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
+                                <input type="text" name="last_name" value="{{ old('last_name') }}" placeholder="مثال: أحمد" required class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
+                                <x-input-error :messages="$errors->get('last_name')" class="mt-2 text-sm text-red-600" />
                             </div>
 
                             <div>
                                 <label class="block text-sm font-medium mb-2">الجنس <span class="text-red-500">*</span></label>
-                                <select required class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
+                                <select name="gender" required class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
                                     <option value="">اختر الجنس</option>
-                                    <option value="female">أنثى</option>
-                                    <option value="male">ذكر</option>
+                                    <option value="female" @selected(old('gender') === 'female')>أنثى</option>
+                                    <option value="male" @selected(old('gender') === 'male')>ذكر</option>
                                 </select>
+                                <x-input-error :messages="$errors->get('gender')" class="mt-2 text-sm text-red-600" />
                             </div>
 
                             <div>
                                 <label class="block text-sm font-medium mb-2">تاريخ الميلاد <span class="text-red-500">*</span></label>
-                                <input type="date" required class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
+                                <input type="date" name="birth_date" value="{{ old('birth_date') }}" required class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
+                                <x-input-error :messages="$errors->get('birth_date')" class="mt-2 text-sm text-red-600" />
                             </div>
 
                             <div>
                                 <label class="block text-sm font-medium mb-2">المستوى الدراسي <span class="text-red-500">*</span></label>
-                                <select required class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
+                                <select name="level_name" required class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
                                     <option value="">اختر المستوى</option>
-                                    <option value="nursery-a">حضانة (أ)</option>
-                                    <option value="nursery-b">حضانة (ب)</option>
-                                    <option value="kg1-a">تمهيدي أول (أ)</option>
-                                    <option value="kg1-b">تمهيدي أول (ب)</option>
-                                    <option value="kg2">تمهيدي ثاني</option>
+                                    <option value="حضانة (أ)" @selected(old('level_name') === 'حضانة (أ)')>حضانة (أ)</option>
+                                    <option value="حضانة (ب)" @selected(old('level_name') === 'حضانة (ب)')>حضانة (ب)</option>
+                                    <option value="تمهيدي أول (أ)" @selected(old('level_name') === 'تمهيدي أول (أ)')>تمهيدي أول (أ)</option>
+                                    <option value="تمهيدي أول (ب)" @selected(old('level_name') === 'تمهيدي أول (ب)')>تمهيدي أول (ب)</option>
+                                    <option value="تمهيدي ثاني" @selected(old('level_name') === 'تمهيدي ثاني')>تمهيدي ثاني</option>
                                 </select>
+                                <x-input-error :messages="$errors->get('level_name')" class="mt-2 text-sm text-red-600" />
                             </div>
 
                             <div>
                                 <label class="block text-sm font-medium mb-2">الفصل <span class="text-red-500">*</span></label>
-                                <select required class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
+                                <select name="classroom_name" required class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
                                     <option value="">اختر الفصل</option>
-                                    <option value="a">الفصل أ</option>
-                                    <option value="b">الفصل ب</option>
-                                    <option value="c">الفصل ج</option>
+                                    <option value="الفصل أ" @selected(old('classroom_name') === 'الفصل أ')>الفصل أ</option>
+                                    <option value="الفصل ب" @selected(old('classroom_name') === 'الفصل ب')>الفصل ب</option>
+                                    <option value="الفصل ج" @selected(old('classroom_name') === 'الفصل ج')>الفصل ج</option>
                                 </select>
+                                <x-input-error :messages="$errors->get('classroom_name')" class="mt-2 text-sm text-red-600" />
                             </div>
 
                         </div>
@@ -128,26 +141,26 @@
 
                                 <div class="md:col-span-2">
                                     <label class="block text-sm font-medium mb-2">هل يعاني الطفل من أي حساسية غذائية أو دوائية؟</label>
-                                    <textarea placeholder="اكتب التفاصيل إن وجدت (مثال: حساسية من الفول السوداني - حساسية من البنسلين)" class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 min-h-[90px]"></textarea>
+                                    <textarea name="allergies" placeholder="اكتب التفاصيل إن وجدت (مثال: حساسية من الفول السوداني - حساسية من البنسلين)" class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 min-h-[90px]">{{ old('allergies') }}</textarea>
                                 </div>
 
                                 <div>
                                     <label class="block text-sm font-medium mb-2">هل يوجد أمراض مزمنة؟</label>
-                                    <input type="text" placeholder="مثال: الربو، السكري..." class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
+                                    <input type="text" name="chronic_diseases" value="{{ old('chronic_diseases') }}" placeholder="مثال: الربو، السكري..." class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
                                 </div>
 
                                 <div>
                                     <label class="block text-sm font-medium mb-2">الأدوية الدورية (إن وجدت)</label>
-                                    <input type="text" placeholder="مثال: بخاخ الربو مرتين يومياً" class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
+                                    <input type="text" name="medications" value="{{ old('medications') }}" placeholder="مثال: بخاخ الربو مرتين يومياً" class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
                                 </div>
 
                             </div>
                         </div>
 
                         <div class="pt-8 border-t border-[#dce5dc] dark:border-[#2d402d] flex flex-col sm:flex-row gap-4 justify-end">
-                            <button type="button" class="px-8 py-3 bg-gray-200 dark:bg-[#2d402d] text-[#111811] dark:text-white font-bold rounded-xl hover:bg-gray-300 dark:hover:bg-[#3a523a] transition-colors order-2 sm:order-1">
+                            <a href="{{ route('parent.parentdashboard') }}" class="px-8 py-3 bg-gray-200 dark:bg-[#2d402d] text-center text-[#111811] dark:text-white font-bold rounded-xl hover:bg-gray-300 dark:hover:bg-[#3a523a] transition-colors order-2 sm:order-1">
                                 إلغاء
-                            </button>
+                            </a>
                             <button type="submit" class="px-10 py-3 bg-primary text-[#111811] font-bold rounded-xl hover:brightness-110 transition-colors shadow-lg shadow-primary/30 order-1 sm:order-2">
                                 إضافة الطفل
                             </button>
@@ -165,16 +178,6 @@
         </main>
     </div>
 
-    <script src="parent-functions.js"></script>
-    <script>
-        // ربط نموذج إضافة طفل
-        const form = document.querySelector('form');
-        if (form) {
-            form.onsubmit = handleAddChild;
-            const cancelBtn = document.querySelector('button[type="button"]');
-            if (cancelBtn) cancelBtn.onclick = cancelAddChild;
-        }
-    </script>
     <script src="{{ asset('js/parent-functions.js') }}"></script>
 </body>
 

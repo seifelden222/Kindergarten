@@ -32,6 +32,10 @@
                 <span class="material-symbols-outlined">calendar_month</span>
                 <span class="text-sm">الحضور والغياب</span>
             </a>
+            <a class="{{ $navItemClasses('calendar') }}" href="{{ route('parent.calendar') }}">
+                <span class="material-symbols-outlined">event_note</span>
+                <span class="text-sm">التقويم</span>
+            </a>
             <a class="{{ $navItemClasses('notification') }}" href="{{ route('parent.notification') }}">
                 <span class="material-symbols-outlined">notifications</span>
                 <span class="text-sm">التنبيهات</span>

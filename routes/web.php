@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Guardian\ChildController;
+use App\Http\Controllers\Guardian\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Teacher\LevelController;
 use Illuminate\Support\Facades\Route;
@@ -50,8 +52,11 @@ Route::group(['prefix' => 'child', 'middleware' => ['auth', 'role:child']], func
 Route::group(['prefix' => 'parent', 'middleware' => ['auth', 'role:guardian']], function () {
     Route::view('/absence', 'parent.absence')->name('parent.absence');
     Route::view('/activities', 'parent.activities')->name('parent.activities');
+    Route::view('/calendar', 'parent.calendar')->name('parent.calendar');
     Route::view('/payment', 'parent.payment')->name('parent.payment');
+    Route::post('/payment', [PaymentController::class, 'store'])->name('parent.payment.store');
     Route::view('/addchild', 'parent.addchild')->name('parent.addchild');
+    Route::post('/addchild', [ChildController::class, 'store'])->name('parent.addchild.store');
     Route::view('/messages', 'parent.messages')->name('parent.messages');
     Route::view('/notification', 'parent.notification')->name('parent.notification');
     Route::view('/parentdashboard', 'parent.parentdashboard')->name('parent.parentdashboard');

@@ -3,6 +3,7 @@
 
 // ==================== Global Variables ====================
 let currentPopup = null;
+const parentCalendarStorageKey = 'parent_calendar_events';
 
 // ==================== CSS Styles for Popups ====================
 (function() {
@@ -777,8 +778,92 @@ function snoozeReminder() {
     showToast('تم تأجيل التذكير لمدة ساعة', 'success');
 }
 
+function getStoredCalendarEvents() {
+    try {
+        const storedEvents = localStorage.getItem(parentCalendarStorageKey);
+
+        return storedEvents ? JSON.parse(storedEvents) : [];
+    } catch (error) {
+        console.error('Failed to read calendar events', error);
+
+        return [];
+    }
+}
+
+function saveStoredCalendarEvents(events) {
+    localStorage.setItem(parentCalendarStorageKey, JSON.stringify(events));
+}
+
+function renderParentCalendar() {
+    const eventsContainer = document.querySelector('[data-calendar-events]');
+
+    if (!eventsContainer) {
+        return;
+    }
+
+    const storedEvents = getStoredCalendarEvents();
+
+    if (storedEvents.length === 0) {
+        eventsContainer.innerHTML = `
+            <div class="rounded-xl border border-dashed border-[#dce5dc] dark:border-[#2d402d] px-5 py-8 text-center text-sm text-[#638863] dark:text-[#a3c2a3]">
+                لا توجد أحداث مضافة بعد. استخدم زر "إضافة إلى التقويم" من صفحة التنبيهات لإظهارها هنا.
+            </div>
+        `;
+
+        return;
+    }
+
+    eventsContainer.innerHTML = storedEvents
+        .sort((firstEvent, secondEvent) => new Date(secondEvent.created_at) - new Date(firstEvent.created_at))
+        .map((eventItem) => `
+            <div class="rounded-2xl border border-[#dce5dc] dark:border-[#2d402d] bg-background-light dark:bg-[#112111] p-5 shadow-sm">
+                <div class="flex items-start justify-between gap-4">
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">event</span>
+                            <p class="text-lg font-bold">${eventItem.name}</p>
+                        </div>
+                        <p class="text-sm text-[#638863] dark:text-[#a3c2a3]">التاريخ: ${eventItem.date}</p>
+                        <p class="text-xs text-[#638863] dark:text-[#a3c2a3]">تمت الإضافة: ${eventItem.added_at}</p>
+                    </div>
+                    <button type="button" onclick="removeCalendarEvent('${eventItem.id}')" class="rounded-xl bg-red-50 px-3 py-2 text-sm font-bold text-red-600 transition-colors hover:bg-red-100 dark:bg-red-950/30 dark:text-red-300">
+                        حذف
+                    </button>
+                </div>
+            </div>
+        `)
+        .join('');
+}
+
+function removeCalendarEvent(eventId) {
+    const filteredEvents = getStoredCalendarEvents().filter((eventItem) => eventItem.id !== eventId);
+
+    saveStoredCalendarEvents(filteredEvents);
+    renderParentCalendar();
+    showToast('تم حذف الموعد من التقويم', 'success');
+}
+
 // إضافة إلى التقويم
 function addToCalendar(eventName, eventDate) {
+    const storedEvents = getStoredCalendarEvents();
+    const eventExists = storedEvents.some((eventItem) => eventItem.name === eventName && eventItem.date === eventDate);
+
+    if (eventExists) {
+        showToast(`"${eventName}" موجود بالفعل في التقويم`, 'warning');
+
+        return;
+    }
+
+    storedEvents.push({
+        id: `${Date.now()}`,
+        name: eventName,
+        date: eventDate,
+        added_at: new Date().toLocaleString('ar-EG'),
+        created_at: new Date().toISOString(),
+    });
+
+    saveStoredCalendarEvents(storedEvents);
+    renderParentCalendar();
     showToast(`تم إضافة "${eventName}" إلى التقويم`, 'success');
 }
 
@@ -1223,34 +1308,29 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // ربط أزرار الإشعارات
     if (window.location.pathname.includes('notification')) {
-        const markAllButton = document.querySelector('button:has-text("تحديد الكل كمقروء")');
-        if (markAllButton) markAllButton.onclick = markAllAsRead;
-        
-        const callButtons = document.querySelectorAll('button:has-text("الاتصال بالحضانة")');
-        callButtons.forEach(btn => btn.onclick = callNursery);
-        
-        const snoozeButtons = document.querySelectorAll('button:has-text("تأجيل التذكير")');
-        snoozeButtons.forEach(btn => btn.onclick = snoozeReminder);
-        
-        const calendarButtons = document.querySelectorAll('button:has-text("إضافة إلى التقويم")');
-        calendarButtons.forEach(btn => btn.onclick = () => addToCalendar('موعد', 'تاريخ'));
-        
-        const loadMoreButton = document.querySelector('button:has-text("عرض المزيد من التنبيهات")');
-        if (loadMoreButton) loadMoreButton.onclick = loadMoreNotifications;
+        document.querySelectorAll('button').forEach((button) => {
+            const buttonText = button.textContent.trim();
+
+            if (buttonText.includes('تحديد الكل كمقروء')) {
+                button.onclick = markAllAsRead;
+            }
+
+            if (buttonText.includes('الاتصال بالحضانة')) {
+                button.onclick = callNursery;
+            }
+
+            if (buttonText.includes('تأجيل التذكير')) {
+                button.onclick = snoozeReminder;
+            }
+        });
     }
     
     // ربط أزرار الدفع
     if (window.location.pathname.includes('payment')) {
-        const historyButton = document.querySelector('button:has-text("سجل الدفعات")');
-        if (historyButton) historyButton.onclick = showPaymentHistory;
-        
-        const payButton = document.querySelector('button:has-text("دفع")');
-        if (payButton) {
-            payButton.onclick = function() {
-                const amountText = this.textContent.match(/[\d,]+/)?.[0];
-                const amount = parseInt(amountText?.replace(/,/g, '') || '3050');
-                processPayment(amount);
-            };
+        const historyButton = document.getElementById('payment-history-button');
+
+        if (historyButton) {
+            historyButton.onclick = showPaymentHistory;
         }
     }
     

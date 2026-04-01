@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -31,6 +32,14 @@ class User extends Authenticatable
         'children_count',
         'relationship_to_child',
         'registration_date',
+        'guardian_id',
+        'gender',
+        'birth_date',
+        'level_name',
+        'classroom_name',
+        'allergies',
+        'chronic_diseases',
+        'medications',
     ];
 
     /**
@@ -56,7 +65,18 @@ class User extends Authenticatable
             'age' => 'integer',
             'children_count' => 'integer',
             'registration_date' => 'date',
+            'birth_date' => 'date',
         ];
+    }
+
+    public function guardian(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'guardian_id');
+    }
+
+    public function children(): HasMany
+    {
+        return $this->hasMany(User::class, 'guardian_id');
     }
 
     public function activities(): HasMany
@@ -77,6 +97,11 @@ class User extends Authenticatable
     public function levels(): HasMany
     {
         return $this->hasMany(Level::class);
+    }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class, 'guardian_id');
     }
 
     public function dashboardRoute(): string
