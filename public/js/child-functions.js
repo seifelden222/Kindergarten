@@ -100,14 +100,14 @@ let soundEnabled = true;
 // ==================== Sound Effects ====================
 function playSound(type) {
     if (!soundEnabled) return;
-    
+
     const sounds = {
         click: '🔊',
         success: '🎉',
         star: '⭐',
         celebration: '🎊'
     };
-    
+
     console.log(`Playing sound: ${sounds[type] || '🔊'}`);
     // هنا يمكن إضافة Web Audio API للأصوات الحقيقية
 }
@@ -115,12 +115,12 @@ function playSound(type) {
 // ==================== Popup Functions ====================
 function createPopup(title, content, icon = '🎁') {
     closeAllPopups();
-    
+
     const popup = document.createElement('div');
     popup.id = 'dynamicPopup';
     popup.className = 'popup-overlay';
     popup.onclick = (e) => { if (e.target === popup) closeAllPopups(); };
-    
+
     popup.innerHTML = `
         <div class="popup-content" onclick="event.stopPropagation()">
             <div class="bg-gradient-to-r from-primary to-orange-400 p-8 text-center relative overflow-hidden">
@@ -138,12 +138,12 @@ function createPopup(title, content, icon = '🎁') {
             </div>
         </div>
     `;
-    
+
     document.body.appendChild(popup);
     document.body.style.overflow = 'hidden';
     currentPopup = popup;
     playSound('click');
-    
+
     return popup;
 }
 
@@ -154,7 +154,7 @@ function closeAllPopups() {
     }
     const existingPopup = document.getElementById('dynamicPopup');
     if (existingPopup) existingPopup.remove();
-    
+
     document.body.style.overflow = 'auto';
 }
 
@@ -167,22 +167,22 @@ document.addEventListener('keydown', (e) => {
 function showToast(message, emoji = '😊') {
     const existingToast = document.getElementById('toast');
     if (existingToast) existingToast.remove();
-    
+
     const toast = document.createElement('div');
     toast.id = 'toast';
     toast.className = 'fixed top-24 left-1/2 transform -translate-x-1/2 bg-white dark:bg-[#322820] border-4 border-primary rounded-3xl shadow-2xl px-8 py-6 z-[110] min-w-[300px]';
     toast.style.animation = 'slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-    
+
     toast.innerHTML = `
         <div class="flex items-center gap-4">
             <span class="text-6xl animate-bounce">${emoji}</span>
             <p class="text-2xl font-bold text-[#181411] dark:text-white">${message}</p>
         </div>
     `;
-    
+
     document.body.appendChild(toast);
     playSound('success');
-    
+
     setTimeout(() => {
         toast.style.animation = 'fadeIn 0.3s ease-out reverse';
         setTimeout(() => toast.remove(), 300);
@@ -223,12 +223,12 @@ function showCelebration(message) {
         </div>
     `;
     document.body.appendChild(celebration);
-    
+
     // إضافة confetti
     if (window.showConfetti) {
         window.showConfetti();
     }
-    
+
     setTimeout(() => celebration.remove(), 2000);
 }
 
@@ -258,7 +258,7 @@ function showAchievements() {
                 <h4 class="text-4xl font-bold text-primary mb-2">إنجازاتي</h4>
                 <p class="text-2xl text-[#8a7560] dark:text-[#cbb8a6]">شوف كل اللي حققته!</p>
             </div>
-            
+
             <div class="grid grid-cols-2 gap-4">
                 <div class="bg-gradient-to-br from-yellow-400 to-orange-400 p-6 rounded-3xl text-center">
                     <div class="text-6xl mb-3">⭐</div>
@@ -281,13 +281,13 @@ function showAchievements() {
                     <p class="text-white text-sm">يوم حضور</p>
                 </div>
             </div>
-            
+
             <button onclick="closeAllPopups()" class="bg-primary text-white text-2xl font-bold py-6 px-12 rounded-full hover:scale-105 transition-transform w-full">
                 رائع! 🎉
             </button>
         </div>
     `;
-    
+
     createPopup('إنجازاتي', content, '🏆');
 }
 
@@ -296,10 +296,10 @@ function showProfile() {
     const content = `
         <div class="space-y-6 text-center">
             <div class="w-32 h-32 mx-auto rounded-full border-4 border-primary bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDf0Ix67ogfzlpkNqBflrYiwgGhqYcmOqrg4ZEuemA8nLmNxxPYTbqSaiEhaZHaHk7GBWXUEb0OvbcgflNmhHdm9Pwq3qlTPYvCsrUams_WKKTY3BrFI9wYxkn37NIt2IvMlFJq7daZTa9nAv3YN0ItfXGz6Ahel8qmdDm-VbJSzqwOQzlwcXLNDzFvPFmznjrgwlJXlVETgAEGz9Pvt2MnCw_3NjJ3aKLlHzj2pzLk5u9O4qopCeFX3LNj-rEyNaEaAJK83XVFu8vo");'></div>
-            
+
             <h4 class="text-4xl font-bold text-primary">أنا نجم!</h4>
             <p class="text-2xl text-[#8a7560] dark:text-[#cbb8a6]">طفل مبدع ومجتهد</p>
-            
+
             <div class="bg-primary/10 p-6 rounded-3xl space-y-3">
                 <div class="flex items-center justify-between">
                     <span class="text-xl">⭐ النجوم:</span>
@@ -314,7 +314,7 @@ function showProfile() {
                     <span class="text-2xl font-bold text-primary">18</span>
                 </div>
             </div>
-            
+
             <div class="grid grid-cols-2 gap-4">
                 <button onclick="showAchievements()" class="bg-gradient-to-br from-yellow-400 to-orange-400 text-white text-xl font-bold py-4 px-6 rounded-2xl hover:scale-105 transition-transform">
                     🏆 إنجازاتي
@@ -325,7 +325,7 @@ function showProfile() {
             </div>
         </div>
     `;
-    
+
     createPopup('ملفي الشخصي', content, '👤');
 }
 
@@ -363,7 +363,7 @@ function startDay() {
             <div class="text-8xl animate-bounce">🚀</div>
             <h4 class="text-4xl font-bold text-primary">يلا نبدأ المغامرة!</h4>
             <p class="text-2xl text-[#8a7560] dark:text-[#cbb8a6]">اختر أول نشاط تحب تعمله النهاردة</p>
-            
+
             <div class="grid grid-cols-2 gap-6 mt-8">
                 <button onclick="selectActivity('رسم')" class="bg-gradient-to-br from-purple-400 to-purple-600 text-white p-8 rounded-3xl hover:scale-105 transition-transform">
                     <span class="material-symbols-outlined text-6xl mb-3">palette</span>
@@ -384,7 +384,7 @@ function startDay() {
             </div>
         </div>
     `;
-    
+
     createPopup('ابدأ يومك!', content, '🌟');
 }
 
@@ -397,7 +397,7 @@ function selectActivity(activity) {
 // بدء نشاط
 function startActivity(activityName) {
     closeAllPopups();
-    
+
     // تحديد نوع النشاط وفتح التطبيق المناسب
     if (activityName.includes('رسم') || activityName.includes('الفنون')) {
         openDrawingApp();
@@ -423,7 +423,7 @@ function openDrawingApp() {
                     <span class="material-symbols-outlined">close</span>
                 </button>
             </div>
-            
+
             <!-- لوحة الألوان -->
             <div class="flex gap-2 justify-center flex-wrap">
                 <button onclick="changeDrawColor('#000000')" class="w-12 h-12 rounded-full border-4 border-white shadow-lg" style="background: #000000"></button>
@@ -437,7 +437,7 @@ function openDrawingApp() {
                 <button onclick="changeDrawColor('#800080')" class="w-12 h-12 rounded-full border-4 border-white shadow-lg" style="background: #800080"></button>
                 <button onclick="changeDrawColor('#ffc0cb')" class="w-12 h-12 rounded-full border-4 border-white shadow-lg" style="background: #ffc0cb"></button>
             </div>
-            
+
             <!-- حجم الفرشاة -->
             <div class="flex gap-4 justify-center items-center">
                 <span class="text-lg font-bold">حجم الفرشاة:</span>
@@ -445,10 +445,10 @@ function openDrawingApp() {
                 <button onclick="changeBrushSize(10)" class="bg-primary text-white px-4 py-2 rounded-full">وسط</button>
                 <button onclick="changeBrushSize(20)" class="bg-primary text-white px-4 py-2 rounded-full text-lg">كبير</button>
             </div>
-            
+
             <!-- Canvas للرسم -->
             <canvas id="drawingCanvas" width="600" height="400" class="border-4 border-primary rounded-2xl bg-white cursor-crosshair mx-auto block shadow-xl"></canvas>
-            
+
             <!-- أزرار التحكم -->
             <div class="flex gap-3 justify-center">
                 <button onclick="clearCanvas()" class="bg-red-500 text-white px-6 py-3 rounded-full font-bold hover:scale-105 transition-transform">
@@ -463,9 +463,9 @@ function openDrawingApp() {
             </div>
         </div>
     `;
-    
+
     createPopup('لوحة الرسم', content, '🎨');
-    
+
     // تفعيل Canvas بعد إنشاء الـ popup
     setTimeout(() => {
         initDrawingCanvas();
@@ -480,17 +480,17 @@ let brushSize = 10;
 function initDrawingCanvas() {
     canvas = document.getElementById('drawingCanvas');
     if (!canvas) return;
-    
+
     ctx = canvas.getContext('2d');
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
-    
+
     // Mouse events
     canvas.addEventListener('mousedown', startDrawing);
     canvas.addEventListener('mousemove', draw);
     canvas.addEventListener('mouseup', stopDrawing);
     canvas.addEventListener('mouseout', stopDrawing);
-    
+
     // Touch events للموبايل
     canvas.addEventListener('touchstart', handleTouch);
     canvas.addEventListener('touchmove', handleTouch);
@@ -506,7 +506,7 @@ function startDrawing(e) {
 
 function draw(e) {
     if (!isDrawing) return;
-    
+
     const rect = canvas.getBoundingClientRect();
     ctx.strokeStyle = currentColor;
     ctx.lineWidth = brushSize;
@@ -568,23 +568,23 @@ function openGameApp() {
     const content = `
         <div class="space-y-4 text-center">
             <h4 class="text-3xl font-bold text-primary">🎮 اختر لعبتك!</h4>
-            
+
             <div class="grid grid-cols-2 gap-4">
                 <button onclick="playMemoryGame()" class="bg-gradient-to-br from-purple-400 to-purple-600 text-white p-6 rounded-3xl hover:scale-105 transition-transform">
                     <span class="text-6xl mb-3 block">🧠</span>
                     <span class="text-xl font-bold">لعبة الذاكرة</span>
                 </button>
-                
+
                 <button onclick="playColorGame()" class="bg-gradient-to-br from-green-400 to-green-600 text-white p-6 rounded-3xl hover:scale-105 transition-transform">
                     <span class="text-6xl mb-3 block">🎨</span>
                     <span class="text-xl font-bold">لعبة الألوان</span>
                 </button>
-                
+
                 <button onclick="playNumberGame()" class="bg-gradient-to-br from-blue-400 to-blue-600 text-white p-6 rounded-3xl hover:scale-105 transition-transform">
                     <span class="text-6xl mb-3 block">🔢</span>
                     <span class="text-xl font-bold">لعبة الأرقام</span>
                 </button>
-                
+
                 <button onclick="playShapeGame()" class="bg-gradient-to-br from-pink-400 to-pink-600 text-white p-6 rounded-3xl hover:scale-105 transition-transform">
                     <span class="text-6xl mb-3 block">⭐</span>
                     <span class="text-xl font-bold">لعبة الأشكال</span>
@@ -592,7 +592,7 @@ function openGameApp() {
             </div>
         </div>
     `;
-    
+
     createPopup('الألعاب', content, '🎮');
 }
 
@@ -602,39 +602,39 @@ function playMemoryGame() {
     const cards = [...emojis, ...emojis].sort(() => Math.random() - 0.5);
     let flippedCards = [];
     let matchedPairs = 0;
-    
+
     const content = `
         <div class="space-y-4 text-center">
             <h4 class="text-3xl font-bold text-primary">🧠 لعبة الذاكرة</h4>
             <p class="text-xl">اوجد الأزواج المتشابهة!</p>
-            
+
             <div id="memoryGrid" class="grid grid-cols-4 gap-3 max-w-md mx-auto">
                 ${cards.map((emoji, index) => `
-                    <button onclick="flipCard(${index})" id="card-${index}" 
+                    <button onclick="flipCard(${index})" id="card-${index}"
                         class="memory-card bg-primary text-white w-20 h-20 rounded-2xl text-4xl font-bold hover:scale-105 transition-transform shadow-lg"
                         data-emoji="${emoji}">
                         ❓
                     </button>
                 `).join('')}
             </div>
-            
+
             <div class="text-2xl font-bold">
                 <span id="matchCount">0</span> / 8 أزواج
             </div>
         </div>
     `;
-    
+
     createPopup('لعبة الذاكرة', content, '🧠');
-    
+
     window.flipCard = function(index) {
         const card = document.getElementById(`card-${index}`);
         if (!card || card.classList.contains('matched') || flippedCards.length >= 2) return;
-        
+
         const emoji = card.getAttribute('data-emoji');
         card.textContent = emoji;
         card.classList.add('flipped');
         flippedCards.push({index, emoji, element: card});
-        
+
         if (flippedCards.length === 2) {
             setTimeout(() => {
                 if (flippedCards[0].emoji === flippedCards[1].emoji) {
@@ -647,7 +647,7 @@ function playMemoryGame() {
                     document.getElementById('matchCount').textContent = matchedPairs;
                     showToast('أحسنت! 🎉', '⭐');
                     addStar();
-                    
+
                     if (matchedPairs === 8) {
                         setTimeout(() => {
                             closeAllPopups();
@@ -677,20 +677,20 @@ function playColorGame() {
         {name: 'أخضر', color: '#00ff00', emoji: '🟢'},
         {name: 'أصفر', color: '#ffff00', emoji: '🟡'}
     ];
-    
+
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
-    
+
     const content = `
         <div class="space-y-6 text-center">
             <h4 class="text-3xl font-bold text-primary">🎨 لعبة الألوان</h4>
             <p class="text-2xl">اختر اللون:</p>
-            
+
             <div class="text-8xl animate-bounce">${randomColor.emoji}</div>
             <p class="text-4xl font-bold">${randomColor.name}</p>
-            
+
             <div class="grid grid-cols-2 gap-4 max-w-md mx-auto">
                 ${colors.map(c => `
-                    <button onclick="checkColorAnswer('${c.name}', '${randomColor.name}')" 
+                    <button onclick="checkColorAnswer('${c.name}', '${randomColor.name}')"
                         class="p-8 rounded-3xl text-white text-2xl font-bold hover:scale-105 transition-transform shadow-lg"
                         style="background: ${c.color}">
                         ${c.name}
@@ -699,7 +699,7 @@ function playColorGame() {
             </div>
         </div>
     `;
-    
+
     createPopup('لعبة الألوان', content, '🎨');
 }
 
@@ -717,17 +717,17 @@ window.checkColorAnswer = function(selected, correct) {
 // لعبة الأرقام
 function playNumberGame() {
     const targetNumber = Math.floor(Math.random() * 10) + 1;
-    
+
     const content = `
         <div class="space-y-6 text-center">
             <h4 class="text-3xl font-bold text-primary">🔢 لعبة الأرقام</h4>
             <p class="text-2xl">اختر الرقم:</p>
-            
+
             <div class="text-9xl font-black text-primary animate-bounce">${targetNumber}</div>
-            
+
             <div class="grid grid-cols-5 gap-3 max-w-lg mx-auto">
                 ${Array.from({length: 10}, (_, i) => i + 1).map(num => `
-                    <button onclick="checkNumberAnswer(${num}, ${targetNumber})" 
+                    <button onclick="checkNumberAnswer(${num}, ${targetNumber})"
                         class="bg-gradient-to-br from-blue-400 to-blue-600 text-white p-6 rounded-2xl text-3xl font-bold hover:scale-110 transition-transform shadow-lg">
                         ${num}
                     </button>
@@ -735,7 +735,7 @@ function playNumberGame() {
             </div>
         </div>
     `;
-    
+
     createPopup('لعبة الأرقام', content, '🔢');
 }
 
@@ -758,19 +758,19 @@ function playShapeGame() {
         {name: 'مثلث', emoji: '🔺', shape: 'triangle'},
         {name: 'نجمة', emoji: '⭐', shape: 'star'}
     ];
-    
+
     const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
-    
+
     const content = `
         <div class="space-y-6 text-center">
             <h4 class="text-3xl font-bold text-primary">⭐ لعبة الأشكال</h4>
             <p class="text-2xl">ما هذا الشكل؟</p>
-            
+
             <div class="text-9xl animate-pulse">${randomShape.emoji}</div>
-            
+
             <div class="grid grid-cols-2 gap-4 max-w-md mx-auto">
                 ${shapes.map(s => `
-                    <button onclick="checkShapeAnswer('${s.name}', '${randomShape.name}')" 
+                    <button onclick="checkShapeAnswer('${s.name}', '${randomShape.name}')"
                         class="bg-gradient-to-br from-purple-400 to-pink-600 text-white p-6 rounded-3xl hover:scale-105 transition-transform shadow-lg">
                         <span class="text-5xl block mb-2">${s.emoji}</span>
                         <span class="text-xl font-bold">${s.name}</span>
@@ -779,7 +779,7 @@ function playShapeGame() {
             </div>
         </div>
     `;
-    
+
     createPopup('لعبة الأشكال', content, '⭐');
 }
 
@@ -801,12 +801,12 @@ function openStoryApp() {
         {title: 'الأسد والفأر', emoji: '🦁🐭', duration: '4 دقائق'},
         {title: 'البطة القبيحة', emoji: '🦆', duration: '6 دقائق'}
     ];
-    
+
     const content = `
         <div class="space-y-6 text-center">
             <h4 class="text-3xl font-bold text-primary">📚 وقت القصة</h4>
             <p class="text-xl">اختر قصتك المفضلة!</p>
-            
+
             <div class="space-y-4">
                 ${stories.map((story, i) => `
                     <button onclick="readStory(${i})" class="w-full bg-gradient-to-r from-purple-400 to-pink-400 text-white p-6 rounded-3xl hover:scale-105 transition-transform shadow-lg">
@@ -822,7 +822,7 @@ function openStoryApp() {
             </div>
         </div>
     `;
-    
+
     createPopup('القصص', content, '📚');
 }
 
@@ -844,33 +844,33 @@ window.readStory = function(index) {
             text: 'كان هناك بطة صغيرة مختلفة عن إخوتها...\n\nكانوا يسخرون منها لأنها تبدو مختلفة.\n\nحزنت البطة وذهبت بعيداً...\n\nمرت الأيام وكبرت البطة...\n\nوإذا بها تتحول إلى بجعة جميلة! 🦢✨\n\nالدرس: كل واحد فينا مميز وجميل بطريقته!'
         }
     ];
-    
+
     const story = stories[index];
-    
+
     const content = `
         <div class="space-y-6">
             <div class="text-center">
                 <div class="text-8xl mb-4">${story.emoji}</div>
                 <h4 class="text-3xl font-bold text-primary">${story.title}</h4>
             </div>
-            
+
             <div class="bg-primary/10 p-6 rounded-3xl text-right">
                 <p class="text-xl leading-relaxed whitespace-pre-line">${story.text}</p>
             </div>
-            
+
             <div class="flex gap-3">
-                <button onclick="closeAllPopups(); addStar(); addStar(); showToast('قصة جميلة! 📚', '⭐')" 
+                <button onclick="closeAllPopups(); addStar(); addStar(); showToast('قصة جميلة! 📚', '⭐')"
                     class="flex-1 bg-primary text-white text-xl font-bold py-4 px-6 rounded-full hover:scale-105 transition-transform">
                     خلصت القصة! ⭐
                 </button>
-                <button onclick="openStoryApp()" 
+                <button onclick="openStoryApp()"
                     class="flex-1 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white text-xl font-bold py-4 px-6 rounded-full hover:scale-105 transition-transform">
                     قصة تانية 📚
                 </button>
             </div>
         </div>
     `;
-    
+
     createPopup(story.title, content, '📚');
 };
 
@@ -882,27 +882,27 @@ function openMusicApp() {
         {name: 'جيتار', emoji: '🎸', sound: 'guitar'},
         {name: 'ناي', emoji: '🎺', sound: 'flute'}
     ];
-    
+
     const content = `
         <div class="space-y-6 text-center">
             <h4 class="text-3xl font-bold text-primary">🎵 وقت الموسيقى</h4>
             <p class="text-xl">اختر آلتك الموسيقية!</p>
-            
+
             <div class="grid grid-cols-2 gap-4">
                 ${instruments.map(inst => `
-                    <button onclick="playInstrument('${inst.name}')" 
+                    <button onclick="playInstrument('${inst.name}')"
                         class="bg-gradient-to-br from-blue-400 to-purple-600 text-white p-8 rounded-3xl hover:scale-105 transition-transform shadow-lg active:scale-95">
                         <span class="text-7xl block mb-3">${inst.emoji}</span>
                         <span class="text-2xl font-bold">${inst.name}</span>
                     </button>
                 `).join('')}
             </div>
-            
+
             <div class="bg-primary/10 p-6 rounded-3xl">
                 <p class="text-lg font-bold mb-4">🎼 اعزف لحنك الخاص!</p>
                 <div class="grid grid-cols-4 gap-2">
                     ${['دو', 'ري', 'مي', 'فا', 'صول', 'لا', 'سي', 'دو'].map((note, i) => `
-                        <button onclick="playNote(${i})" 
+                        <button onclick="playNote(${i})"
                             class="bg-white dark:bg-gray-800 text-primary font-bold py-4 rounded-xl hover:scale-110 transition-transform shadow-md active:bg-primary active:text-white">
                             ${note}
                         </button>
@@ -911,7 +911,7 @@ function openMusicApp() {
             </div>
         </div>
     `;
-    
+
     createPopup('الموسيقى', content, '🎵');
 }
 
@@ -934,7 +934,7 @@ function openGeneralActivity(activityName) {
             <div class="text-8xl animate-pulse">🎨</div>
             <h4 class="text-4xl font-bold text-primary">${activityName}</h4>
             <p class="text-2xl text-[#8a7560] dark:text-[#cbb8a6]">جاهز تبدأ؟</p>
-            
+
             <div class="bg-primary/10 p-6 rounded-3xl">
                 <p class="text-xl font-bold mb-4">هتحتاج:</p>
                 <div class="flex justify-center gap-4 flex-wrap">
@@ -952,13 +952,13 @@ function openGeneralActivity(activityName) {
                     </div>
                 </div>
             </div>
-            
+
             <button onclick="confirmStartActivity('${activityName}')" class="bg-primary text-white text-3xl font-bold py-6 px-12 rounded-full hover:scale-105 transition-transform w-full">
                 يلا بينا! 🚀
             </button>
         </div>
     `;
-    
+
     createPopup('جاهز؟', content, '🎯');
 }
 
@@ -978,7 +978,7 @@ function showActivityDetails(activityName, time, status) {
         'قريباً': '⏰',
         'الآن': '🎯'
     };
-    
+
     const content = `
         <div class="space-y-6">
             <div class="text-center">
@@ -986,7 +986,7 @@ function showActivityDetails(activityName, time, status) {
                 <h4 class="text-4xl font-bold text-primary mb-2">${activityName}</h4>
                 <p class="text-2xl text-[#8a7560] dark:text-[#cbb8a6]">${time}</p>
             </div>
-            
+
             ${status === 'مكتمل' ? `
                 <div class="bg-green-100 dark:bg-green-900/30 p-6 rounded-3xl">
                     <p class="text-2xl font-bold text-green-700 dark:text-green-400 mb-4">أحسنت! 🌟</p>
@@ -997,7 +997,7 @@ function showActivityDetails(activityName, time, status) {
                     </div>
                 </div>
             ` : ''}
-            
+
             <div class="grid grid-cols-2 gap-4">
                 <button onclick="closeAllPopups()" class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white text-xl font-bold py-4 px-6 rounded-2xl hover:scale-105 transition-transform">
                     رجوع
@@ -1008,7 +1008,7 @@ function showActivityDetails(activityName, time, status) {
             </div>
         </div>
     `;
-    
+
     createPopup(activityName, content, '🎨');
 }
 
@@ -1034,15 +1034,15 @@ function showDayDetails(day, status) {
         'غائب': { emoji: '🌙', color: 'indigo-500', message: 'افتقدناك' },
         'قريباً': { emoji: '❓', color: 'gray-400', message: 'لسه ما جاش' }
     };
-    
+
     const data = statusData[status] || statusData['قريباً'];
-    
+
     const content = `
         <div class="space-y-6 text-center">
             <div class="text-9xl animate-bounce">${data.emoji}</div>
             <h4 class="text-5xl font-bold text-${data.color}">يوم ${day}</h4>
             <p class="text-3xl font-bold">${data.message}</p>
-            
+
             ${status === 'حاضر' ? `
                 <div class="bg-primary/10 p-6 rounded-3xl">
                     <p class="text-2xl font-bold mb-4">أنشطة اليوم:</p>
@@ -1062,13 +1062,13 @@ function showDayDetails(day, status) {
                     </div>
                 </div>
             ` : ''}
-            
+
             <button onclick="closeAllPopups()" class="bg-primary text-white text-2xl font-bold py-6 px-12 rounded-full hover:scale-105 transition-transform w-full">
                 تمام! 👍
             </button>
         </div>
     `;
-    
+
     createPopup(`يوم ${day}`, content, data.emoji);
 }
 
@@ -1087,11 +1087,11 @@ function changeMonth(direction) {
 function sendEmoji(emoji) {
     const messagesContainer = document.querySelector('.message-stream');
     if (!messagesContainer) return;
-    
+
     const messageDiv = document.createElement('div');
     messageDiv.className = 'flex items-end gap-3 justify-end';
     messageDiv.style.animation = 'slideUp 0.4s ease';
-    
+
     messageDiv.innerHTML = `
         <div class="flex flex-col gap-1 items-end">
             <div class="text-8xl p-6 rounded-3xl bg-primary/20 border-4 border-primary/30 shadow-lg hover:scale-110 transition-transform">
@@ -1100,10 +1100,10 @@ function sendEmoji(emoji) {
         </div>
         <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-12 h-12 shrink-0 border-2 border-zinc-200" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDf0Ix67ogfzlpkNqBflrYiwgGhqYcmOqrg4ZEuemA8nLmNxxPYTbqSaiEhaZHaHk7GBWXUEb0OvbcgflNmhHdm9Pwq3qlTPYvCsrUams_WKKTY3BrFI9wYxkn37NIt2IvMlFJq7daZTa9nAv3YN0ItfXGz6Ahel8qmdDm-VbJSzqwOQzlwcXLNDzFvPFmznjrgwlJXlVETgAEGz9Pvt2MnCw_3NjJ3aKLlHzj2pzLk5u9O4qopCeFX3LNj-rEyNaEaAJK83XVFu8vo");'></div>
     `;
-    
+
     messagesContainer.appendChild(messageDiv);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    
+
     playSound('click');
     showToast('تم الإرسال!', emoji);
     addStar();
@@ -1116,26 +1116,26 @@ function startVoiceMessage() {
             <div class="text-9xl animate-pulse">🎤</div>
             <h4 class="text-4xl font-bold text-primary">اضغط واتكلم!</h4>
             <p class="text-2xl text-[#8a7560] dark:text-[#cbb8a6]">قول للمعلمة اللي عايز تقوله</p>
-            
+
             <div class="bg-red-500 w-32 h-32 rounded-full mx-auto flex items-center justify-center animate-pulse cursor-pointer hover:scale-110 transition-transform" onclick="recordVoice()">
                 <span class="material-symbols-outlined text-white" style="font-size: 64px;">mic</span>
             </div>
-            
+
             <p class="text-xl text-gray-500">اضغط على المايك وابدأ الكلام</p>
-            
+
             <button onclick="closeAllPopups()" class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white text-xl font-bold py-4 px-8 rounded-2xl hover:scale-105 transition-transform">
                 إلغاء
             </button>
         </div>
     `;
-    
+
     createPopup('رسالة صوتية', content, '🎤');
 }
 
 function recordVoice() {
     closeAllPopups();
     showToast('جاري التسجيل...', '🎤');
-    
+
     setTimeout(() => {
         showToast('تم الإرسال!', '✅');
         addStar();
@@ -1149,7 +1149,7 @@ function finishActivity() {
             <div class="text-9xl animate-bounce">🎉</div>
             <h4 class="text-5xl font-bold text-primary">برافو عليك!</h4>
             <p class="text-3xl text-[#8a7560] dark:text-[#cbb8a6]">خلصت النشاط بنجاح!</p>
-            
+
             <div class="bg-gradient-to-r from-yellow-400 to-orange-400 p-8 rounded-3xl">
                 <p class="text-white text-4xl font-bold mb-4">كسبت 3 نجوم!</p>
                 <div class="flex justify-center gap-3">
@@ -1158,13 +1158,13 @@ function finishActivity() {
                     <span class="text-7xl animate-bounce" style="animation-delay: 0.2s;">⭐</span>
                 </div>
             </div>
-            
+
             <button onclick="confirmFinish()" class="bg-primary text-white text-3xl font-bold py-6 px-12 rounded-full hover:scale-105 transition-transform w-full">
                 يلا للنشاط الجاي! 🚀
             </button>
         </div>
     `;
-    
+
     createPopup('أحسنت!', content, '🏆');
     playSound('celebration');
 }
@@ -1184,7 +1184,7 @@ function askForHelp() {
             <div class="text-9xl animate-bounce">🙋</div>
             <h4 class="text-4xl font-bold text-primary">محتاج مساعدة؟</h4>
             <p class="text-2xl text-[#8a7560] dark:text-[#cbb8a6]">المعلمة جاية دلوقتي!</p>
-            
+
             <div class="bg-blue-100 dark:bg-blue-900/30 p-6 rounded-3xl">
                 <p class="text-xl font-bold mb-4">عايز مساعدة في إيه؟</p>
                 <div class="grid grid-cols-2 gap-4">
@@ -1206,13 +1206,13 @@ function askForHelp() {
                     </button>
                 </div>
             </div>
-            
+
             <button onclick="closeAllPopups()" class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white text-xl font-bold py-4 px-8 rounded-2xl hover:scale-105 transition-transform">
                 مش محتاج
             </button>
         </div>
     `;
-    
+
     createPopup('محتاج مساعدة', content, '🆘');
 }
 
@@ -1252,36 +1252,36 @@ function openGiftBox(giftType) {
             reward: 'نجمة'
         }
     };
-    
+
     const gift = gifts[giftType] || gifts['وسام'];
-    
+
     const content = `
         <div class="space-y-6 text-center">
             <div class="text-9xl animate-bounce">${gift.emoji}</div>
             <h4 class="text-5xl font-bold text-primary">${gift.title}</h4>
             <p class="text-3xl text-[#8a7560] dark:text-[#cbb8a6]">${gift.message}</p>
-            
+
             <div class="bg-gradient-to-r from-yellow-400 to-orange-400 p-8 rounded-3xl">
                 <p class="text-white text-3xl font-bold mb-4">مكافأتك:</p>
                 <div class="flex justify-center gap-3">
-                    ${gift.reward === 'نجمتين' ? 
-                        '<span class="text-7xl">⭐</span><span class="text-7xl">⭐</span>' : 
+                    ${gift.reward === 'نجمتين' ?
+                        '<span class="text-7xl">⭐</span><span class="text-7xl">⭐</span>' :
                         '<span class="text-7xl">⭐</span>'}
                 </div>
             </div>
-            
+
             ${giftType === 'صورة' ? `
                 <div class="bg-white dark:bg-[#322820] p-4 rounded-3xl">
                     <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400" class="w-full rounded-2xl" alt="رسمتك">
                 </div>
             ` : ''}
-            
+
             <button onclick="collectReward('${gift.reward}')" class="bg-primary text-white text-3xl font-bold py-6 px-12 rounded-full hover:scale-105 transition-transform w-full">
                 خد المكافأة! 🎁
             </button>
         </div>
     `;
-    
+
     createPopup('مفاجأة!', content, '🎁');
     playSound('celebration');
 }
@@ -1301,21 +1301,21 @@ function viewMemory(day, activity) {
             <div class="text-8xl animate-bounce">📸</div>
             <h4 class="text-4xl font-bold text-primary">${activity}</h4>
             <p class="text-2xl text-[#8a7560] dark:text-[#cbb8a6]">يوم ${day}</p>
-            
+
             <div class="bg-white dark:bg-[#322820] p-4 rounded-3xl">
                 <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=500" class="w-full rounded-2xl" alt="ذكرى">
             </div>
-            
+
             <div class="bg-primary/10 p-6 rounded-3xl">
                 <p class="text-xl font-bold">كان يوم جميل! 🌟</p>
             </div>
-            
+
             <button onclick="closeAllPopups()" class="bg-primary text-white text-2xl font-bold py-6 px-12 rounded-full hover:scale-105 transition-transform w-full">
                 تمام! 👍
             </button>
         </div>
     `;
-    
+
     createPopup('ذكرى جميلة', content, '💝');
 }
 
@@ -1330,9 +1330,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     updateStarDisplay();
-    
+
     // ==================== HOME PAGE ====================
-    
+
     // زر "ابدأ اليوم"
     const startDayBtn = document.querySelector('button:has(.material-symbols-outlined)');
     if (startDayBtn && startDayBtn.textContent.includes('ابدأ اليوم')) {
@@ -1342,12 +1342,12 @@ document.addEventListener('DOMContentLoaded', function() {
             startDay();
         });
     }
-    
+
     // أزرار الأنشطة في الصفحة الرئيسية
     const activityButtons = document.querySelectorAll('button');
     activityButtons.forEach(btn => {
-        if (btn.textContent.includes('العب الآن') || 
-            btn.textContent.includes('ابدأ الحركة') || 
+        if (btn.textContent.includes('العب الآن') ||
+            btn.textContent.includes('ابدأ الحركة') ||
             btn.textContent.includes('اسمع الآن')) {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -1358,10 +1358,10 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
-    
-    
+
+
     // ==================== ACTIVITIES PAGE ====================
-    
+
     // زر "ابدأ الآن" في النشاط الحالي
     const startCurrentActivityBtn = document.querySelector('button:has(.material-symbols-outlined)');
     if (startCurrentActivityBtn && startCurrentActivityBtn.textContent.includes('ابدأ الآن')) {
@@ -1372,7 +1372,7 @@ document.addEventListener('DOMContentLoaded', function() {
             startActivity(activityName);
         });
     }
-    
+
     // أزرار التنقل بين الأنشطة
     const navButtons = document.querySelectorAll('button:has(.material-symbols-outlined)');
     navButtons.forEach(btn => {
@@ -1386,7 +1386,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
-    
+
     // بطاقات الأنشطة (النقر على البطاقة)
     const activityCards = document.querySelectorAll('.group.flex.flex-col.bg-white');
     activityCards.forEach(card => {
@@ -1398,15 +1398,15 @@ document.addEventListener('DOMContentLoaded', function() {
             let status = 'قريباً';
             if (statusBadge?.textContent.includes('مكتمل')) status = 'مكتمل';
             else if (statusBadge?.textContent.includes('الآن')) status = 'الآن';
-            
+
             card.style.animation = 'pulse 0.3s ease';
             showActivityDetails(activityName, time, status);
         });
     });
-    
-    
+
+
     // ==================== ATTENDANCE PAGE ====================
-    
+
     // أزرار التنقل بين الشهور
     const monthNavButtons = document.querySelectorAll('button:has(.material-symbols-outlined)');
     monthNavButtons.forEach(btn => {
@@ -1420,29 +1420,29 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
-    
+
     // بطاقات الأيام (النقر على اليوم)
     const dayCards = document.querySelectorAll('.flex.flex-col.items-center.gap-3.p-4');
     dayCards.forEach(card => {
         const dayNumber = card.querySelector('.text-xl.font-black');
         const statusText = card.querySelector('.text-xs.font-bold');
-        
+
         if (dayNumber && statusText) {
             card.addEventListener('click', (e) => {
                 e.preventDefault();
                 const day = dayNumber.textContent;
-                const status = statusText.textContent.includes('حاضر') ? 'حاضر' : 
+                const status = statusText.textContent.includes('حاضر') ? 'حاضر' :
                               statusText.textContent.includes('غائب') ? 'غائب' : 'قريباً';
-                
+
                 card.style.animation = 'bounce 0.5s ease';
                 showDayDetails(day, status);
             });
         }
     });
-    
-    
+
+
     // ==================== TEACHER TALK PAGE ====================
-    
+
     // أزرار الإيموجي
     const emojiButtons = document.querySelectorAll('button:has(span.text-4xl)');
     emojiButtons.forEach(btn => {
@@ -1456,7 +1456,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
-    
+
     // زر الرسالة الصوتية (المايك الكبير)
     const voiceBtn = document.querySelector('button.bg-primary.w-24.h-24');
     if (voiceBtn) {
@@ -1466,7 +1466,7 @@ document.addEventListener('DOMContentLoaded', function() {
             startVoiceMessage();
         });
     }
-    
+
     // زر "انتهيت!"
     const finishBtn = document.querySelector('button:has(span.material-symbols-outlined)');
     if (finishBtn && finishBtn.textContent.includes('انتهيت')) {
@@ -1476,7 +1476,7 @@ document.addEventListener('DOMContentLoaded', function() {
             finishActivity();
         });
     }
-    
+
     // زر "ساعديني"
     allButtons.forEach(btn => {
         if (btn.textContent.includes('ساعديني')) {
@@ -1487,10 +1487,10 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
-    
-    
+
+
     // ==================== SURPRISE PAGE ====================
-    
+
     // بطاقات المفاجآت
     const giftCards = document.querySelectorAll('.gift-card');
     giftCards.forEach(card => {
@@ -1498,17 +1498,17 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const title = card.querySelector('h3')?.textContent || '';
             let giftType = 'وسام';
-            
+
             if (title.includes('وسام')) giftType = 'وسام';
             else if (title.includes('رسالة')) giftType = 'رسالة';
             else if (title.includes('صورة')) giftType = 'صورة';
             else if (title.includes('وجبة')) giftType = 'وجبة';
-            
+
             card.style.animation = 'bounce 0.5s ease';
             openGiftBox(giftType);
         });
     });
-    
+
     // بطاقات الذكريات
     const memoryCards = document.querySelectorAll('.flex-none.w-64');
     memoryCards.forEach(card => {
@@ -1516,15 +1516,15 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const activity = card.querySelector('.font-bold')?.textContent || 'نشاط';
             const day = card.querySelector('.text-sm')?.textContent || 'الأحد';
-            
+
             card.style.animation = 'pulse 0.3s ease';
             viewMemory(day, activity);
         });
     });
-    
-    
+
+
     // ==================== GLOBAL ANIMATIONS ====================
-    
+
     // النقر على صورة الطفل لعرض الملف الشخصي
     const profileImages = document.querySelectorAll('.w-20.h-20.rounded-full, .w-12.h-12.rounded-full');
     profileImages.forEach(img => {
@@ -1537,7 +1537,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
-    
+
     // النقر على عداد النجوم لعرض الإنجازات
     const starCounters = document.querySelectorAll('.flex.flex-col.items-center.bg-white');
     starCounters.forEach(counter => {
@@ -1551,7 +1551,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
-    
+
     // إضافة animations للأيقونات عند التحميل
     const allIcons = document.querySelectorAll('.material-symbols-outlined');
     allIcons.forEach((icon, index) => {
@@ -1559,7 +1559,7 @@ document.addEventListener('DOMContentLoaded', function() {
             icon.style.animation = 'fadeIn 0.5s ease';
         }, index * 50);
     });
-    
+
     // إضافة hover effects للبطاقات
     const allCards = document.querySelectorAll('.bg-white, .bg-gradient-to-br, .gift-card');
     allCards.forEach(card => {
@@ -1571,13 +1571,13 @@ document.addEventListener('DOMContentLoaded', function() {
             card.style.transform = 'scale(1)';
         });
     });
-    
+
     // تكبير الأيقونات في Navigation
     const navIcons = document.querySelectorAll('.nav-icon');
     navIcons.forEach(icon => {
         icon.style.fontSize = '3.5rem';
     });
-    
+
     // إضافة تأثيرات للـ Navigation Links
     const navLinks = document.querySelectorAll('a[href*=".html"]');
     navLinks.forEach(link => {
@@ -1588,7 +1588,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
+
     // إضافة تأثير للـ Home Button في الزاوية
     const homeButtons = document.querySelectorAll('.fixed.bottom-10, .fixed.bottom-8');
     homeButtons.forEach(btn => {
@@ -1599,7 +1599,7 @@ document.addEventListener('DOMContentLoaded', function() {
             btn.style.transform = 'scale(1) rotate(0deg)';
         });
     });
-    
+
     // إضافة sparkle effect للنجوم
     const starIcons = document.querySelectorAll('.material-symbols-outlined');
     starIcons.forEach(icon => {
@@ -1607,14 +1607,14 @@ document.addEventListener('DOMContentLoaded', function() {
             icon.classList.add('star-sparkle');
         }
     });
-    
+
     // تفعيل الأصوات عند النقر على أي زر
     document.querySelectorAll('button').forEach(btn => {
         btn.addEventListener('click', () => {
             playSound('click');
         });
     });
-    
+
     // إضافة confetti effect عند كسب النجوم
     window.showConfetti = function() {
         const colors = ['#f48c25', '#ffd700', '#ff6b6b', '#4ecdc4', '#45b7d1'];
@@ -1638,7 +1638,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }, i * 30);
         }
     };
-    
+
     // إضافة animation للـ confetti
     const confettiStyle = document.createElement('style');
     confettiStyle.textContent = `
@@ -1650,7 +1650,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     `;
     document.head.appendChild(confettiStyle);
-    
+
     // تفعيل Dark Mode Toggle (إذا كان موجود)
     const darkModeToggle = document.querySelector('[data-dark-mode-toggle]');
     if (darkModeToggle) {
@@ -1659,14 +1659,14 @@ document.addEventListener('DOMContentLoaded', function() {
             showToast('تم تغيير الوضع!', '🌙');
         });
     }
-    
+
     // إضافة تأثير الموجة عند النقر
     document.addEventListener('click', (e) => {
         if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
             const ripple = document.createElement('div');
             const btn = e.target.tagName === 'BUTTON' ? e.target : e.target.closest('button');
             const rect = btn.getBoundingClientRect();
-            
+
             ripple.style.cssText = `
                 position: absolute;
                 border-radius: 50%;
@@ -1678,15 +1678,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 pointer-events: none;
                 animation: ripple 0.6s ease-out;
             `;
-            
+
             btn.style.position = 'relative';
             btn.style.overflow = 'hidden';
             btn.appendChild(ripple);
-            
+
             setTimeout(() => ripple.remove(), 600);
         }
     });
-    
+
     // إضافة animation للـ ripple
     const rippleStyle = document.createElement('style');
     rippleStyle.textContent = `
@@ -1698,7 +1698,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     `;
     document.head.appendChild(rippleStyle);
-    
+
     console.log('✨ All event listeners attached successfully!');
 });
 

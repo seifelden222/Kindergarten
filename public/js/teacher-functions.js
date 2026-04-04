@@ -81,19 +81,19 @@ function setTeacherGalleryImages(images) {
 // ==================== Popup Functions ====================
 function createPopup(title, content, size = 'medium') {
     closeAllPopups();
-    
+
     const sizeClasses = {
         small: 'max-w-md',
         medium: 'max-w-2xl',
         large: 'max-w-4xl',
         xlarge: 'max-w-6xl'
     };
-    
+
     const popup = document.createElement('div');
     popup.id = 'dynamicPopup';
     popup.className = 'popup-overlay';
     popup.onclick = (e) => { if (e.target === popup) closeAllPopups(); };
-    
+
     popup.innerHTML = `
         <div class="${sizeClasses[size]} w-full bg-white dark:bg-[#1a2a1a] rounded-2xl shadow-2xl overflow-hidden" onclick="event.stopPropagation()">
             <div class="flex items-center justify-between p-6 border-b border-[#dce5dc] dark:border-[#2a3a2a] bg-gray-50/50 dark:bg-black/10">
@@ -107,11 +107,11 @@ function createPopup(title, content, size = 'medium') {
             </div>
         </div>
     `;
-    
+
     document.body.appendChild(popup);
     document.body.style.overflow = 'hidden';
     currentPopup = popup;
-    
+
     return popup;
 }
 
@@ -122,7 +122,7 @@ function closeAllPopups() {
     }
     const existingPopup = document.getElementById('dynamicPopup');
     if (existingPopup) existingPopup.remove();
-    
+
     document.body.style.overflow = 'auto';
 }
 
@@ -135,42 +135,42 @@ document.addEventListener('keydown', (e) => {
 function showToast(message, type = 'info') {
     const existingToast = document.getElementById('toast');
     if (existingToast) existingToast.remove();
-    
+
     const icons = {
         success: 'check_circle',
         error: 'error',
         warning: 'warning',
         info: 'info'
     };
-    
+
     const colors = {
         success: 'border-green-500 bg-green-50 dark:bg-green-900/20',
         error: 'border-red-500 bg-red-50 dark:bg-red-900/20',
         warning: 'border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20',
         info: 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
     };
-    
+
     const iconColors = {
         success: 'text-green-600 dark:text-green-400',
         error: 'text-red-600 dark:text-red-400',
         warning: 'text-yellow-600 dark:text-yellow-400',
         info: 'text-blue-600 dark:text-blue-400'
     };
-    
+
     const toast = document.createElement('div');
     toast.id = 'toast';
     toast.className = `fixed top-20 left-1/2 transform -translate-x-1/2 ${colors[type]} border-2 rounded-xl shadow-2xl px-6 py-4 z-[110] min-w-[300px]`;
     toast.style.animation = 'slideUp 0.3s ease-out';
-    
+
     toast.innerHTML = `
         <div class="flex items-center gap-3">
             <span class="material-symbols-outlined ${iconColors[type]} text-3xl">${icons[type]}</span>
             <p class="text-zinc-900 dark:text-white font-medium">${message}</p>
         </div>
     `;
-    
+
     document.body.appendChild(toast);
-    
+
     setTimeout(() => {
         toast.style.animation = 'fadeIn 0.2s ease-out reverse';
         setTimeout(() => toast.remove(), 200);
@@ -182,14 +182,14 @@ function showToast(message, type = 'info') {
 function searchInPage() {
     const searchInput = document.querySelector('input[placeholder*="بحث"]');
     if (!searchInput) return;
-    
+
     const searchTerm = searchInput.value.toLowerCase().trim();
     console.log('Searching for:', searchTerm);
-    
+
     // البحث في بطاقات الأطفال
     const studentCards = document.querySelectorAll('.grid > div');
     let foundCount = 0;
-    
+
     studentCards.forEach(card => {
         const text = card.textContent.toLowerCase();
         if (text.includes(searchTerm) || searchTerm === '') {
@@ -199,7 +199,7 @@ function searchInPage() {
             card.style.display = 'none';
         }
     });
-    
+
     if (searchTerm && foundCount === 0) {
         showToast('لم يتم العثور على نتائج', 'warning');
     } else if (searchTerm) {
@@ -224,7 +224,7 @@ function submitAttendance() {
                 <h4 class="text-xl font-bold mb-2">تأكيد تسجيل الحضور</h4>
                 <p class="text-sm text-[#638863] dark:text-[#a0b0a0]">هل أنت متأكد من تسجيل الحضور لجميع الطلاب؟</p>
             </div>
-            
+
             <div class="bg-white dark:bg-[#112111] p-5 rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a]">
                 <div class="grid grid-cols-2 gap-4 text-center">
                     <div>
@@ -237,7 +237,7 @@ function submitAttendance() {
                     </div>
                 </div>
             </div>
-            
+
             <div class="flex justify-end gap-3 pt-4 border-t border-[#dce5dc] dark:border-[#2a3a2a]">
                 <button onclick="closeAllPopups()" class="px-6 py-2.5 rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] hover:bg-gray-100 dark:hover:bg-[#2a3a2a] transition-colors font-medium">
                     إلغاء
@@ -249,7 +249,7 @@ function submitAttendance() {
             </div>
         </div>
     `;
-    
+
     createPopup('تسجيل الحضور', content, 'medium');
 }
 
@@ -270,7 +270,7 @@ function addDailyActivity() {
                 <label class="block text-sm font-medium mb-2">عنوان النشاط</label>
                 <input type="text" required placeholder="مثال: الرسم بالألوان المائية" class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
             </div>
-            
+
             <div>
                 <label class="block text-sm font-medium mb-2">نوع النشاط</label>
                 <select required class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
@@ -282,12 +282,12 @@ function addDailyActivity() {
                     <option value="science">نشاط علمي</option>
                 </select>
             </div>
-            
+
             <div>
                 <label class="block text-sm font-medium mb-2">الوصف</label>
                 <textarea required rows="4" placeholder="اكتب وصف النشاط..." class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
             </div>
-            
+
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium mb-2">الوقت</label>
@@ -298,7 +298,7 @@ function addDailyActivity() {
                     <input type="number" required placeholder="30" class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
                 </div>
             </div>
-            
+
             <div class="flex justify-end gap-3 pt-4 border-t border-[#dce5dc] dark:border-[#2a3a2a]">
                 <button type="button" onclick="closeAllPopups()" class="px-6 py-2.5 rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] hover:bg-gray-100 dark:hover:bg-[#2a3a2a] transition-colors font-medium">
                     إلغاء
@@ -310,7 +310,7 @@ function addDailyActivity() {
             </div>
         </form>
     `;
-    
+
     createPopup('إضافة نشاط يومي', content, 'medium');
 }
 
@@ -337,7 +337,7 @@ function addBehaviorNote() {
                     <option value="3">ياسين عمر</option>
                 </select>
             </div>
-            
+
             <div>
                 <label class="block text-sm font-medium mb-2">نوع الملاحظة</label>
                 <select required class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
@@ -347,12 +347,12 @@ function addBehaviorNote() {
                     <option value="neutral">عامة</option>
                 </select>
             </div>
-            
+
             <div>
                 <label class="block text-sm font-medium mb-2">الملاحظة</label>
                 <textarea required rows="5" placeholder="اكتب الملاحظة السلوكية..." class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
             </div>
-            
+
             <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-4 rounded-xl">
                 <div class="flex items-start gap-3">
                     <span class="material-symbols-outlined text-blue-600 text-xl">info</span>
@@ -361,7 +361,7 @@ function addBehaviorNote() {
                     </p>
                 </div>
             </div>
-            
+
             <div class="flex justify-end gap-3 pt-4 border-t border-[#dce5dc] dark:border-[#2a3a2a]">
                 <button type="button" onclick="closeAllPopups()" class="px-6 py-2.5 rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] hover:bg-gray-100 dark:hover:bg-[#2a3a2a] transition-colors font-medium">
                     إلغاء
@@ -373,7 +373,7 @@ function addBehaviorNote() {
             </div>
         </form>
     `;
-    
+
     createPopup('إضافة ملاحظة سلوكية', content, 'medium');
 }
 
@@ -442,7 +442,7 @@ function viewAllPhotos() {
                     </div>
                 `).join('')}
             </div>
-            
+
             <div class="flex justify-end gap-3 pt-4 border-t border-[#dce5dc] dark:border-[#2a3a2a]">
                 <button onclick="closeAllPopups()" class="px-6 py-2.5 rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] hover:bg-gray-100 dark:hover:bg-[#2a3a2a] transition-colors font-medium">
                     إغلاق
@@ -454,7 +454,7 @@ function viewAllPhotos() {
             </div>
         </div>
     `;
-    
+
     createPopup('معرض الصور', content, 'large');
 }
 
@@ -489,12 +489,12 @@ function sendDailyReport() {
                 <h4 class="text-xl font-bold mb-2">التقرير اليومي</h4>
                 <p class="text-sm text-[#638863] dark:text-[#a0b0a0]">فصل الزهور (أ) - ${new Date().toLocaleDateString('ar-EG')}</p>
             </div>
-            
+
             <div>
                 <label class="block text-sm font-medium mb-2">ملخص اليوم</label>
                 <textarea required rows="4" placeholder="اكتب ملخص عن أنشطة اليوم..." class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
             </div>
-            
+
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium mb-2">عدد الأنشطة</label>
@@ -509,12 +509,12 @@ function sendDailyReport() {
                     </select>
                 </div>
             </div>
-            
+
             <div class="flex items-center gap-3 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
                 <input type="checkbox" id="includePhotos" class="w-5 h-5 text-primary rounded">
                 <label for="includePhotos" class="text-sm">إرفاق صور الأنشطة</label>
             </div>
-            
+
             <div class="flex justify-end gap-3 pt-4 border-t border-[#dce5dc] dark:border-[#2a3a2a]">
                 <button type="button" onclick="closeAllPopups()" class="px-6 py-2.5 rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] hover:bg-gray-100 dark:hover:bg-[#2a3a2a] transition-colors font-medium">
                     إلغاء
@@ -526,7 +526,7 @@ function sendDailyReport() {
             </div>
         </form>
     `;
-    
+
     createPopup('إرسال التقرير اليومي', content, 'medium');
 }
 
@@ -552,7 +552,7 @@ function editProfile() {
                     </button>
                 </div>
             </div>
-            
+
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium mb-2">الاسم الأول</label>
@@ -563,17 +563,17 @@ function editProfile() {
                     <input type="text" required value="أحمد" class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
                 </div>
             </div>
-            
+
             <div>
                 <label class="block text-sm font-medium mb-2">البريد الإلكتروني</label>
                 <input type="email" required value="sara.ahmed@nursery.com" class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
             </div>
-            
+
             <div>
                 <label class="block text-sm font-medium mb-2">رقم الجوال</label>
                 <input type="tel" required value="01012345678" class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
             </div>
-            
+
             <div class="flex justify-end gap-3 pt-4 border-t border-[#dce5dc] dark:border-[#2a3a2a]">
                 <button type="button" onclick="closeAllPopups()" class="px-6 py-2.5 rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] hover:bg-gray-100 dark:hover:bg-[#2a3a2a] transition-colors font-medium">
                     إلغاء
@@ -584,7 +584,7 @@ function editProfile() {
             </div>
         </form>
     `;
-    
+
     createPopup('تعديل الملف الشخصي', content, 'medium');
 }
 
@@ -612,7 +612,7 @@ function showNotifications() {
                     </div>
                 </div>
             </div>
-            
+
             <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-4 rounded-xl">
                 <div class="flex items-start gap-3">
                     <span class="material-symbols-outlined text-blue-600 text-2xl">info</span>
@@ -623,7 +623,7 @@ function showNotifications() {
                     </div>
                 </div>
             </div>
-            
+
             <div class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-4 rounded-xl">
                 <div class="flex items-start gap-3">
                     <span class="material-symbols-outlined text-green-600 text-2xl">check_circle</span>
@@ -634,7 +634,7 @@ function showNotifications() {
                     </div>
                 </div>
             </div>
-            
+
             <div class="flex justify-end gap-3 pt-4 border-t border-[#dce5dc] dark:border-[#2a3a2a]">
                 <button onclick="markAllNotificationsRead()" class="px-6 py-2.5 rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] hover:bg-gray-100 dark:hover:bg-[#2a3a2a] transition-colors font-medium">
                     تحديد الكل كمقروء
@@ -645,7 +645,7 @@ function showNotifications() {
             </div>
         </div>
     `;
-    
+
     createPopup('الإشعارات', content, 'medium');
 }
 
@@ -667,7 +667,7 @@ function addNewClass() {
                 <label class="block text-sm font-medium mb-2">اسم الفصل</label>
                 <input type="text" required placeholder="مثال: فصل الورود" class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
             </div>
-            
+
             <div>
                 <label class="block text-sm font-medium mb-2">المعلمة المسؤولة</label>
                 <select required class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
@@ -677,7 +677,7 @@ function addNewClass() {
                     <option value="3">أ. لمى خالد</option>
                 </select>
             </div>
-            
+
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium mb-2">السعة القصوى</label>
@@ -693,7 +693,7 @@ function addNewClass() {
                     </select>
                 </div>
             </div>
-            
+
             <div>
                 <label class="block text-sm font-medium mb-2">لون الفصل</label>
                 <div class="flex gap-3">
@@ -704,7 +704,7 @@ function addNewClass() {
                     <button type="button" class="size-10 rounded-full bg-pink-500 border-2 border-gray-300" onclick="selectClassColor(this, '#ec4899')"></button>
                 </div>
             </div>
-            
+
             <div class="flex justify-end gap-3 pt-4 border-t border-[#dce5dc] dark:border-[#2a3a2a]">
                 <button type="button" onclick="closeAllPopups()" class="px-6 py-2.5 rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] hover:bg-gray-100 dark:hover:bg-[#2a3a2a] transition-colors font-medium">
                     إلغاء
@@ -716,7 +716,7 @@ function addNewClass() {
             </div>
         </form>
     `;
-    
+
     createPopup('إضافة فصل جديد', content, 'medium');
 }
 
@@ -745,7 +745,7 @@ function viewClassDetails(className, teacherName, studentCount) {
                 <h4 class="text-2xl font-bold mb-2">${className}</h4>
                 <p class="text-sm text-[#638863] dark:text-[#a0b0a0]">المعلمة: ${teacherName}</p>
             </div>
-            
+
             <div class="grid grid-cols-3 gap-4">
                 <div class="bg-white dark:bg-[#112111] p-4 rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] text-center">
                     <p class="text-3xl font-bold text-primary">${studentCount}</p>
@@ -760,7 +760,7 @@ function viewClassDetails(className, teacherName, studentCount) {
                     <p class="text-sm text-[#638863] dark:text-[#a0b0a0] mt-1">الأنشطة</p>
                 </div>
             </div>
-            
+
             <div>
                 <h5 class="font-bold mb-3">قائمة الأطفال</h5>
                 <div class="space-y-2 max-h-60 overflow-y-auto">
@@ -777,7 +777,7 @@ function viewClassDetails(className, teacherName, studentCount) {
                     `).join('')}
                 </div>
             </div>
-            
+
             <div class="flex justify-end gap-3 pt-4 border-t border-[#dce5dc] dark:border-[#2a3a2a]">
                 <button onclick="closeAllPopups()" class="px-6 py-2.5 rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] hover:bg-gray-100 dark:hover:bg-[#2a3a2a] transition-colors font-medium">
                     إغلاق
@@ -789,7 +789,7 @@ function viewClassDetails(className, teacherName, studentCount) {
             </div>
         </div>
     `;
-    
+
     createPopup(`تفاصيل ${className}`, content, 'large');
 }
 
@@ -812,9 +812,9 @@ let currentChatData = {
 // التبديل بين جهات الاتصال
 function switchContact(name, role, image, status = 'online') {
     currentChatData = { name, role, image, status };
-    
+
     console.log('Switching to contact:', name);
-    
+
     // تحديث هيدر المحادثة
     const chatHeader = document.querySelector('.lg\\:col-span-8 .p-5.border-b');
     if (chatHeader) {
@@ -829,7 +829,7 @@ function switchContact(name, role, image, status = 'online') {
         `;
         console.log('Chat header updated');
     }
-    
+
     // مسح الرسائل القديمة وعرض رسائل ترحيبية
     const messagesContainer = document.querySelector('.flex-1.p-6.overflow-y-auto');
     if (messagesContainer) {
@@ -843,12 +843,12 @@ function switchContact(name, role, image, status = 'online') {
         `;
         console.log('Messages cleared');
     }
-    
+
     // تحديث الحالة النشطة في القائمة
     document.querySelectorAll('.lg\\:col-span-4 .divide-y > div').forEach(contact => {
         contact.classList.remove('bg-primary/5');
     });
-    
+
     showToast(`تم فتح محادثة ${name}`, 'success');
 }
 
@@ -865,17 +865,17 @@ function composeNewMessage() {
                     <option value="3">إدارة الحضانة</option>
                 </select>
             </div>
-            
+
             <div>
                 <label class="block text-sm font-medium mb-2">الموضوع</label>
                 <input type="text" required placeholder="موضوع الرسالة" class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
             </div>
-            
+
             <div>
                 <label class="block text-sm font-medium mb-2">الرسالة</label>
                 <textarea required rows="6" placeholder="اكتب رسالتك هنا..." class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
             </div>
-            
+
             <div class="flex justify-end gap-3 pt-4 border-t border-[#dce5dc] dark:border-[#2a3a2a]">
                 <button type="button" onclick="closeAllPopups()" class="px-6 py-2.5 rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] hover:bg-gray-100 dark:hover:bg-[#2a3a2a] transition-colors font-medium">
                     إلغاء
@@ -887,7 +887,7 @@ function composeNewMessage() {
             </div>
         </form>
     `;
-    
+
     createPopup('رسالة جديدة', content, 'medium');
 }
 
@@ -907,25 +907,25 @@ function sendChatMessage() {
         console.error('Message input not found');
         return;
     }
-    
+
     const messageText = messageInput.value.trim();
     console.log('Sending message:', messageText);
     console.log('Attached files:', attachedFiles.length);
-    
+
     if (!messageText && attachedFiles.length === 0) {
         showToast('يرجى كتابة رسالة أو إرفاق ملف', 'warning');
         return;
     }
-    
+
     const messagesContainer = document.querySelector('.flex-1.p-6.overflow-y-auto');
     if (!messagesContainer) {
         console.error('Messages container not found');
         return;
     }
-    
+
     const messageDiv = document.createElement('div');
     messageDiv.className = 'flex justify-end';
-    
+
     let filesHTML = '';
     if (attachedFiles.length > 0) {
         filesHTML = '<div class="flex gap-2 mt-3 flex-wrap">';
@@ -953,7 +953,7 @@ function sendChatMessage() {
         });
         filesHTML += '</div>';
     }
-    
+
     messageDiv.innerHTML = `
         <div class="max-w-[70%] bg-primary text-white rounded-2xl rounded-tl-none px-5 py-3">
             ${messageText ? `<p>${messageText}</p>` : ''}
@@ -961,12 +961,12 @@ function sendChatMessage() {
             <p class="text-xs text-white/80 mt-1">الآن</p>
         </div>
     `;
-    
+
     messagesContainer.appendChild(messageDiv);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    
+
     console.log('Message sent successfully');
-    
+
     messageInput.value = '';
     attachedFiles = [];
     updateAttachedFilesDisplay();
@@ -991,20 +991,20 @@ function attachFileToMessage() {
     input.onchange = (e) => {
         const files = Array.from(e.target.files);
         console.log('Files selected:', files.length);
-        
+
         files.forEach(file => {
             if (file.size > 10 * 1024 * 1024) { // 10MB max
                 showToast(`الملف ${file.name} كبير جداً (الحد الأقصى 10MB)`, 'error');
                 return;
             }
-            
+
             const fileObj = {
                 name: file.name,
                 size: file.size,
                 type: file.type,
                 file: file
             };
-            
+
             // إنشاء معاينة للصور
             if (file.type.startsWith('image/')) {
                 const reader = new FileReader();
@@ -1021,7 +1021,7 @@ function attachFileToMessage() {
                 console.log('File added:', file.name);
             }
         });
-        
+
         if (files.length > 0) {
             showToast(`تم إرفاق ${files.length} ملف`, 'success');
         }
@@ -1032,17 +1032,17 @@ function attachFileToMessage() {
 // تحديث عرض الملفات المرفقة
 function updateAttachedFilesDisplay() {
     let container = document.getElementById('attachedFilesContainer');
-    
+
     if (attachedFiles.length === 0) {
         if (container) container.remove();
         return;
     }
-    
+
     if (!container) {
         container = document.createElement('div');
         container.id = 'attachedFilesContainer';
         container.className = 'px-5 py-3 border-t border-[#dce5dc] dark:border-[#2a3a2a] bg-[#f0f4f0] dark:bg-[#2a3a2a]';
-        
+
         const chatFooter = document.querySelector('.lg\\:col-span-8 .p-5.border-t');
         if (chatFooter && chatFooter.parentNode) {
             chatFooter.parentNode.insertBefore(container, chatFooter);
@@ -1052,7 +1052,7 @@ function updateAttachedFilesDisplay() {
             return;
         }
     }
-    
+
     container.innerHTML = `
         <div class="flex items-center gap-2 mb-2">
             <span class="text-xs font-bold text-[#638863] dark:text-[#a0b0a0]">الملفات المرفقة (${attachedFiles.length})</span>
@@ -1061,7 +1061,7 @@ function updateAttachedFilesDisplay() {
         <div class="flex gap-2 flex-wrap">
             ${attachedFiles.map((file, index) => `
                 <div class="relative group">
-                    ${file.preview ? 
+                    ${file.preview ?
                         `<img src="${file.preview}" class="w-16 h-16 rounded-lg object-cover border border-[#dce5dc] dark:border-[#2a3a2a]" />` :
                         `<div class="w-16 h-16 rounded-lg border border-[#dce5dc] dark:border-[#2a3a2a] bg-white dark:bg-[#1a2a1a] flex items-center justify-center">
                             <span class="material-symbols-outlined text-primary text-2xl">description</span>
@@ -1075,7 +1075,7 @@ function updateAttachedFilesDisplay() {
             `).join('')}
         </div>
     `;
-    
+
     console.log('Attached files display updated');
 }
 
@@ -1100,7 +1100,7 @@ function filterMessages() {
     const content = `
         <div class="space-y-4">
             <h4 class="font-bold text-lg mb-4">تصفية المحادثات</h4>
-            
+
             <div>
                 <label class="block text-sm font-medium mb-2">نوع المحادثة</label>
                 <select class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
@@ -1110,7 +1110,7 @@ function filterMessages() {
                     <option value="teachers">المعلمات</option>
                 </select>
             </div>
-            
+
             <div>
                 <label class="block text-sm font-medium mb-2">الحالة</label>
                 <select class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
@@ -1119,7 +1119,7 @@ function filterMessages() {
                     <option value="read">مقروءة</option>
                 </select>
             </div>
-            
+
             <div>
                 <label class="block text-sm font-medium mb-2">الفترة الزمنية</label>
                 <select class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
@@ -1129,7 +1129,7 @@ function filterMessages() {
                     <option value="month">هذا الشهر</option>
                 </select>
             </div>
-            
+
             <div class="flex justify-end gap-3 pt-4 border-t border-[#dce5dc] dark:border-[#2a3a2a]">
                 <button onclick="closeAllPopups()" class="px-6 py-2.5 rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] hover:bg-gray-100 dark:hover:bg-[#2a3a2a] transition-colors font-medium">
                     إلغاء
@@ -1140,7 +1140,7 @@ function filterMessages() {
             </div>
         </div>
     `;
-    
+
     createPopup('تصفية المحادثات', content, 'small');
 }
 
@@ -1166,7 +1166,7 @@ function createNewReport() {
                     <option value="activity">تقرير نشاط</option>
                 </select>
             </div>
-            
+
             <div>
                 <label class="block text-sm font-medium mb-2">الفصل</label>
                 <select required class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
@@ -1176,17 +1176,17 @@ function createNewReport() {
                     <option value="3">فصل النجوم (ج)</option>
                 </select>
             </div>
-            
+
             <div>
                 <label class="block text-sm font-medium mb-2">التاريخ</label>
                 <input type="date" required class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
             </div>
-            
+
             <div>
                 <label class="block text-sm font-medium mb-2">محتوى التقرير</label>
                 <textarea required rows="6" placeholder="اكتب محتوى التقرير..." class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
             </div>
-            
+
             <div class="flex justify-end gap-3 pt-4 border-t border-[#dce5dc] dark:border-[#2a3a2a]">
                 <button type="button" onclick="closeAllPopups()" class="px-6 py-2.5 rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] hover:bg-gray-100 dark:hover:bg-[#2a3a2a] transition-colors font-medium">
                     إلغاء
@@ -1198,7 +1198,7 @@ function createNewReport() {
             </div>
         </form>
     `;
-    
+
     createPopup('تقرير جديد', content, 'medium');
 }
 
@@ -1219,7 +1219,7 @@ function viewReport(reportTitle) {
                 <h4 class="text-xl font-bold mb-2">${reportTitle}</h4>
                 <p class="text-sm text-[#638863] dark:text-[#a0b0a0]">فصل الزهور (أ) - ${new Date().toLocaleDateString('ar-EG')}</p>
             </div>
-            
+
             <div class="prose dark:prose-invert max-w-none">
                 <p class="text-[#638863] dark:text-[#a0b0a0]">
                     كان يوماً رائعاً مليئاً بالأنشطة المفيدة. بدأنا اليوم بحلقة الصباح حيث تعلم الأطفال عن فصل الربيع وأهمية النباتات.
@@ -1231,7 +1231,7 @@ function viewReport(reportTitle) {
                     نسبة الحضور اليوم كانت ممتازة (22 من 25 طالب). جميع الأطفال كانوا متعاونين ومتفاعلين.
                 </p>
             </div>
-            
+
             <div class="grid grid-cols-3 gap-4">
                 <div class="bg-white dark:bg-[#112111] p-4 rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] text-center">
                     <p class="text-2xl font-bold text-primary">3</p>
@@ -1246,7 +1246,7 @@ function viewReport(reportTitle) {
                     <p class="text-xs text-[#638863] dark:text-[#a0b0a0] mt-1">طالب</p>
                 </div>
             </div>
-            
+
             <div class="flex justify-end gap-3 pt-4 border-t border-[#dce5dc] dark:border-[#2a3a2a]">
                 <button onclick="closeAllPopups()" class="px-6 py-2.5 rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] hover:bg-gray-100 dark:hover:bg-[#2a3a2a] transition-colors font-medium">
                     إغلاق
@@ -1258,7 +1258,7 @@ function viewReport(reportTitle) {
             </div>
         </div>
     `;
-    
+
     createPopup('عرض التقرير', content, 'large');
 }
 
@@ -1292,7 +1292,7 @@ function viewAllReports() {
 // ==================== Event Listeners ====================
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Teacher Portal Functions Loaded ✓');
-    
+
     // ربط حقل البحث
     const searchInput = document.querySelector('input[placeholder*="بحث"]');
     if (searchInput) {
@@ -1302,7 +1302,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         console.log('Search input connected');
     }
-    
+
     // ربط زر الإشعارات - البحث عن الزر بطريقة أفضل
     const notificationBtns = document.querySelectorAll('button');
     notificationBtns.forEach(btn => {
@@ -1314,12 +1314,12 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Notification button connected');
         }
     });
-    
+
     // ربط أزرار الحضور والغياب
     const allButtons = document.querySelectorAll('button');
     allButtons.forEach(btn => {
         const text = btn.textContent.trim();
-        
+
         // أزرار الحضور
         if (text === 'حاضر') {
             btn.onclick = function(e) {
@@ -1331,7 +1331,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.classList.remove('bg-primary/10', 'text-primary', 'bg-[#f0f4f0]', 'text-[#638863]');
             };
         }
-        
+
         // أزرار الغياب
         if (text === 'غائب') {
             btn.onclick = function(e) {
@@ -1343,7 +1343,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.classList.remove('bg-[#f0f4f0]', 'text-[#638863]');
             };
         }
-        
+
         // أزرار Dashboard
         if (text.includes('تسجيل الحضور')) {
             btn.onclick = function(e) {
@@ -1352,7 +1352,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             console.log('Submit attendance button connected');
         }
-        
+
         if (text.includes('إضافة نشاط يومي')) {
             btn.onclick = function(e) {
                 e.preventDefault();
@@ -1360,7 +1360,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             console.log('Add activity button connected');
         }
-        
+
         if (text.includes('ملاحظة سلوكية')) {
             btn.onclick = function(e) {
                 e.preventDefault();
@@ -1368,7 +1368,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             console.log('Add behavior note button connected');
         }
-        
+
         if (text.includes('إرسال التقرير اليومي')) {
             btn.onclick = function(e) {
                 e.preventDefault();
@@ -1376,7 +1376,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             console.log('Send daily report button connected');
         }
-        
+
         if (text.includes('تعديل الملف الشخصي')) {
             btn.onclick = function(e) {
                 e.preventDefault();
@@ -1384,7 +1384,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             console.log('Edit profile button connected');
         }
-        
+
         if (text.includes('مشاهدة الكل')) {
             btn.onclick = function(e) {
                 e.preventDefault();
@@ -1392,7 +1392,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             console.log('View all photos button connected');
         }
-        
+
         // أزرار الفصول
         if (text.includes('إضافة فصل جديد')) {
             btn.onclick = function(e) {
@@ -1401,7 +1401,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             console.log('Add new class button connected');
         }
-        
+
         if (text.includes('عرض التفاصيل')) {
             btn.onclick = function(e) {
                 e.preventDefault();
@@ -1413,7 +1413,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             console.log('View class details button connected');
         }
-        
+
         if (text === 'تعديل' && !text.includes('الملف')) {
             btn.onclick = function(e) {
                 e.preventDefault();
@@ -1422,7 +1422,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 editClass(className);
             };
         }
-        
+
         // أزرار الرسائل
         if (text.includes('رسالة جديدة')) {
             btn.onclick = function(e) {
@@ -1431,7 +1431,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             console.log('New message button connected');
         }
-        
+
         // أزرار التقارير
         if (text.includes('تقرير جديد')) {
             btn.onclick = function(e) {
@@ -1440,14 +1440,14 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             console.log('New report button connected');
         }
-        
+
         if (text.includes('عرض الكل') && window.location.pathname.includes('reports')) {
             btn.onclick = function(e) {
                 e.preventDefault();
                 viewAllReports();
             };
         }
-        
+
         if (text.includes('تصدير الكل')) {
             btn.onclick = function(e) {
                 e.preventDefault();
@@ -1455,7 +1455,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             console.log('Export all reports button connected');
         }
-        
+
         if (text === 'عرض' && window.location.pathname.includes('reports')) {
             btn.onclick = function(e) {
                 e.preventDefault();
@@ -1465,7 +1465,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
         }
     });
-    
+
     // ربط أيقونات الفلتر والترتيب
     const filterIcons = document.querySelectorAll('.material-symbols-outlined');
     filterIcons.forEach(icon => {
@@ -1494,7 +1494,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
         }
     });
-    
+
     // ربط أزرار الرسائل - Messages Page
     if (window.location.pathname.includes('messages')) {
         // ربط جهات الاتصال للتبديل
@@ -1503,31 +1503,31 @@ document.addEventListener('DOMContentLoaded', function() {
             contactDiv.style.cursor = 'pointer';
             contactDiv.onclick = function(e) {
                 e.preventDefault();
-                
+
                 // إزالة الخلفية النشطة من جميع جهات الاتصال
                 contactDivs.forEach(div => div.classList.remove('bg-primary/5'));
-                
+
                 // إضافة الخلفية النشطة للجهة المختارة
                 this.classList.add('bg-primary/5');
-                
+
                 // استخراج معلومات جهة الاتصال
                 const nameElement = this.querySelector('p.font-medium');
                 const roleElement = this.querySelector('p.text-sm');
                 const imageElement = this.querySelector('div[style*="background-image"]');
-                
+
                 if (nameElement && imageElement) {
                     const name = nameElement.textContent.trim();
                     const role = roleElement ? roleElement.textContent.trim() : 'جهة اتصال';
                     const imageStyle = imageElement.getAttribute('style');
                     const imageMatch = imageStyle.match(/url\(['"]?([^'"]+)['"]?\)/);
                     const image = imageMatch ? imageMatch[1] : '';
-                    
+
                     switchContact(name, role, image);
                 }
             };
             console.log(`Contact ${index + 1} connected`);
         });
-        
+
         // زر إرسال الرسالة
         const sendBtns = document.querySelectorAll('button');
         sendBtns.forEach(btn => {
@@ -1547,7 +1547,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('Attach file button connected');
             }
         });
-        
+
         // ربط Enter في حقل الرسالة
         const messageInput = document.querySelector('input[placeholder*="اكتب رسالتك"]');
         if (messageInput) {
@@ -1560,7 +1560,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Message input connected');
         }
     }
-    
+
     // ربط فلتر الإحصائيات في التقارير
     if (window.location.pathname.includes('reports')) {
         const statsFilter = document.querySelectorAll('select');
@@ -1573,7 +1573,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
+
     console.log('All event listeners connected successfully ✓');
 });
 

@@ -54,19 +54,19 @@ const parentCalendarStorageKey = 'parent_calendar_events';
 // ==================== Popup Functions ====================
 function createPopup(title, content, size = 'medium') {
     closeAllPopups();
-    
+
     const sizeClasses = {
         small: 'max-w-md',
         medium: 'max-w-2xl',
         large: 'max-w-4xl',
         xlarge: 'max-w-6xl'
     };
-    
+
     const popup = document.createElement('div');
     popup.id = 'dynamicPopup';
     popup.className = 'popup-overlay';
     popup.onclick = (e) => { if (e.target === popup) closeAllPopups(); };
-    
+
     popup.innerHTML = `
         <div class="${sizeClasses[size]} w-full bg-white dark:bg-[#1a2e1a] rounded-2xl shadow-2xl overflow-hidden" onclick="event.stopPropagation()">
             <div class="flex items-center justify-between p-6 border-b border-[#dce5dc] dark:border-[#2d402d] bg-gray-50/50 dark:bg-black/10">
@@ -80,11 +80,11 @@ function createPopup(title, content, size = 'medium') {
             </div>
         </div>
     `;
-    
+
     document.body.appendChild(popup);
     document.body.style.overflow = 'hidden';
     currentPopup = popup;
-    
+
     return popup;
 }
 
@@ -95,7 +95,7 @@ function closeAllPopups() {
     }
     const existingPopup = document.getElementById('dynamicPopup');
     if (existingPopup) existingPopup.remove();
-    
+
     document.body.style.overflow = 'auto';
 }
 
@@ -109,42 +109,42 @@ document.addEventListener('keydown', (e) => {
 function showToast(message, type = 'info') {
     const existingToast = document.getElementById('toast');
     if (existingToast) existingToast.remove();
-    
+
     const icons = {
         success: 'check_circle',
         error: 'error',
         warning: 'warning',
         info: 'info'
     };
-    
+
     const colors = {
         success: 'border-green-500 bg-green-50 dark:bg-green-900/20',
         error: 'border-red-500 bg-red-50 dark:bg-red-900/20',
         warning: 'border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20',
         info: 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
     };
-    
+
     const iconColors = {
         success: 'text-green-600 dark:text-green-400',
         error: 'text-red-600 dark:text-red-400',
         warning: 'text-yellow-600 dark:text-yellow-400',
         info: 'text-blue-600 dark:text-blue-400'
     };
-    
+
     const toast = document.createElement('div');
     toast.id = 'toast';
     toast.className = `fixed top-20 left-1/2 transform -translate-x-1/2 ${colors[type]} border-2 rounded-xl shadow-2xl px-6 py-4 z-[110] min-w-[300px]`;
     toast.style.animation = 'slideUp 0.3s ease-out';
-    
+
     toast.innerHTML = `
         <div class="flex items-center gap-3">
             <span class="material-symbols-outlined ${iconColors[type]} text-3xl">${icons[type]}</span>
             <p class="text-zinc-900 dark:text-white font-medium">${message}</p>
         </div>
     `;
-    
+
     document.body.appendChild(toast);
-    
+
     setTimeout(() => {
         toast.style.animation = 'fadeIn 0.2s ease-out reverse';
         setTimeout(() => toast.remove(), 200);
@@ -162,7 +162,7 @@ function showDailyReport(childName) {
                 <h4 class="text-xl font-bold mb-2">التقرير اليومي - ${childName}</h4>
                 <p class="text-sm text-[#638863] dark:text-[#a3c2a3]">التاريخ: ${new Date().toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="bg-white dark:bg-[#112111] p-4 rounded-xl border border-[#dce5dc] dark:border-[#2d402d]">
                     <div class="flex items-center gap-3 mb-3">
@@ -173,7 +173,7 @@ function showDailyReport(childName) {
                     <p class="text-sm text-[#638863] dark:text-[#a3c2a3]">الغداء: تناول 80%</p>
                     <p class="text-sm text-[#638863] dark:text-[#a3c2a3]">الوجبة الخفيفة: تناول بالكامل ✓</p>
                 </div>
-                
+
                 <div class="bg-white dark:bg-[#112111] p-4 rounded-xl border border-[#dce5dc] dark:border-[#2d402d]">
                     <div class="flex items-center gap-3 mb-3">
                         <span class="material-symbols-outlined text-primary text-2xl">bedtime</span>
@@ -183,7 +183,7 @@ function showDailyReport(childName) {
                     <p class="text-sm text-[#638863] dark:text-[#a3c2a3]">الوقت: 1:00 - 2:15 م</p>
                     <p class="text-sm text-[#638863] dark:text-[#a3c2a3]">الجودة: نوم هادئ ومريح</p>
                 </div>
-                
+
                 <div class="bg-white dark:bg-[#112111] p-4 rounded-xl border border-[#dce5dc] dark:border-[#2d402d]">
                     <div class="flex items-center gap-3 mb-3">
                         <span class="material-symbols-outlined text-primary text-2xl">mood</span>
@@ -192,7 +192,7 @@ function showDailyReport(childName) {
                     <p class="text-sm text-[#638863] dark:text-[#a3c2a3]">سعيد ومتفاعل طوال اليوم</p>
                     <p class="text-sm text-[#638863] dark:text-[#a3c2a3]">تعاون مع الأصدقاء بشكل ممتاز</p>
                 </div>
-                
+
                 <div class="bg-white dark:bg-[#112111] p-4 rounded-xl border border-[#dce5dc] dark:border-[#2d402d]">
                     <div class="flex items-center gap-3 mb-3">
                         <span class="material-symbols-outlined text-primary text-2xl">draw</span>
@@ -203,7 +203,7 @@ function showDailyReport(childName) {
                     <p class="text-sm text-[#638863] dark:text-[#a3c2a3]">ألعاب حركية في الحديقة</p>
                 </div>
             </div>
-            
+
             <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 p-4 rounded-xl">
                 <div class="flex items-start gap-3">
                     <span class="material-symbols-outlined text-amber-600 text-xl">lightbulb</span>
@@ -215,7 +215,7 @@ function showDailyReport(childName) {
                     </div>
                 </div>
             </div>
-            
+
             <div class="flex justify-end gap-3 pt-4 border-t border-[#dce5dc] dark:border-[#2d402d]">
                 <button onclick="closeAllPopups()" class="px-6 py-2.5 rounded-xl border border-[#dce5dc] dark:border-[#2d402d] hover:bg-gray-100 dark:hover:bg-[#2d402d] transition-colors font-medium">
                     إغلاق
@@ -227,7 +227,7 @@ function showDailyReport(childName) {
             </div>
         </div>
     `;
-    
+
     createPopup(`التقرير اليومي - ${childName}`, content, 'large');
 }
 
@@ -254,11 +254,11 @@ function printAttendanceReport() {
 // تصفية حسب الشهر
 function filterByMonth(month) {
     showToast(`جاري تحميل بيانات ${getMonthName(month)}...`, 'info');
-    
+
     setTimeout(() => {
         // هنا يمكن إضافة كود لتحميل البيانات من الخادم
         showToast(`تم تحميل بيانات ${getMonthName(month)} بنجاح`, 'success');
-        
+
         // تحديث عنوان الجدول
         const tableTitle = document.querySelector('.bg-white.dark\\:bg-\\[\\#1a2e1a\\].rounded-2xl .p-6 span.text-xs');
         if (tableTitle) {
@@ -297,10 +297,10 @@ function filterActivities(period) {
         btn.classList.remove('bg-primary', 'text-[#111811]', 'shadow-lg', 'shadow-primary/20');
         btn.classList.add('bg-white', 'dark:bg-[#1a2e1a]', 'border', 'border-[#dce5dc]', 'dark:border-[#2d402d]');
     });
-    
+
     event.target.classList.add('bg-primary', 'text-[#111811]', 'shadow-lg', 'shadow-primary/20');
     event.target.classList.remove('bg-white', 'dark:bg-[#1a2e1a]', 'border', 'border-[#dce5dc]', 'dark:border-[#2d402d]');
-    
+
     showToast(`تم التصفية: ${period}`, 'info');
 }
 
@@ -314,7 +314,7 @@ function showActivityDetails(activityName, childName, date) {
                 <h4 class="text-xl font-bold mb-2">${activityName}</h4>
                 <p class="text-sm text-[#638863] dark:text-[#a3c2a3]">${childName} • ${date}</p>
             </div>
-            
+
             <div class="space-y-4">
                 <div>
                     <h5 class="font-bold mb-2">وصف النشاط</h5>
@@ -322,7 +322,7 @@ function showActivityDetails(activityName, childName, date) {
                         نشاط إبداعي يهدف إلى تنمية المهارات الحركية الدقيقة والإبداع الفني لدى الأطفال.
                     </p>
                 </div>
-                
+
                 <div>
                     <h5 class="font-bold mb-2">الأهداف التعليمية</h5>
                     <ul class="list-disc list-inside text-sm text-[#638863] dark:text-[#a3c2a3] space-y-1">
@@ -331,7 +331,7 @@ function showActivityDetails(activityName, childName, date) {
                         <li>تعلم التعاون والعمل الجماعي</li>
                     </ul>
                 </div>
-                
+
                 <div>
                     <h5 class="font-bold mb-2">تقييم الأداء</h5>
                     <div class="flex items-center gap-2 mb-2">
@@ -343,7 +343,7 @@ function showActivityDetails(activityName, childName, date) {
                     </p>
                 </div>
             </div>
-            
+
             <div class="flex justify-end gap-3 pt-4 border-t border-[#dce5dc] dark:border-[#2d402d]">
                 <button onclick="closeAllPopups()" class="px-6 py-2.5 rounded-xl border border-[#dce5dc] dark:border-[#2d402d] hover:bg-gray-100 dark:hover:bg-[#2d402d] transition-colors font-medium">
                     إغلاق
@@ -351,7 +351,7 @@ function showActivityDetails(activityName, childName, date) {
             </div>
         </div>
     `;
-    
+
     createPopup('تفاصيل النشاط', content, 'medium');
 }
 
@@ -361,7 +361,7 @@ function showActivityDetails(activityName, childName, date) {
 // معالجة إضافة طفل جديد
 function handleAddChild(event) {
     event.preventDefault();
-    
+
     const formData = new FormData(event.target);
     const childData = {
         firstName: formData.get('firstName') || document.querySelector('input[placeholder*="ليلى"]').value,
@@ -371,14 +371,14 @@ function handleAddChild(event) {
         level: formData.get('level'),
         class: formData.get('class')
     };
-    
+
     if (!childData.firstName || !childData.lastName || !childData.gender || !childData.birthdate) {
         showToast('يرجى ملء جميع الحقول المطلوبة', 'error');
         return;
     }
-    
+
     showToast('جاري إضافة الطفل...', 'info');
-    
+
     setTimeout(() => {
         showToast(`تم إضافة ${childData.firstName} ${childData.lastName} بنجاح!`, 'success');
         setTimeout(() => {
@@ -408,12 +408,12 @@ let attachedFiles = [];
 // التبديل بين المحادثات
 function switchChat(chatName, chatRole, chatImage) {
     currentChat = { name: chatName, role: chatRole, image: chatImage };
-    
+
     console.log('Switching to chat:', chatName);
-    
+
     // البحث عن هيدر المحادثة بطرق متعددة
     let chatHeader = document.querySelector('.lg\\:col-span-2 .p-5.border-b');
-    
+
     // محاولة بديلة
     if (!chatHeader) {
         const chatArea = document.querySelector('.lg\\:col-span-2');
@@ -421,9 +421,9 @@ function switchChat(chatName, chatRole, chatImage) {
             chatHeader = chatArea.querySelector('.border-b');
         }
     }
-    
+
     console.log('Chat header found:', chatHeader);
-    
+
     if (chatHeader) {
         chatHeader.innerHTML = `
             <div class="flex items-center gap-3">
@@ -439,19 +439,19 @@ function switchChat(chatName, chatRole, chatImage) {
         `;
         console.log('Chat header updated');
     }
-    
+
     // البحث عن حاوية الرسائل
     let messagesContainer = document.querySelector('.lg\\:col-span-2 .flex-1.p-6.overflow-y-auto');
-    
+
     if (!messagesContainer) {
         const chatArea = document.querySelector('.lg\\:col-span-2');
         if (chatArea) {
             messagesContainer = chatArea.querySelector('.flex-1.overflow-y-auto');
         }
     }
-    
+
     console.log('Messages container found:', messagesContainer);
-    
+
     if (messagesContainer) {
         messagesContainer.innerHTML = `
             <div class="flex items-start gap-4 max-w-3xl">
@@ -466,45 +466,45 @@ function switchChat(chatName, chatRole, chatImage) {
         `;
         console.log('Messages cleared and welcome message added');
     }
-    
+
     // تحديث الحالة النشطة في القائمة
     document.querySelectorAll('.lg\\:col-span-1 a').forEach(link => {
         link.classList.remove('bg-primary/5');
     });
-    
+
     if (event && event.target) {
         const clickedLink = event.target.closest('a');
         if (clickedLink) {
             clickedLink.classList.add('bg-primary/5');
         }
     }
-    
+
     showToast(`تم فتح محادثة ${chatName}`, 'success');
 }
 
 // إرسال رسالة جديدة
 function sendMessage(event) {
     if (event) event.preventDefault();
-    
+
     const messageInput = document.querySelector('input[placeholder*="اكتب رسالتك"]');
     if (!messageInput) {
         console.error('Message input not found');
         showToast('خطأ: لم يتم العثور على حقل الرسالة', 'error');
         return;
     }
-    
+
     const messageText = messageInput.value.trim();
     console.log('Message text:', messageText);
     console.log('Attached files:', attachedFiles.length);
-    
+
     if (!messageText && attachedFiles.length === 0) {
         showToast('يرجى كتابة رسالة أو إرفاق ملف', 'warning');
         return;
     }
-    
+
     // البحث عن حاوية الرسائل بطرق متعددة
     let messagesContainer = document.querySelector('.lg\\:col-span-2 .flex-1.p-6.overflow-y-auto');
-    
+
     // محاولة بديلة للعثور على الحاوية
     if (!messagesContainer) {
         const chatArea = document.querySelector('.lg\\:col-span-2');
@@ -512,19 +512,19 @@ function sendMessage(event) {
             messagesContainer = chatArea.querySelector('.flex-1.overflow-y-auto');
         }
     }
-    
+
     console.log('Messages container:', messagesContainer);
-    
+
     if (!messagesContainer) {
         console.error('Messages container not found');
         showToast('خطأ: لم يتم العثور على منطقة الرسائل', 'error');
         return;
     }
-    
+
     const messageDiv = document.createElement('div');
     messageDiv.className = 'flex items-start gap-4 max-w-3xl flex-row-reverse';
     messageDiv.style.marginTop = '1.5rem';
-    
+
     let filesHTML = '';
     if (attachedFiles.length > 0) {
         filesHTML = '<div class="flex gap-2 mt-3 flex-wrap">';
@@ -552,7 +552,7 @@ function sendMessage(event) {
         });
         filesHTML += '</div>';
     }
-    
+
     messageDiv.innerHTML = `
         <div class="w-10 h-10 rounded-full bg-cover bg-center flex-shrink-0" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCoNKPpXzXYSEFlvxulodXggbSdsxj0jHDD6aVOTiDJQRBElKwveAMc7giiWmqSnxi-S-OfILt2hkFl-eKa6MTGgvznUfckgigR_vu-XKy_8EP8IVi7EcyVofU1aOxwoSPuTjAsbu-SnPMxr4x6JloEp9utClJEQqqiRcGMxr_VZGM_k2RLIdCpWPGjzyCTUesuurXg6AsSZJb8OOmLDF1p4JHg_hPE7Ay0BxOtczfN42O9_JIZ37cKc29jM6Y5Sp11mv-pLaYmpkOW')"></div>
         <div class="flex-1">
@@ -563,12 +563,12 @@ function sendMessage(event) {
             <span class="text-xs text-[#638863] dark:text-[#a3c2a3] mt-1 block text-right">الآن</span>
         </div>
     `;
-    
+
     messagesContainer.appendChild(messageDiv);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    
+
     console.log('Message added successfully');
-    
+
     messageInput.value = '';
     attachedFiles = [];
     updateAttachedFilesDisplay();
@@ -616,14 +616,14 @@ function attachFile() {
                 showToast(`الملف ${file.name} كبير جداً (الحد الأقصى 10MB)`, 'error');
                 return;
             }
-            
+
             const fileObj = {
                 name: file.name,
                 size: file.size,
                 type: file.type,
                 file: file
             };
-            
+
             // إنشاء معاينة للصور
             if (file.type.startsWith('image/')) {
                 const reader = new FileReader();
@@ -638,7 +638,7 @@ function attachFile() {
                 updateAttachedFilesDisplay();
             }
         });
-        
+
         if (files.length > 0) {
             showToast(`تم إرفاق ${files.length} ملف`, 'success');
         }
@@ -649,29 +649,29 @@ function attachFile() {
 // تحديث عرض الملفات المرفقة
 function updateAttachedFilesDisplay() {
     let container = document.getElementById('attachedFilesContainer');
-    
+
     if (attachedFiles.length === 0) {
         if (container) container.remove();
         return;
     }
-    
+
     if (!container) {
         container = document.createElement('div');
         container.id = 'attachedFilesContainer';
         container.className = 'px-5 py-3 border-t border-[#dce5dc] dark:border-[#2d402d] bg-gray-50/50 dark:bg-black/20';
-        
+
         // البحث عن منطقة الإدخال بطرق متعددة
         let chatFooter = document.querySelector('.lg\\:col-span-2 .p-5.border-t');
-        
+
         if (!chatFooter) {
             const chatArea = document.querySelector('.lg\\:col-span-2');
             if (chatArea) {
                 chatFooter = chatArea.querySelector('.border-t:last-child');
             }
         }
-        
+
         console.log('Chat footer found:', chatFooter);
-        
+
         if (chatFooter && chatFooter.parentNode) {
             chatFooter.parentNode.insertBefore(container, chatFooter);
             console.log('Attached files container added');
@@ -680,7 +680,7 @@ function updateAttachedFilesDisplay() {
             return;
         }
     }
-    
+
     container.innerHTML = `
         <div class="flex items-center gap-2 mb-2">
             <span class="text-xs font-bold text-[#638863] dark:text-[#a3c2a3]">الملفات المرفقة (${attachedFiles.length})</span>
@@ -689,7 +689,7 @@ function updateAttachedFilesDisplay() {
         <div class="flex gap-2 flex-wrap">
             ${attachedFiles.map((file, index) => `
                 <div class="relative group">
-                    ${file.preview ? 
+                    ${file.preview ?
                         `<img src="${file.preview}" class="w-16 h-16 rounded-lg object-cover border border-[#dce5dc] dark:border-[#2d402d]" />` :
                         `<div class="w-16 h-16 rounded-lg border border-[#dce5dc] dark:border-[#2d402d] bg-white dark:bg-[#112111] flex items-center justify-center">
                             <span class="material-symbols-outlined text-primary text-2xl">description</span>
@@ -703,7 +703,7 @@ function updateAttachedFilesDisplay() {
             `).join('')}
         </div>
     `;
-    
+
     console.log('Attached files display updated');
 }
 
@@ -734,17 +734,17 @@ function composeNewMessage() {
                     <option value="admin">إدارة الحضانة</option>
                 </select>
             </div>
-            
+
             <div>
                 <label class="block text-sm font-medium mb-2">الموضوع</label>
                 <input type="text" required placeholder="موضوع الرسالة" class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
             </div>
-            
+
             <div>
                 <label class="block text-sm font-medium mb-2">الرسالة</label>
                 <textarea required rows="6" placeholder="اكتب رسالتك هنا..." class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
             </div>
-            
+
             <div class="flex justify-end gap-3 pt-4 border-t border-[#dce5dc] dark:border-[#2d402d]">
                 <button type="button" onclick="closeAllPopups()" class="px-6 py-2.5 rounded-xl border border-[#dce5dc] dark:border-[#2d402d] hover:bg-gray-100 dark:hover:bg-[#2d402d] transition-colors font-medium">
                     إلغاء
@@ -756,7 +756,7 @@ function composeNewMessage() {
             </div>
         </form>
     `;
-    
+
     createPopup('رسالة جديدة', content, 'medium');
 }
 
@@ -775,11 +775,11 @@ function handleSendNewMessage(event) {
 // تحديد جميع الإشعارات كمقروءة
 function markAllAsRead() {
     showToast('جاري تحديد جميع الإشعارات كمقروءة...', 'info');
-    
+
     setTimeout(() => {
         const badge = document.querySelector('.bg-red-500');
         if (badge) badge.remove();
-        
+
         showToast('تم تحديد جميع الإشعارات كمقروءة', 'success');
     }, 1000);
 }
@@ -893,11 +893,11 @@ function showNotificationDetails(title, message) {
             <div class="bg-primary/10 p-5 rounded-xl border-r-4 border-primary">
                 <h4 class="text-xl font-bold mb-2">${title}</h4>
             </div>
-            
+
             <div class="text-[#638863] dark:text-[#a3c2a3]">
                 <p>${message}</p>
             </div>
-            
+
             <div class="flex justify-end gap-3 pt-4 border-t border-[#dce5dc] dark:border-[#2d402d]">
                 <button onclick="closeAllPopups()" class="px-6 py-2.5 rounded-xl bg-primary text-[#111811] hover:brightness-110 transition-colors font-medium">
                     حسناً
@@ -905,7 +905,7 @@ function showNotificationDetails(title, message) {
             </div>
         </div>
     `;
-    
+
     createPopup('تفاصيل الإشعار', content, 'medium');
 }
 
@@ -919,7 +919,7 @@ function showPaymentHistory() {
                 <h4 class="text-xl font-bold mb-2">سجل الدفعات</h4>
                 <p class="text-sm text-[#638863] dark:text-[#a3c2a3]">آخر 6 أشهر</p>
             </div>
-            
+
             <div class="space-y-3">
                 <div class="bg-white dark:bg-[#112111] p-4 rounded-xl border border-[#dce5dc] dark:border-[#2d402d]">
                     <div class="flex justify-between items-start mb-2">
@@ -938,7 +938,7 @@ function showPaymentHistory() {
                         <span>٥ مارس ٢٠٢٦</span>
                     </div>
                 </div>
-                
+
                 <div class="bg-white dark:bg-[#112111] p-4 rounded-xl border border-[#dce5dc] dark:border-[#2d402d]">
                     <div class="flex justify-between items-start mb-2">
                         <div>
@@ -956,7 +956,7 @@ function showPaymentHistory() {
                         <span>٨ فبراير ٢٠٢٦</span>
                     </div>
                 </div>
-                
+
                 <div class="bg-white dark:bg-[#112111] p-4 rounded-xl border border-[#dce5dc] dark:border-[#2d402d]">
                     <div class="flex justify-between items-start mb-2">
                         <div>
@@ -975,7 +975,7 @@ function showPaymentHistory() {
                     </div>
                 </div>
             </div>
-            
+
             <div class="flex justify-end gap-3 pt-4 border-t border-[#dce5dc] dark:border-[#2d402d]">
                 <button onclick="closeAllPopups()" class="px-6 py-2.5 rounded-xl border border-[#dce5dc] dark:border-[#2d402d] hover:bg-gray-100 dark:hover:bg-[#2d402d] transition-colors font-medium">
                     إغلاق
@@ -987,7 +987,7 @@ function showPaymentHistory() {
             </div>
         </div>
     `;
-    
+
     createPopup('سجل الدفعات', content, 'medium');
 }
 
@@ -1006,7 +1006,7 @@ function processPayment(amount) {
                 <p class="text-sm text-[#638863] dark:text-[#a3c2a3] mb-2">المبلغ المطلوب</p>
                 <p class="text-4xl font-black text-primary">${amount.toLocaleString('ar-EG')} ج.م</p>
             </div>
-            
+
             <div>
                 <label class="block text-sm font-medium mb-2">طريقة الدفع</label>
                 <select required class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
@@ -1016,12 +1016,12 @@ function processPayment(amount) {
                     <option value="fawry">فوري / كروت الدفع</option>
                 </select>
             </div>
-            
+
             <div>
                 <label class="block text-sm font-medium mb-2">رقم البطاقة</label>
                 <input type="text" required placeholder="1234 5678 9012 3456" maxlength="19" class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
             </div>
-            
+
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium mb-2">تاريخ الانتهاء</label>
@@ -1032,7 +1032,7 @@ function processPayment(amount) {
                     <input type="text" required placeholder="123" maxlength="3" class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
                 </div>
             </div>
-            
+
             <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-4 rounded-xl">
                 <div class="flex items-start gap-3">
                     <span class="material-symbols-outlined text-blue-600 text-xl">lock</span>
@@ -1041,7 +1041,7 @@ function processPayment(amount) {
                     </p>
                 </div>
             </div>
-            
+
             <div class="flex justify-end gap-3 pt-4 border-t border-[#dce5dc] dark:border-[#2d402d]">
                 <button type="button" onclick="closeAllPopups()" class="px-6 py-2.5 rounded-xl border border-[#dce5dc] dark:border-[#2d402d] hover:bg-gray-100 dark:hover:bg-[#2d402d] transition-colors font-medium">
                     إلغاء
@@ -1053,18 +1053,18 @@ function processPayment(amount) {
             </div>
         </form>
     `;
-    
+
     createPopup('إتمام عملية الدفع', content, 'medium');
 }
 
 function handlePayment(event, amount) {
     event.preventDefault();
     showToast('جاري معالجة الدفع...', 'info');
-    
+
     setTimeout(() => {
         closeAllPopups();
         showToast(`تم الدفع بنجاح! المبلغ: ${amount.toLocaleString('ar-EG')} ج.م`, 'success');
-        
+
         setTimeout(() => {
             showPaymentReceipt(amount);
         }, 1500);
@@ -1079,12 +1079,12 @@ function showPaymentReceipt(amount) {
                     <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-5xl">check_circle</span>
                 </div>
             </div>
-            
+
             <div>
                 <h4 class="text-2xl font-bold mb-2">تم الدفع بنجاح!</h4>
                 <p class="text-[#638863] dark:text-[#a3c2a3]">شكراً لك على الدفع</p>
             </div>
-            
+
             <div class="bg-gray-50 dark:bg-[#112111] p-5 rounded-xl">
                 <div class="space-y-3 text-right">
                     <div class="flex justify-between">
@@ -1105,7 +1105,7 @@ function showPaymentReceipt(amount) {
                     </div>
                 </div>
             </div>
-            
+
             <div class="flex justify-center gap-3 pt-4">
                 <button onclick="closeAllPopups()" class="px-6 py-2.5 rounded-xl border border-[#dce5dc] dark:border-[#2d402d] hover:bg-gray-100 dark:hover:bg-[#2d402d] transition-colors font-medium">
                     إغلاق
@@ -1117,7 +1117,7 @@ function showPaymentReceipt(amount) {
             </div>
         </div>
     `;
-    
+
     createPopup('إيصال الدفع', content, 'small');
 }
 
@@ -1134,9 +1134,9 @@ function printReceipt() {
 // حفظ بيانات الحساب
 function saveAccountSettings(event) {
     if (event) event.preventDefault();
-    
+
     showToast('جاري حفظ التغييرات...', 'info');
-    
+
     setTimeout(() => {
         showToast('تم حفظ بيانات الحساب بنجاح!', 'success');
     }, 1000);
@@ -1145,9 +1145,9 @@ function saveAccountSettings(event) {
 // تطبيق إعدادات المظهر
 function applyAppearanceSettings(event) {
     if (event) event.preventDefault();
-    
+
     showToast('جاري تطبيق التغييرات...', 'info');
-    
+
     setTimeout(() => {
         showToast('تم تطبيق إعدادات المظهر بنجاح!', 'success');
     }, 1000);
@@ -1156,28 +1156,28 @@ function applyAppearanceSettings(event) {
 // تغيير كلمة المرور
 function changePassword(event) {
     if (event) event.preventDefault();
-    
+
     const currentPassword = document.querySelector('input[placeholder="••••••••"]').value;
     const newPassword = document.querySelectorAll('input[placeholder="••••••••"]')[1]?.value;
     const confirmPassword = document.querySelectorAll('input[placeholder="••••••••"]')[2]?.value;
-    
+
     if (!currentPassword || !newPassword || !confirmPassword) {
         showToast('يرجى ملء جميع الحقول', 'error');
         return;
     }
-    
+
     if (newPassword !== confirmPassword) {
         showToast('كلمة المرور الجديدة غير متطابقة', 'error');
         return;
     }
-    
+
     if (newPassword.length < 8) {
         showToast('كلمة المرور يجب أن تكون 8 أحرف على الأقل', 'error');
         return;
     }
-    
+
     showToast('جاري تغيير كلمة المرور...', 'info');
-    
+
     setTimeout(() => {
         showToast('تم تغيير كلمة المرور بنجاح!', 'success');
         document.querySelectorAll('input[type="password"]').forEach(input => input.value = '');
@@ -1195,7 +1195,7 @@ function deleteAccount() {
                     هذا الإجراء لا يمكن التراجع عنه. سيتم حذف جميع بياناتك وبيانات أطفالك بشكل نهائي.
                 </p>
             </div>
-            
+
             <div class="bg-white dark:bg-[#112111] p-5 rounded-xl border border-[#dce5dc] dark:border-[#2d402d]">
                 <h5 class="font-bold mb-3">سيتم حذف:</h5>
                 <ul class="space-y-2 text-sm text-[#638863] dark:text-[#a3c2a3]">
@@ -1217,13 +1217,13 @@ function deleteAccount() {
                     </li>
                 </ul>
             </div>
-            
+
             <form onsubmit="confirmDeleteAccount(event)" class="space-y-4">
                 <div>
                     <label class="block text-sm font-medium mb-2">للتأكيد، اكتب "حذف الحساب"</label>
                     <input type="text" id="deleteConfirmation" required placeholder="حذف الحساب" class="w-full px-4 py-3 bg-background-light dark:bg-[#112111] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/50">
                 </div>
-                
+
                 <div class="flex justify-center gap-3 pt-4">
                     <button type="button" onclick="closeAllPopups()" class="px-8 py-3 rounded-xl border-2 border-[#dce5dc] dark:border-[#2d402d] hover:bg-gray-100 dark:hover:bg-[#2d402d] transition-colors font-bold">
                         إلغاء
@@ -1236,26 +1236,26 @@ function deleteAccount() {
             </form>
         </div>
     `;
-    
+
     createPopup('تأكيد حذف الحساب', content, 'medium');
 }
 
 function confirmDeleteAccount(event) {
     event.preventDefault();
-    
+
     const confirmation = document.getElementById('deleteConfirmation').value;
-    
+
     if (confirmation !== 'حذف الحساب') {
         showToast('يرجى كتابة "حذف الحساب" للتأكيد', 'error');
         return;
     }
-    
+
     showToast('جاري حذف الحساب...', 'info');
-    
+
     setTimeout(() => {
         closeAllPopups();
         showToast('تم حذف الحساب بنجاح', 'success');
-        
+
         setTimeout(() => {
             window.location.href = '../index.html';
         }, 2000);
@@ -1301,7 +1301,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const darkModeToggle = document.querySelector('input[type="checkbox"]');
         if (darkModeToggle) darkModeToggle.checked = true;
     }
-    
+
     // ربط أزرار التقرير اليومي
     const reportButtons = findButtonsByText('عرض التقرير اليومي');
     reportButtons.forEach(button => {
@@ -1311,21 +1311,21 @@ document.addEventListener('DOMContentLoaded', function() {
             showDailyReport(childName);
         };
     });
-    
+
     // ربط نموذج إضافة طفل
     const addChildForm = document.querySelector('form');
     if (addChildForm && window.location.pathname.includes('addchild')) {
         addChildForm.onsubmit = handleAddChild;
-        
+
         const cancelButton = document.querySelector('button[type="button"]');
         if (cancelButton) cancelButton.onclick = cancelAddChild;
     }
-    
+
     // ربط زر إرسال الرسالة
     const sendButton = findButtonByIcon('send');
     if (sendButton && window.location.pathname.includes('messages')) {
         sendButton.onclick = sendMessage;
-        
+
         const messageInput = document.querySelector('input[placeholder*="اكتب رسالتك"]');
         if (messageInput) {
             messageInput.addEventListener('keypress', function(e) {
@@ -1334,14 +1334,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         }
-        
+
         const attachButton = findButtonByIcon('attach_file');
         if (attachButton) attachButton.onclick = attachFile;
-        
+
         const newMessageButton = findButtonByText('رسالة جديدة');
         if (newMessageButton) newMessageButton.onclick = composeNewMessage;
     }
-    
+
     // ربط أزرار الإشعارات
     if (window.location.pathname.includes('notification')) {
         document.querySelectorAll('button').forEach((button) => {
@@ -1360,7 +1360,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
+
     // ربط أزرار الدفع
     if (window.location.pathname.includes('payment')) {
         const historyButton = document.getElementById('payment-history-button');
@@ -1369,7 +1369,7 @@ document.addEventListener('DOMContentLoaded', function() {
             historyButton.onclick = showPaymentHistory;
         }
     }
-    
+
     // ربط أزرار الإعدادات
     if (window.location.pathname.includes('settings')) {
         const forms = document.querySelectorAll('form');
@@ -1378,23 +1378,23 @@ document.addEventListener('DOMContentLoaded', function() {
             if (index === 1) form.onsubmit = applyAppearanceSettings;
             if (index === 2) form.onsubmit = changePassword;
         });
-        
+
         const deleteButton = findButtonByText('حذف الحساب نهائياً');
         if (deleteButton) deleteButton.onclick = deleteAccount;
-        
+
         const darkModeToggle = document.querySelector('input[type="checkbox"]');
         if (darkModeToggle) darkModeToggle.onchange = function() { toggleDarkMode(this); };
     }
-    
+
     // ربط أزرار الحضور
     if (window.location.pathname.includes('absence')) {
         const printButton = findButtonByText('طباعة التقرير');
         if (printButton) printButton.onclick = printAttendanceReport;
-        
+
         const showAllButton = findButtonByText('عرض جميع أيام الشهر');
         if (showAllButton) showAllButton.onclick = showAllMonthDays;
     }
-    
+
     // ربط أزرار الأنشطة
     if (window.location.pathname.includes('activities')) {
         const previousMonthButton = findButtonByText('عرض أنشطة الشهر الماضي');
@@ -1408,10 +1408,10 @@ document.addEventListener('DOMContentLoaded', function() {
 function searchTable() {
     const input = document.getElementById('searchInput');
     if (!input) return;
-    
+
     const filter = input.value.toLowerCase();
     const tables = document.querySelectorAll('table tbody');
-    
+
     tables.forEach(table => {
         const rows = table.querySelectorAll('tr');
         rows.forEach(row => {
