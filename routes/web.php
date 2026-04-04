@@ -90,6 +90,7 @@ Route::group(['prefix' => 'teacher', 'middleware' => ['auth', 'role:teacher']], 
     Route::get('/reports', [TeacherReportController::class, 'index'])->name('teacher.reports');
     Route::post('/reports', [TeacherReportController::class, 'store'])->name('teacher.reports.store');
     Route::get('/teacherdashboard', [TeacherDashboardController::class, 'index'])->name('teacher.teacherdashboard');
+    Route::post('/teacherdashboard/attendance', [TeacherDashboardController::class, 'storeAttendance'])->name('teacher.attendance.store');
     Route::patch('/teacherdashboard/profile', [TeacherDashboardController::class, 'updateProfile'])->name('teacher.profile.update');
 });
 

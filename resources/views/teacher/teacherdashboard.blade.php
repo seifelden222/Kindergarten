@@ -92,9 +92,14 @@
                         <div class="lg:col-span-8 flex flex-col gap-6">
                             <h3 class="text-xl font-bold">قائمة الفصل</h3>
 
+                            <form method="POST" action="{{ route('teacher.attendance.store') }}" class="contents">
+                                @csrf
+
                             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                                 @forelse ($studentsForDashboard as $student)
                                     <div class="bg-white dark:bg-[#1a2a1a] rounded-xl p-4 border border-[#dce5dc] dark:border-[#2a3a2a] flex flex-col items-center text-center gap-3">
+                                        <input type="hidden" name="attendance[{{ $loop->index }}][user_id]" value="{{ $student['id'] }}">
+                                        <input type="hidden" name="attendance[{{ $loop->index }}][status]" value="{{ $student['is_present'] ? 'present' : 'absent' }}" data-status-input>
                                         <div class="relative">
                                             <div class="size-16 rounded-full bg-zinc-200 border-2 {{ $student['is_present'] ? 'border-primary' : 'border-zinc-300' }}"></div>
                                             <div class="absolute bottom-0 right-0 size-4 {{ $student['is_present'] ? 'bg-primary' : 'bg-zinc-300' }} border-2 border-white dark:border-[#1a2a1a] rounded-full"></div>
@@ -103,9 +108,9 @@
                                             <p class="font-bold">{{ $student['name'] }}</p>
                                             <p class="text-xs text-[#638863]">{{ $student['level_name'] ?: 'غير محدد' }}</p>
                                         </div>
-                                        <div class="flex w-full gap-2 mt-2">
-                                            <button class="flex-1 text-xs font-bold py-2 rounded-lg {{ $student['is_present'] ? 'bg-primary text-white' : 'bg-primary/10 text-primary' }}">حاضر</button>
-                                            <button class="flex-1 text-xs font-bold py-2 rounded-lg {{ $student['is_present'] ? 'bg-[#f0f4f0] dark:bg-[#2a3a2a] text-[#638863]' : 'bg-red-500 text-white' }}">غائب</button>
+                                        <div class="flex w-full gap-2 mt-2" data-attendance-buttons>
+                                            <button type="button" data-status-value="present" class="flex-1 text-xs font-bold py-2 rounded-lg {{ $student['is_present'] ? 'bg-primary text-white' : 'bg-primary/10 text-primary' }}">حاضر</button>
+                                            <button type="button" data-status-value="absent" class="flex-1 text-xs font-bold py-2 rounded-lg {{ $student['is_present'] ? 'bg-[#f0f4f0] dark:bg-[#2a3a2a] text-[#638863]' : 'bg-red-500 text-white' }}">غائب</button>
                                         </div>
                                     </div>
                                 @empty
@@ -116,7 +121,7 @@
                             </div>
 
                             <div class="flex flex-wrap gap-4 py-4">
-                                <button class="flex min-w-[140px] flex-1 items-center justify-center rounded-xl h-14 px-6 bg-primary text-white text-base font-bold shadow-lg shadow-primary/20">
+                                <button type="submit" class="flex min-w-[140px] flex-1 items-center justify-center rounded-xl h-14 px-6 bg-primary text-white text-base font-bold shadow-lg shadow-primary/20">
                                     <span class="material-symbols-outlined ml-2">check_circle</span>
                                     تسجيل الحضور
                                 </button>
@@ -129,6 +134,7 @@
                                     ملاحظة سلوكية
                                 </button>
                             </div>
+                            </form>
 
                             <div class="flex flex-col gap-4">
                                 <div class="flex items-center justify-between">
@@ -238,6 +244,35 @@
     </template>
 
     <script src="{{ asset('js/teacher-functions.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('[data-attendance-buttons]').forEach(function (group) {
+                const statusInput = group.closest('div').querySelector('[data-status-input]');
+                const presentButton = group.querySelector('[data-status-value="present"]');
+                const absentButton = group.querySelector('[data-status-value="absent"]');
+
+                function applyStatus(status) {
+                    statusInput.value = status;
+
+                    if (status === 'present') {
+                        presentButton.className = 'flex-1 text-xs font-bold py-2 rounded-lg bg-primary text-white';
+                        absentButton.className = 'flex-1 text-xs font-bold py-2 rounded-lg bg-[#f0f4f0] dark:bg-[#2a3a2a] text-[#638863]';
+                    } else {
+                        presentButton.className = 'flex-1 text-xs font-bold py-2 rounded-lg bg-primary/10 text-primary';
+                        absentButton.className = 'flex-1 text-xs font-bold py-2 rounded-lg bg-red-500 text-white';
+                    }
+                }
+
+                presentButton.addEventListener('click', function () {
+                    applyStatus('present');
+                });
+
+                absentButton.addEventListener('click', function () {
+                    applyStatus('absent');
+                });
+            });
+        });
+    </script>
     @if ($errors->any())
         <script>
             document.addEventListener('DOMContentLoaded', function () {

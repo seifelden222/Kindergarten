@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTeacherAttendanceRequest;
 use App\Http\Requests\UpdateTeacherProfileRequest;
 use App\Models\Activity;
 use App\Models\Attendance;
@@ -106,7 +107,7 @@ class TeacherDashboardController extends Controller
     }
 
     /**
-     * @param Collection<int, User> $students
+     * @param  Collection<int, User>  $students
      * @return Collection<int, array<string, string>>
      */
     private function buildAlerts(Collection $students): Collection
@@ -137,6 +138,44 @@ class TeacherDashboardController extends Controller
             Carbon::SATURDAY => 'السبت',
             default => '-',
         };
+    }
+
+    public function storeAttendance(StoreTeacherAttendanceRequest $request): RedirectResponse
+    {
+        $attendanceRows = $request->validated('attendance');
+        $today = now()->toDateString();
+
+        foreach ($attendanceRows as $row) {
+            $userId = (int) $row['user_id'];
+            $status = $row['status'];
+
+            $attendance = Attendance::query()
+                ->where('user_id', $userId)
+                ->whereDate('check_in', $today)
+                ->first();
+
+            $payload = [
+                'absence_count' => $status === 'present' ? 0 : 1,
+                'check_out' => $status === 'present' ? now() : null,
+            ];
+
+            if ($attendance !== null) {
+                $attendance->update($payload);
+
+                continue;
+            }
+
+            Attendance::query()->create([
+                'user_id' => $userId,
+                'check_in' => now(),
+                'check_out' => $status === 'present' ? now() : null,
+                'absence_count' => $status === 'present' ? 0 : 1,
+            ]);
+        }
+
+        return redirect()
+            ->route('teacher.teacherdashboard')
+            ->with('status', 'تم تسجيل الحضور بنجاح.');
     }
 
     public function updateProfile(UpdateTeacherProfileRequest $request): RedirectResponse
