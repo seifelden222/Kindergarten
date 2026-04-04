@@ -1,5 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AttendanceController;
+use App\Http\Controllers\Admin\FinanceController;
+use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\TableScheduleController;
+use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Guardian\ChildController;
 use App\Http\Controllers\Guardian\PaymentController;
 use App\Http\Controllers\ProfileController;
@@ -31,13 +38,21 @@ Route::middleware('auth')->group(function () {
 
 // admin routes
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], function () {
-    Route::view('/absense', 'admin.absense')->name('admin.absense');
+    Route::get('/absense', [AttendanceController::class, 'index'])->name('admin.absense');
+    Route::post('/absense', [AttendanceController::class, 'store'])->name('admin.absense.store');
+    Route::patch('/absense/{attendance}', [AttendanceController::class, 'update'])->name('admin.absense.update');
     Route::view('/academicactivities', 'admin.academicactivities')->name('admin.academicactivities');
-    Route::view('/admindashboard', 'admin.admindashboard')->name('admin.admindashboard');
-    Route::view('/payment', 'admin.payment')->name('admin.payment');
-    Route::view('/reports', 'admin.reports')->name('admin.reports');
-    Route::view('tables', 'admin.tables')->name('admin.tables');
-    Route::view('/users', 'admin.users')->name('admin.users');
+    Route::get('/admindashboard', [AdminDashboardController::class, 'index'])->name('admin.admindashboard');
+    Route::get('/payment', [FinanceController::class, 'index'])->name('admin.payment');
+    Route::post('/payment', [FinanceController::class, 'store'])->name('admin.payment.store');
+    Route::delete('/payment/{payment}', [FinanceController::class, 'destroy'])->name('admin.payment.destroy');
+    Route::get('/reports', [ReportController::class, 'index'])->name('admin.reports');
+    Route::get('/settings', [SettingsController::class, 'edit'])->name('admin.settings');
+    Route::patch('/settings', [SettingsController::class, 'update'])->name('admin.settings.update');
+    Route::get('tables', [TableScheduleController::class, 'index'])->name('admin.tables');
+    Route::get('/users', [UserManagementController::class, 'index'])->name('admin.users');
+    Route::patch('/users/{user}', [UserManagementController::class, 'update'])->name('admin.users.update');
+    Route::delete('/users/{user}', [UserManagementController::class, 'destroy'])->name('admin.users.destroy');
 });
 // Child routes
 Route::group(['prefix' => 'child', 'middleware' => ['auth', 'role:child']], function () {

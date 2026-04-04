@@ -15,9 +15,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            AdminSeeder::class,
             TeacherSeeder::class,
             GuardianSeeder::class,
             ChildSeeder::class,
+            WeeklyScheduleSeeder::class,
         ]);
     }
 }

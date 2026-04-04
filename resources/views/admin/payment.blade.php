@@ -22,240 +22,275 @@
                     fontFamily: {
                         "display": ["Cairo", "sans-serif"]
                     },
-                    borderRadius: {
-                        "DEFAULT": "0.5rem",
-                        "lg": "1rem",
-                        "xl": "1.5rem",
-                        "full": "9999px"
-                    },
                 },
             },
         }
     </script>
     <style>
-        body {
-            font-family: 'Cairo', sans-serif;
-        }
-
+        body { font-family: 'Cairo', sans-serif; }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-
-        .active-nav {
-            background-color: #0ea60e;
-            color: white !important;
-        }
+        .active-nav { background-color: #0ea60e; color: white !important; }
     </style>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
     <div class="flex h-screen overflow-hidden">
- <x-admin-slider />
+        <x-admin-slider />
+
         <main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark">
             <header class="sticky top-0 z-10 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800 px-8 py-4 flex items-center justify-between">
                 <div class="flex items-center gap-6 flex-1">
                     <h2 class="text-xl font-bold">المالية</h2>
-                    <div class="relative w-full max-w-md">
+                    <form method="GET" action="{{ route('admin.payment') }}" class="relative w-full max-w-md">
                         <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400">search</span>
-                        <input class="w-full bg-zinc-100 dark:bg-zinc-800 border-none rounded-xl pr-10 pl-4 focus:ring-2 focus:ring-primary/50 text-sm py-2.5" placeholder="البحث عن دفعة أو فاتورة..." type="text" />
-                    </div>
-                </div>
-                <div class="flex items-center gap-4">
-                    <button class="p-2.5 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-primary/10 hover:text-primary transition-all relative">
-                        <span class="material-symbols-outlined">notifications</span>
-                        <span class="absolute top-2 right-2.5 size-2 bg-red-500 rounded-full border-2 border-white dark:border-zinc-900"></span>
-                    </button>
-                    <button class="p-2.5 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-primary/10 hover:text-primary transition-all">
-                        <span class="material-symbols-outlined">help_outline</span>
-                    </button>
+                        <input name="q" value="{{ $search }}" class="w-full bg-zinc-100 dark:bg-zinc-800 border-none rounded-xl pr-10 pl-4 focus:ring-2 focus:ring-primary/50 text-sm py-2.5" placeholder="ابحث برقم المرجع أو الاسم..." type="text" />
+                    </form>
                 </div>
             </header>
+
             <div class="p-8 space-y-8">
+                @if (session('status'))
+                    <div class="rounded-2xl border border-green-200 bg-green-50 px-5 py-4 text-sm font-medium text-green-700">
+                        {{ session('status') }}
+                    </div>
+                @endif
+
+                @if ($errors->any())
+                    <div class="rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-700">
+                        <p class="font-bold">تعذر حفظ عملية الدفع.</p>
+                        <ul class="mt-2 space-y-1">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-100 dark:border-zinc-800 flex flex-col gap-4 shadow-sm">
-                        <div class="flex items-center justify-between">
-                            <span class="material-symbols-outlined p-3 bg-green-50 text-green-600 rounded-xl text-3xl">trending_up</span>
-                            <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded">+18%</span>
-                        </div>
-                        <div>
-                            <p class="text-zinc-500 dark:text-zinc-400 text-sm font-medium">إجمالي الإيرادات الشهرية</p>
-                            <h3 class="text-3xl font-bold mt-2">87,450 <span class="text-xl font-normal text-zinc-400">ج.م</span></h3>
-                        </div>
+                    <div class="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-100 dark:border-zinc-800 shadow-sm">
+                        <p class="text-zinc-500 text-sm">إجمالي الإيرادات الشهرية</p>
+                        <h3 class="text-3xl font-bold mt-2 text-primary">{{ number_format((float) $monthlyRevenue, 2) }} <span class="text-xl font-normal text-zinc-400">ج.م</span></h3>
                     </div>
-                    <div class="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-100 dark:border-zinc-800 flex flex-col gap-4 shadow-sm">
-                        <div class="flex items-center justify-between">
-                            <span class="material-symbols-outlined p-3 bg-blue-50 text-blue-600 rounded-xl text-3xl">account_balance</span>
-                            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded">+4%</span>
-                        </div>
-                        <div>
-                            <p class="text-zinc-500 dark:text-zinc-400 text-sm font-medium">الرصيد الحالي</p>
-                            <h3 class="text-3xl font-bold mt-2">142,300 <span class="text-xl font-normal text-zinc-400">ج.م</span></h3>
-                        </div>
+                    <div class="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-100 dark:border-zinc-800 shadow-sm">
+                        <p class="text-zinc-500 text-sm">الرصيد الحالي</p>
+                        <h3 class="text-3xl font-bold mt-2">{{ number_format((float) $currentBalance, 2) }} <span class="text-xl font-normal text-zinc-400">ج.م</span></h3>
                     </div>
-                    <div class="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-100 dark:border-zinc-800 flex flex-col gap-4 shadow-sm">
-                        <div class="flex items-center justify-between">
-                            <span class="material-symbols-outlined p-3 bg-red-50 text-red-600 rounded-xl text-3xl">pending</span>
-                            <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded">+12%</span>
-                        </div>
-                        <div>
-                            <p class="text-zinc-500 dark:text-zinc-400 text-sm font-medium">المدفوعات المعلقة</p>
-                            <h3 class="text-3xl font-bold mt-2">18,750 <span class="text-xl font-normal text-zinc-400">ج.م</span></h3>
-                        </div>
+                    <div class="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-100 dark:border-zinc-800 shadow-sm">
+                        <p class="text-zinc-500 text-sm">المدفوعات المعلقة</p>
+                        <h3 class="text-3xl font-bold mt-2 text-amber-600">{{ number_format((float) $pendingPayments, 2) }} <span class="text-xl font-normal text-zinc-400">ج.م</span></h3>
                     </div>
-                    <div class="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-100 dark:border-zinc-800 flex flex-col gap-4 shadow-sm">
-                        <div class="flex items-center justify-between">
-                            <span class="material-symbols-outlined p-3 bg-amber-50 text-amber-600 rounded-xl text-3xl">warning</span>
-                            <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded">متأخر</span>
-                        </div>
-                        <div>
-                            <p class="text-zinc-500 dark:text-zinc-400 text-sm font-medium">الديون المتأخرة</p>
-                            <h3 class="text-3xl font-bold mt-2">9,200 <span class="text-xl font-normal text-zinc-400">ج.م</span></h3>
-                        </div>
+                    <div class="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-100 dark:border-zinc-800 shadow-sm">
+                        <p class="text-zinc-500 text-sm">الديون المتأخرة</p>
+                        <h3 class="text-3xl font-bold mt-2 text-red-600">{{ number_format((float) $overdueDebts, 2) }} <span class="text-xl font-normal text-zinc-400">ج.م</span></h3>
                     </div>
                 </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div class="bg-white dark:bg-zinc-900 p-8 rounded-2xl border border-zinc-100 dark:border-zinc-800 shadow-sm flex flex-col gap-6">
-                        <div class="flex items-center justify-between flex-wrap gap-4">
-                            <div>
-                                <h4 class="text-lg font-bold">الإيرادات والمصروفات الشهرية</h4>
-                                <p class="text-zinc-500 text-sm">آخر 6 أشهر</p>
-                            </div>
-                            <div class="flex items-center gap-4">
-                                <span class="flex items-center gap-2 text-sm">
-                                    <span class="size-3 bg-primary rounded-full"></span> الإيرادات
-                                </span>
-                                <span class="flex items-center gap-2 text-sm">
-                                    <span class="size-3 bg-red-500 rounded-full"></span> المصروفات
-                                </span>
-                            </div>
-                        </div>
-                        <div class="h-64 flex items-end justify-between gap-3 pt-6">
-                            <div class="flex-1 flex flex-col items-center">
-                                <div class="w-full bg-red-400/60 rounded-t-lg" style="height: 35%;"></div>
-                                <div class="w-full bg-primary/70 mt-1 rounded-t-lg" style="height: 75%;"></div>
-                                <span class="text-xs text-zinc-500 mt-2">يناير</span>
-                            </div>
-                            <div class="flex-1 flex flex-col items-center">
-                                <div class="w-full bg-red-400/60 rounded-t-lg" style="height: 40%;"></div>
-                                <div class="w-full bg-primary/70 mt-1 rounded-t-lg" style="height: 68%;"></div>
-                                <span class="text-xs text-zinc-500 mt-2">فبراير</span>
-                            </div>
-                            <div class="flex-1 flex flex-col items-center">
-                                <div class="w-full bg-red-400/60 rounded-t-lg" style="height: 38%;"></div>
-                                <div class="w-full bg-primary/70 mt-1 rounded-t-lg" style="height: 82%;"></div>
-                                <span class="text-xs text-zinc-500 mt-2">مارس</span>
-                            </div>
-                            <div class="flex-1 flex flex-col items-center">
-                                <div class="w-full bg-red-400/60 rounded-t-lg" style="height: 42%;"></div>
-                                <div class="w-full bg-primary/70 mt-1 rounded-t-lg" style="height: 95%;"></div>
-                                <span class="text-xs text-zinc-500 mt-2">أبريل</span>
-                            </div>
-                            <div class="flex-1 flex flex-col items-center">
-                                <div class="w-full bg-red-400/60 rounded-t-lg" style="height: 45%;"></div>
-                                <div class="w-full bg-primary/70 mt-1 rounded-t-lg" style="height: 88%;"></div>
-                                <span class="text-xs text-zinc-500 mt-2">مايو</span>
-                            </div>
-                            <div class="flex-1 flex flex-col items-center">
-                                <div class="w-full bg-red-400/60 rounded-t-lg" style="height: 40%;"></div>
-                                <div class="w-full bg-primary rounded-t-lg shadow-lg shadow-primary/30" style="height: 100%;"></div>
-                                <span class="text-xs font-bold text-zinc-900 dark:text-white mt-2">يونيو</span>
-                            </div>
+
+                <div class="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 shadow-sm">
+                    <div class="p-6 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
+                        <div>
+                            <h4 class="text-lg font-bold">إضافة عملية دفع</h4>
+                            <p class="text-sm text-zinc-500 mt-1">يمكنك تسجيل دفعة جديدة مباشرة من لوحة الإدارة.</p>
                         </div>
                     </div>
-                    <div class="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 shadow-sm overflow-hidden">
-                        <div class="p-6 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between flex-wrap gap-4">
-                            <h4 class="text-lg font-bold">آخر العمليات المالية</h4>
-                            <button class="bg-primary text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-primary/90 transition-all flex items-center gap-2">
-                                <span class="material-symbols-outlined">add</span>
-                                تسجيل دفعة جديدة
+
+                    <form method="POST" action="{{ route('admin.payment.store', array_filter(['q' => $search])) }}" class="p-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                        @csrf
+
+                        <div>
+                            <label class="block text-sm mb-1">ولي الأمر</label>
+                            <select id="guardian_id" name="guardian_id" class="w-full rounded-xl border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800">
+                                <option value="">اختر ولي الأمر</option>
+                                @foreach ($guardians as $guardian)
+                                    <option value="{{ $guardian->id }}" @selected(old('guardian_id') == $guardian->id)>{{ $guardian->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm mb-1">الطفل</label>
+                            <select id="child_id" name="child_id" class="w-full rounded-xl border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800">
+                                <option value="">بدون طفل محدد</option>
+                                @foreach ($children as $child)
+                                    <option value="{{ $child->id }}" data-guardian-id="{{ $child->guardian_id }}" @selected(old('child_id') == $child->id)>{{ $child->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm mb-1">المبلغ</label>
+                            <input name="amount" type="number" min="1" step="0.01" value="{{ old('amount') }}" class="w-full rounded-xl border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800" />
+                        </div>
+
+                        <div>
+                            <label class="block text-sm mb-1">طريقة الدفع</label>
+                            <select name="payment_method" class="w-full rounded-xl border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800">
+                                <option value="card" @selected(old('payment_method') === 'card')>بطاقة ائتمان / خصم</option>
+                                <option value="bank_transfer" @selected(old('payment_method') === 'bank_transfer')>تحويل بنكي</option>
+                                <option value="fawry" @selected(old('payment_method', 'fawry') === 'fawry')>فوري</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm mb-1">نوع الحالة المالية</label>
+                            <select id="payment_status" name="status" class="w-full rounded-xl border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800">
+                                <option value="paid" @selected(old('status', 'paid') === 'paid')>مدفوع بالكامل</option>
+                                <option value="pending" @selected(old('status') === 'pending')>معلق ولم يُسدَّد بعد</option>
+                                <option value="overdue" @selected(old('status') === 'overdue')>متأخر وتجاوز موعد السداد</option>
+                            </select>
+                            <p id="payment-status-hint" class="mt-2 rounded-xl bg-zinc-50 px-3 py-2 text-xs text-zinc-600 dark:bg-zinc-800/60 dark:text-zinc-300"></p>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm mb-1">تاريخ الدفع</label>
+                            <input name="paid_at" type="date" value="{{ old('paid_at', now()->toDateString()) }}" class="w-full rounded-xl border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800" />
+                        </div>
+
+                        <div class="md:col-span-2 xl:col-span-3">
+                            <label class="block text-sm mb-1">ملاحظات</label>
+                            <textarea name="notes" rows="3" class="w-full rounded-xl border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800">{{ old('notes') }}</textarea>
+                        </div>
+
+                        <div class="md:col-span-2 xl:col-span-3 flex justify-end">
+                            <button type="submit" class="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:brightness-110">
+                                <span class="material-symbols-outlined text-base">add_card</span>
+                                <span>إضافة عملية الدفع</span>
                             </button>
                         </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-right border-collapse">
-                                <thead>
-                                    <tr class="bg-zinc-50 dark:bg-zinc-800/50">
-                                        <th class="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-wider">الطفل / ولي الأمر</th>
-                                        <th class="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-wider">النوع</th>
-                                        <th class="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-wider">المبلغ</th>
-                                        <th class="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-wider">التاريخ</th>
-                                        <th class="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-wider">الحالة</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-zinc-100 dark:divide-zinc-800">
+                    </form>
+                </div>
+
+                <div class="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 shadow-sm overflow-hidden">
+                    <div class="p-6 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
+                        <h4 class="text-lg font-bold">جدول العمليات المالية</h4>
+                        <span class="text-sm text-zinc-500">{{ $payments->total() }} عملية</span>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-right border-collapse">
+                            <thead>
+                                <tr class="bg-zinc-50 dark:bg-zinc-800/50">
+                                    <th class="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-wider">الطفل</th>
+                                    <th class="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-wider">ولي الأمر</th>
+                                    <th class="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-wider">طريقة الدفع</th>
+                                    <th class="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-wider">المبلغ</th>
+                                    <th class="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-wider">المرجع</th>
+                                    <th class="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-wider">التاريخ</th>
+                                    <th class="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-wider">الحالة</th>
+                                    <th class="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-wider">إجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-zinc-100 dark:divide-zinc-800">
+                                @forelse ($payments as $payment)
+                                    @php
+                                        $paymentMethodLabel = match ($payment->payment_method) {
+                                            'card' => 'بطاقة ائتمان / خصم',
+                                            'bank_transfer' => 'تحويل بنكي',
+                                            'fawry' => 'فوري',
+                                            default => $payment->payment_method,
+                                        };
+
+                                        $statusLabel = match ($payment->status) {
+                                            'paid' => 'مدفوع',
+                                            'pending' => 'معلق',
+                                            'overdue' => 'متأخر',
+                                            default => $payment->status,
+                                        };
+
+                                        $statusClasses = match ($payment->status) {
+                                            'paid' => 'bg-green-100 text-green-700',
+                                            'pending' => 'bg-yellow-100 text-yellow-700',
+                                            'overdue' => 'bg-red-100 text-red-700',
+                                            default => 'bg-zinc-100 text-zinc-700',
+                                        };
+
+                                        $amountClasses = match ($payment->status) {
+                                            'paid' => 'text-green-600',
+                                            'overdue' => 'text-red-600',
+                                            default => 'text-amber-600',
+                                        };
+                                    @endphp
                                     <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex items-center gap-3">
-                                                <div class="size-10 rounded-full bg-cover bg-center"></div>
-                                                <span class="font-medium">سارة محمد</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 text-sm">رسوم شهرية</td>
-                                        <td class="px-6 py-4 text-sm font-medium text-green-600">3,200 ج.م</td>
-                                        <td class="px-6 py-4 text-sm text-zinc-500">2025-06-28</td>
+                                        <td class="px-6 py-4 text-sm font-medium">{{ $payment->child?->name ?? '-' }}</td>
+                                        <td class="px-6 py-4 text-sm">{{ $payment->guardian?->name ?? '-' }}</td>
+                                        <td class="px-6 py-4 text-sm">{{ $paymentMethodLabel }}</td>
+                                        <td class="px-6 py-4 text-sm font-bold {{ $amountClasses }}">{{ number_format((float) $payment->amount, 2) }} ج.م</td>
+                                        <td class="px-6 py-4 text-sm text-zinc-500">{{ $payment->reference }}</td>
+                                        <td class="px-6 py-4 text-sm text-zinc-500">{{ optional($payment->paid_at)->format('Y-m-d') ?? optional($payment->created_at)->format('Y-m-d') }}</td>
                                         <td class="px-6 py-4">
-                                            <span class="px-3 py-1 text-xs font-bold rounded-full bg-green-100 text-green-700">مدفوع</span>
+                                            <span class="px-3 py-1 text-xs font-bold rounded-full {{ $statusClasses }}">{{ $statusLabel }}</span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <form method="POST" action="{{ route('admin.payment.destroy', ['payment' => $payment, 'q' => $search]) }}" onsubmit="return confirm('هل أنت متأكد من حذف عملية الدفع؟');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-sm font-bold text-red-600 hover:text-red-700 hover:underline">حذف</button>
+                                            </form>
                                         </td>
                                     </tr>
+                                @empty
                                     <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex items-center gap-3">
-                                                <div class="size-10 rounded-full bg-cover bg-center"></div>
-                                                <span class="font-medium">علي خالد</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 text-sm">رسوم التسجيل</td>
-                                        <td class="px-6 py-4 text-sm font-medium text-green-600">5,000 ج.م</td>
-                                        <td class="px-6 py-4 text-sm text-zinc-500">2025-06-25</td>
-                                        <td class="px-6 py-4">
-                                            <span class="px-3 py-1 text-xs font-bold rounded-full bg-green-100 text-green-700">مدفوع</span>
-                                        </td>
+                                        <td colspan="8" class="px-6 py-8 text-center text-zinc-500">لا توجد بيانات مالية متاحة.</td>
                                     </tr>
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex items-center gap-3">
-                                                <div class="size-10 rounded-full bg-cover bg-center"></div>
-                                                <span class="font-medium">محمد أحمد</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 text-sm">رسوم شهرية</td>
-                                        <td class="px-6 py-4 text-sm font-medium text-yellow-600">3,200 ج.م</td>
-                                        <td class="px-6 py-4 text-sm text-zinc-500">2025-06-20</td>
-                                        <td class="px-6 py-4">
-                                            <span class="px-3 py-1 text-xs font-bold rounded-full bg-yellow-100 text-yellow-700">معلق</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex items-center gap-3">
-                                                <div class="size-10 rounded-full bg-cover bg-center"></div>
-                                                <span class="font-medium">فاطمة علي</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 text-sm">مصروفات رواتب</td>
-                                        <td class="px-6 py-4 text-sm font-medium text-red-600">-12,500 ج.م</td>
-                                        <td class="px-6 py-4 text-sm text-zinc-500">2025-06-15</td>
-                                        <td class="px-6 py-4">
-                                            <span class="px-3 py-1 text-xs font-bold rounded-full bg-green-100 text-green-700">مدفوع</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="p-6 border-t border-zinc-100 dark:border-zinc-800 flex justify-between text-sm text-zinc-500">
-                            <span>عرض 1-4 من 87 عملية</span>
-                            <div class="flex gap-2">
-                                <button class="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 disabled:opacity-50" disabled>
-                                    <span class="material-symbols-outlined">chevron_right</span>
-                                </button>
-                                <button class="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800">
-                                    <span class="material-symbols-outlined">chevron_left</span>
-                                </button>
-                            </div>
-                        </div>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="p-4 border-t border-zinc-100 dark:border-zinc-800">
+                        {{ $payments->links() }}
                     </div>
                 </div>
+            </div>
         </main>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const guardianSelect = document.getElementById('guardian_id');
+            const childSelect = document.getElementById('child_id');
+            const paymentStatusSelect = document.getElementById('payment_status');
+            const paymentStatusHint = document.getElementById('payment-status-hint');
+
+            if (!guardianSelect || !childSelect) {
+                return;
+            }
+
+            const childOptions = Array.from(childSelect.querySelectorAll('option[data-guardian-id]'));
+            const statusDescriptions = {
+                paid: 'مدفوع بالكامل: استخدمه عندما تكون العملية مسددة فعلاً وتم استلام المبلغ.',
+                pending: 'معلق: استخدمه عندما تكون العملية مسجلة لكن السداد لم يتم بعد أو ما زال بانتظار التأكيد.',
+                overdue: 'متأخر: استخدمه عندما انتهى موعد السداد وما زالت العملية غير مدفوعة.',
+            };
+
+            function filterChildrenByGuardian() {
+                const guardianId = guardianSelect.value;
+
+                childOptions.forEach(function (option) {
+                    const isVisible = guardianId === '' || option.dataset.guardianId === guardianId;
+                    option.hidden = !isVisible;
+
+                    if (!isVisible && option.selected) {
+                        childSelect.value = '';
+                    }
+                });
+            }
+
+            function updatePaymentStatusHint() {
+                if (!paymentStatusSelect || !paymentStatusHint) {
+                    return;
+                }
+
+                paymentStatusHint.textContent = statusDescriptions[paymentStatusSelect.value] ?? '';
+            }
+
+            guardianSelect.addEventListener('change', filterChildrenByGuardian);
+            paymentStatusSelect?.addEventListener('change', updatePaymentStatusHint);
+            filterChildrenByGuardian();
+            updatePaymentStatusHint();
+        });
+    </script>
 </body>
 
 </html>

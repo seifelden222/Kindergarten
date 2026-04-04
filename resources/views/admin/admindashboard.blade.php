@@ -50,26 +50,18 @@
 
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
     <div class="flex h-screen overflow-hidden">
-       
+
 <x-admin-slider />
         <main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark">
             <header class="sticky top-0 z-10 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800 px-8 py-4 flex items-center justify-between">
                 <div class="flex items-center gap-6 flex-1">
                     <h2 class="text-xl font-bold">نظرة عامة</h2>
-                    <div class="relative w-full max-w-md">
+                    <form method="GET" action="{{ route('admin.admindashboard') }}" class="relative w-full max-w-md">
                         <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400">search</span>
-                        <input class="w-full bg-zinc-100 dark:bg-zinc-800 border-none rounded-xl pr-10 pl-4 focus:ring-2 focus:ring-primary/50 text-sm py-2.5" placeholder="البحث عن طفل، معلم، أو ملف..." type="text" />
-                    </div>
+                        <input name="q" value="{{ $search }}" class="w-full bg-zinc-100 dark:bg-zinc-800 border-none rounded-xl pr-10 pl-4 focus:ring-2 focus:ring-primary/50 text-sm py-2.5" placeholder="ابحث في النشاطات..." type="text" />
+                    </form>
                 </div>
-                <div class="flex items-center gap-4">
-                    <button class="p-2.5 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-primary/10 hover:text-primary transition-all relative">
-                        <span class="material-symbols-outlined">notifications</span>
-                        <span class="absolute top-2 right-2.5 size-2 bg-red-500 rounded-full border-2 border-white dark:border-zinc-900"></span>
-                    </button>
-                    <button class="p-2.5 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-primary/10 hover:text-primary transition-all">
-                        <span class="material-symbols-outlined">help_outline</span>
-                    </button>
-                </div>
+
             </header>
             <div class="p-8 space-y-8">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -80,7 +72,7 @@
                         </div>
                         <div>
                             <p class="text-zinc-500 dark:text-zinc-400 text-sm font-medium">إجمالي الأطفال</p>
-                            <h3 class="text-3xl font-bold mt-1">120</h3>
+                            <h3 class="text-3xl font-bold mt-1">{{ $totalChildren }}</h3>
                         </div>
                     </div>
                     <div class="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-100 dark:border-zinc-800 flex flex-col gap-4 shadow-sm">
@@ -90,7 +82,7 @@
                         </div>
                         <div>
                             <p class="text-zinc-500 dark:text-zinc-400 text-sm font-medium">إجمالي المعلمين</p>
-                            <h3 class="text-3xl font-bold mt-1">15</h3>
+                            <h3 class="text-3xl font-bold mt-1">{{ $totalTeachers }}</h3>
                         </div>
                     </div>
                     <div class="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-100 dark:border-zinc-800 flex flex-col gap-4 shadow-sm">
@@ -100,7 +92,7 @@
                         </div>
                         <div>
                             <p class="text-zinc-500 dark:text-zinc-400 text-sm font-medium">مدفوعات معلقة</p>
-                            <h3 class="text-3xl font-bold mt-1">2,500 <span class="text-sm font-normal text-zinc-400">ر.س</span></h3>
+                            <h3 class="text-3xl font-bold mt-1">{{ number_format((float) $pendingPayments, 0) }} <span class="text-sm font-normal text-zinc-400">ر.س</span></h3>
                         </div>
                     </div>
                     <div class="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-100 dark:border-zinc-800 flex flex-col gap-4 shadow-sm">
@@ -110,7 +102,7 @@
                         </div>
                         <div>
                             <p class="text-zinc-500 dark:text-zinc-400 text-sm font-medium">نسبة الحضور اليوم</p>
-                            <h3 class="text-3xl font-bold mt-1">94%</h3>
+                            <h3 class="text-3xl font-bold mt-1">{{ $attendanceRate }}%</h3>
                         </div>
                     </div>
                 </div>
@@ -191,7 +183,9 @@
                 <div class="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 shadow-sm overflow-hidden">
                     <div class="p-6 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
                         <h4 class="text-lg font-bold">آخر النشاطات</h4>
-                        <button class="text-primary text-sm font-bold hover:underline">عرض الكل</button>
+                        <a href="{{ route('admin.admindashboard', array_filter(['q' => $search, 'all_activities' => $showAllActivities ? null : 1])) }}" class="text-primary text-sm font-bold hover:underline">
+                            {{ $showAllActivities ? 'عرض أقل' : 'عرض الكل' }}
+                        </a>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-right border-collapse">
@@ -204,48 +198,28 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-zinc-100 dark:divide-zinc-800">
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center gap-3">
-                                            <div class="size-8 rounded-full bg-zinc-200" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAMHEEzzwmcwhlrNc7CwMk5WwtKoOSocZGgJ96s6SoAyUEWJLQ2XAiMbZuUm7KolPLnGwoC3r5zPnJekmN6oGavwiU0uiAUDQNwYhDPuvtCB40kAY4bNaozyGxi1g2dkuyt4dr2G4iNEJ7y1OhQZVP8NBSp0vLcs8DmHzBS_rdGUN1ZraEO4YrLgaWmsK0u9I0kAlQ9D-8inqnA9jUy12NKf3tQveE0itH0Zz4Yp-BoWk01jT6W_mM2bB0XxfF5SYwkR9eKNRXKgQUm')"></div>
-                                            <span class="text-sm font-medium">سارة محمد</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm">تسجيل طالب جديد</td>
-                                    <td class="px-6 py-4 text-sm text-zinc-500">منذ ساعتين</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 py-1 text-[10px] font-bold rounded-full bg-green-100 text-green-700">مكتمل</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center gap-3">
-                                            <div class="size-8 rounded-full bg-zinc-200" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBV7P4SdEd01ffqWAF3dqXXqHdRbffgWVgMwzlfjiZK5eCJ90nmldqfjEMrIKD0U1wP3KqclFGz8rcWpAoM3gaDJ1lHN2uKS5fbC74QRAlh6EBoeoOlFIjSvMf0Vk1NH89qgNtiX7H3psP1bQ4rL94H3hq7bjXyUxzXqi21aHmfDNKTQ0v1dNViTh14Z75eJHtFISrMiXDSMEuerLhd6cNDI25YKbSs6HQ3FzaayOaTjHbPRAxeIjT85-LBXFRrIXCkfOJ2o8ZCHUza')"></div>
-                                            <span class="text-sm font-medium">علي خالد</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm">دفع رسوم الفصل الدراسي</td>
-                                    <td class="px-6 py-4 text-sm text-zinc-500">اليوم، 10:30 صباحاً</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 py-1 text-[10px] font-bold rounded-full bg-yellow-100 text-yellow-700">قيد المعالجة</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center gap-3">
-                                            <div class="size-8 rounded-full bg-zinc-200" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBVIJlTM5sXPuGdkc3BSny7APE5WfF4IK18M7Hx1GdrJLO6Twz84hk3CALnTk6RJ3U0JiBGpfkB2DXOMugQNSvH-txjYeVWwKn5lHEP9pUKv7K75BVCm_TCe2FRt8CLYWiiWOaGcpzQBUKMN_1uSyuiv_ImMtuX0udd7jDCK4uwDAYTLuL4T72274vkq7tAGUJbgEyf0U299oSJyCyNUlNWQmgOanx4yJayy6NiNEFwFeIdnjPuaviwsXIm0B7z1mECkVOD6mlLKK76')"></div>
-                                            <span class="text-sm font-medium">نورة السعد</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm">تغيير الجدول الدراسي</td>
-                                    <td class="px-6 py-4 text-sm text-zinc-500">أمس</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 py-1 text-[10px] font-bold rounded-full bg-green-100 text-green-700">مكتمل</span>
-                                    </td>
-                                </tr>
+                                @forelse ($activities as $activity)
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">{{ $activity->user?->name ?? 'غير محدد' }}</td>
+                                        <td class="px-6 py-4 text-sm">{{ $activity->name }}</td>
+                                        <td class="px-6 py-4 text-sm text-zinc-500">{{ optional($activity->activity_date)->format('Y-m-d') ?? optional($activity->created_at)->format('Y-m-d') }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 py-1 text-[10px] font-bold rounded-full bg-green-100 text-green-700">{{ $activity->activity_type }}</span>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="px-6 py-8 text-center text-zinc-500">لا توجد نشاطات مطابقة حتى الآن.</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
+                    @if ($showAllActivities)
+                        <div class="p-4 border-t border-zinc-100 dark:border-zinc-800">
+                            {{ $activities->links() }}
+                        </div>
+                    @endif
                 </div>
             </div>
         </main>
