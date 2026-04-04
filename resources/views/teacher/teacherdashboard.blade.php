@@ -52,6 +52,11 @@
         <div class="flex-1 flex flex-col overflow-hidden">
             <main class="flex-1 overflow-y-auto py-8 px-6 md:px-10">
                 <div class="max-w-[1200px] mx-auto flex flex-col gap-8">
+                    @if (session('status'))
+                        <div class="rounded-2xl border border-green-200 bg-green-50 px-5 py-4 text-sm font-medium text-green-700">
+                            {{ session('status') }}
+                        </div>
+                    @endif
 
                     <div class="flex flex-wrap justify-between items-end gap-4">
                         <div class="flex min-w-72 flex-col gap-2">
@@ -63,7 +68,7 @@
                                 <span class="material-symbols-outlined ml-2 text-xl">groups</span>
                                 صفحة الفصول
                             </a>
-                            <button class="flex items-center justify-center rounded-xl h-11 px-6 bg-white dark:bg-[#1a2a1a] border border-[#dce5dc] dark:border-[#2a3a2a] text-sm font-bold shadow-sm hover:bg-gray-50 transition-all">
+                            <button type="button" onclick="editProfile()" class="flex items-center justify-center rounded-xl h-11 px-6 bg-white dark:bg-[#1a2a1a] border border-[#dce5dc] dark:border-[#2a3a2a] text-sm font-bold shadow-sm hover:bg-gray-50 transition-all">
                                 <span class="material-symbols-outlined ml-2 text-xl">edit</span>
                                 تعديل الملف الشخصي
                             </button>
@@ -289,7 +294,73 @@
             </div>
         </div>
     </div>
+
+    <template id="teacher-profile-form-template">
+        <form method="POST" action="{{ route('teacher.profile.update') }}" class="space-y-5">
+            @csrf
+            @method('PATCH')
+
+            <div class="flex justify-center mb-4">
+                <div class="relative">
+                    <div class="size-24 rounded-full bg-cover bg-center border-4 border-primary" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA-NWq3LGx-QdmdnVL0WxNPG-VwwZK1NCc9Mj53x3yw5XhAJ3DIfCVftHnyYny6HViotlVBVUIW9ZPYMpklXDKdhjP-7J9bBTkMkx32TSOO6k9aiZgqTbXpKf9p0jL7ycUzJr3fQbKnGs7htazQvmO8zPYdFbS7Qo7FhxFhXOQKX-t8vad7Kbp2hBbJ5km2WtYLv6GvXQJqwHrvCveb8afZYJTYakHfakW9ruSuAJKsx-Lrl5T72Za2YeX4bXeErPTynTfMORrhbDu7');"></div>
+                    <div class="absolute bottom-0 right-0 size-8 bg-primary text-white rounded-full flex items-center justify-center">
+                        <span class="material-symbols-outlined text-sm">edit</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2">الاسم الأول</label>
+                    <input name="first_name" type="text" required value="{{ old('first_name', $teacherFirstName) }}" class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
+                    @error('first_name')
+                        <p class="mt-2 text-xs text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">اسم العائلة</label>
+                    <input name="last_name" type="text" required value="{{ old('last_name', $teacherLastName) }}" class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
+                    @error('last_name')
+                        <p class="mt-2 text-xs text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-2">البريد الإلكتروني</label>
+                <input name="email" type="email" required value="{{ old('email', $teacher->email) }}" class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
+                @error('email')
+                    <p class="mt-2 text-xs text-red-500">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-2">رقم الجوال</label>
+                <input name="phone" type="tel" value="{{ old('phone', $teacher->phone) }}" class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
+                @error('phone')
+                    <p class="mt-2 text-xs text-red-500">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="flex justify-end gap-3 pt-4 border-t border-[#dce5dc] dark:border-[#2a3a2a]">
+                <button type="button" onclick="closeAllPopups()" class="px-6 py-2.5 rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] hover:bg-gray-100 dark:hover:bg-[#2a3a2a] transition-colors font-medium">
+                    إلغاء
+                </button>
+                <button type="submit" class="px-6 py-2.5 bg-primary text-white rounded-xl hover:brightness-110 transition-colors font-medium">
+                    حفظ التغييرات
+                </button>
+            </div>
+        </form>
+    </template>
+
     <script src="{{ asset('js/teacher-functions.js') }}"></script>
+    @if ($errors->any())
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                editProfile();
+            });
+        </script>
+    @endif
 
 </body>
 

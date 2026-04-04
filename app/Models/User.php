@@ -104,6 +104,11 @@ class User extends Authenticatable
         return $this->hasMany(Payment::class, 'guardian_id');
     }
 
+    public function teacherReports(): HasMany
+    {
+        return $this->hasMany(TeacherReport::class, 'teacher_id');
+    }
+
     public function dashboardRoute(): string
     {
         return match ($this->role) {

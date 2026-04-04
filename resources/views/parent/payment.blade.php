@@ -114,21 +114,21 @@
                                 <h3 class="text-xl font-bold">طرق الدفع المتاحة</h3>
                             </div>
                             <div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-5">
-                                <div class="border border-[#dce5dc] dark:border-[#2d402d] rounded-xl p-5 text-center hover:border-primary transition-colors cursor-pointer">
+                                <button type="button" data-payment-card data-payment-value="card" class="border border-[#dce5dc] dark:border-[#2d402d] rounded-xl p-5 text-center transition-colors cursor-pointer hover:border-primary hover:bg-primary/5">
                                     <span class="material-symbols-outlined text-3xl text-primary mb-3">credit_card</span>
                                     <p class="font-bold">بطاقة ائتمان / خصم</p>
                                     <p class="text-sm text-[#638863] dark:text-[#a3c2a3] mt-1">فيزا - ماستركارد</p>
-                                </div>
-                                <div class="border border-[#dce5dc] dark:border-[#2d402d] rounded-xl p-5 text-center hover:border-primary transition-colors cursor-pointer">
+                                </button>
+                                <button type="button" data-payment-card data-payment-value="bank_transfer" class="border border-[#dce5dc] dark:border-[#2d402d] rounded-xl p-5 text-center transition-colors cursor-pointer hover:border-primary hover:bg-primary/5">
                                     <span class="material-symbols-outlined text-3xl text-primary mb-3">account_balance</span>
                                     <p class="font-bold">تحويل بنكي</p>
                                     <p class="text-sm text-[#638863] dark:text-[#a3c2a3] mt-1">بنك مصر / البنك الأهلي</p>
-                                </div>
-                                <div class="border border-[#dce5dc] dark:border-[#2d402d] rounded-xl p-5 text-center hover:border-primary transition-colors cursor-pointer bg-primary/5">
+                                </button>
+                                <button type="button" data-payment-card data-payment-value="fawry" class="border border-[#dce5dc] dark:border-[#2d402d] rounded-xl p-5 text-center transition-colors cursor-pointer hover:border-primary hover:bg-primary/5">
                                     <span class="material-symbols-outlined text-3xl text-primary mb-3">qr_code_2</span>
                                     <p class="font-bold">فوري / كروت الدفع</p>
                                     <p class="text-sm text-[#638863] dark:text-[#a3c2a3] mt-1">الأكثر استخداماً</p>
-                                </div>
+                                </button>
                             </div>
                         </div>
 
@@ -175,7 +175,7 @@
 
                                 <div>
                                     <label class="mb-2 block text-sm font-medium">طريقة الدفع</label>
-                                    <select name="payment_method" class="w-full rounded-xl border border-[#dce5dc] bg-background-light px-4 py-3 dark:border-[#2d402d] dark:bg-[#112111] focus:outline-none focus:ring-2 focus:ring-primary/50">
+                                    <select id="payment_method" name="payment_method" class="w-full rounded-xl border border-[#dce5dc] bg-background-light px-4 py-3 dark:border-[#2d402d] dark:bg-[#112111] focus:outline-none focus:ring-2 focus:ring-primary/50">
                                         <option value="card" @selected(old('payment_method') === 'card')>بطاقة ائتمان / خصم</option>
                                         <option value="bank_transfer" @selected(old('payment_method') === 'bank_transfer')>تحويل بنكي</option>
                                         <option value="fawry" @selected(old('payment_method', 'fawry') === 'fawry')>فوري / كروت الدفع</option>
@@ -211,10 +211,40 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const historyButton = document.getElementById('payment-history-button');
+            const paymentMethodSelect = document.getElementById('payment_method');
+            const paymentCards = document.querySelectorAll('[data-payment-card]');
 
             if (historyButton) {
                 historyButton.addEventListener('click', showPaymentHistory);
             }
+
+            function syncPaymentCards() {
+                if (!paymentMethodSelect) {
+                    return;
+                }
+
+                paymentCards.forEach(function (card) {
+                    const isSelected = card.dataset.paymentValue === paymentMethodSelect.value;
+
+                    card.classList.toggle('border-primary', isSelected);
+                    card.classList.toggle('bg-primary/5', isSelected);
+                    card.classList.toggle('shadow-md', isSelected);
+                });
+            }
+
+            paymentCards.forEach(function (card) {
+                card.addEventListener('click', function () {
+                    if (!paymentMethodSelect) {
+                        return;
+                    }
+
+                    paymentMethodSelect.value = card.dataset.paymentValue;
+                    syncPaymentCards();
+                });
+            });
+
+            paymentMethodSelect?.addEventListener('change', syncPaymentCards);
+            syncPaymentCards();
         });
     </script>
     <script src="{{ asset('js/parent-functions.js') }}"></script>

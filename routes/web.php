@@ -7,10 +7,13 @@ use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\TableScheduleController;
 use App\Http\Controllers\Admin\UserManagementController;
+use App\Http\Controllers\Guardian\AbsenceController;
 use App\Http\Controllers\Guardian\ChildController;
 use App\Http\Controllers\Guardian\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Teacher\LevelController;
+use App\Http\Controllers\Teacher\TeacherDashboardController;
+use App\Http\Controllers\Teacher\TeacherReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -65,7 +68,7 @@ Route::group(['prefix' => 'child', 'middleware' => ['auth', 'role:child']], func
 
 // parent routes
 Route::group(['prefix' => 'parent', 'middleware' => ['auth', 'role:guardian']], function () {
-    Route::view('/absence', 'parent.absence')->name('parent.absence');
+    Route::get('/absence', [AbsenceController::class, 'index'])->name('parent.absence');
     Route::view('/activities', 'parent.activities')->name('parent.activities');
     Route::view('/calendar', 'parent.calendar')->name('parent.calendar');
     Route::view('/payment', 'parent.payment')->name('parent.payment');
@@ -84,8 +87,10 @@ Route::group(['prefix' => 'teacher', 'middleware' => ['auth', 'role:teacher']], 
         ->except(['create'])
         ->names('teacher.levels');
     Route::view('/messages', 'teacher.messages')->name('teacher.messages');
-    Route::view('/reports', 'teacher.reports')->name('teacher.reports');
-    Route::view('/teacherdashboard', 'teacher.teacherdashboard')->name('teacher.teacherdashboard');
+    Route::get('/reports', [TeacherReportController::class, 'index'])->name('teacher.reports');
+    Route::post('/reports', [TeacherReportController::class, 'store'])->name('teacher.reports.store');
+    Route::get('/teacherdashboard', [TeacherDashboardController::class, 'index'])->name('teacher.teacherdashboard');
+    Route::patch('/teacherdashboard/profile', [TeacherDashboardController::class, 'updateProfile'])->name('teacher.profile.update');
 });
 
 require __DIR__.'/auth.php';

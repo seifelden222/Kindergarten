@@ -542,59 +542,14 @@ function handleSendDailyReport(event) {
 
 // تعديل الملف الشخصي
 function editProfile() {
-    const content = `
-        <form onsubmit="handleEditProfile(event)" class="space-y-5">
-            <div class="flex justify-center mb-4">
-                <div class="relative">
-                    <div class="size-24 rounded-full bg-cover bg-center border-4 border-primary" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA-NWq3LGx-QdmdnVL0WxNPG-VwwZK1NCc9Mj53x3yw5XhAJ3DIfCVftHnyYny6HViotlVBVUIW9ZPYMpklXDKdhjP-7J9bBTkMkx32TSOO6k9aiZgqTbXpKf9p0jL7ycUzJr3fQbKnGs7htazQvmO8zPYdFbS7Qo7FhxFhXOQKX-t8vad7Kbp2hBbJ5km2WtYLv6GvXQJqwHrvCveb8afZYJTYakHfakW9ruSuAJKsx-Lrl5T72Za2YeX4bXeErPTynTfMORrhbDu7');"></div>
-                    <button type="button" class="absolute bottom-0 right-0 size-8 bg-primary text-white rounded-full flex items-center justify-center">
-                        <span class="material-symbols-outlined text-sm">edit</span>
-                    </button>
-                </div>
-            </div>
+    const template = document.getElementById('teacher-profile-form-template');
 
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-sm font-medium mb-2">الاسم الأول</label>
-                    <input type="text" required value="سارة" class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium mb-2">اسم العائلة</label>
-                    <input type="text" required value="أحمد" class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
-                </div>
-            </div>
+    if (!template) {
+        showToast('تعذر تحميل نموذج تعديل الملف الشخصي', 'error');
+        return;
+    }
 
-            <div>
-                <label class="block text-sm font-medium mb-2">البريد الإلكتروني</label>
-                <input type="email" required value="sara.ahmed@nursery.com" class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
-            </div>
-
-            <div>
-                <label class="block text-sm font-medium mb-2">رقم الجوال</label>
-                <input type="tel" required value="01012345678" class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
-            </div>
-
-            <div class="flex justify-end gap-3 pt-4 border-t border-[#dce5dc] dark:border-[#2a3a2a]">
-                <button type="button" onclick="closeAllPopups()" class="px-6 py-2.5 rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] hover:bg-gray-100 dark:hover:bg-[#2a3a2a] transition-colors font-medium">
-                    إلغاء
-                </button>
-                <button type="submit" class="px-6 py-2.5 bg-primary text-white rounded-xl hover:brightness-110 transition-colors font-medium">
-                    حفظ التغييرات
-                </button>
-            </div>
-        </form>
-    `;
-
-    createPopup('تعديل الملف الشخصي', content, 'medium');
-}
-
-function handleEditProfile(event) {
-    event.preventDefault();
-    showToast('جاري حفظ التغييرات...', 'info');
-    setTimeout(() => {
-        closeAllPopups();
-        showToast('تم حفظ التغييرات بنجاح!', 'success');
-    }, 1000);
+    createPopup('تعديل الملف الشخصي', template.innerHTML, 'medium');
 }
 
 
@@ -1154,97 +1109,27 @@ function applyMessageFilter() {
 
 // إنشاء تقرير جديد
 function createNewReport() {
-    const content = `
-        <form onsubmit="handleCreateReport(event)" class="space-y-5">
-            <div>
-                <label class="block text-sm font-medium mb-2">نوع التقرير</label>
-                <select required class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
-                    <option value="">اختر نوع التقرير</option>
-                    <option value="daily">تقرير يومي</option>
-                    <option value="weekly">تقرير أسبوعي</option>
-                    <option value="monthly">تقرير شهري</option>
-                    <option value="activity">تقرير نشاط</option>
-                </select>
-            </div>
+    const template = document.getElementById('teacher-report-form-template');
 
-            <div>
-                <label class="block text-sm font-medium mb-2">الفصل</label>
-                <select required class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
-                    <option value="">اختر الفصل</option>
-                    <option value="1">فصل الزهور (أ)</option>
-                    <option value="2">فصل الفراشات (ب)</option>
-                    <option value="3">فصل النجوم (ج)</option>
-                </select>
-            </div>
+    if (!template) {
+        showToast('تعذر تحميل نموذج التقرير', 'error');
+        return;
+    }
 
-            <div>
-                <label class="block text-sm font-medium mb-2">التاريخ</label>
-                <input type="date" required class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
-            </div>
-
-            <div>
-                <label class="block text-sm font-medium mb-2">محتوى التقرير</label>
-                <textarea required rows="6" placeholder="اكتب محتوى التقرير..." class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
-            </div>
-
-            <div class="flex justify-end gap-3 pt-4 border-t border-[#dce5dc] dark:border-[#2a3a2a]">
-                <button type="button" onclick="closeAllPopups()" class="px-6 py-2.5 rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] hover:bg-gray-100 dark:hover:bg-[#2a3a2a] transition-colors font-medium">
-                    إلغاء
-                </button>
-                <button type="submit" class="px-6 py-2.5 bg-primary text-white rounded-xl hover:brightness-110 transition-colors font-medium flex items-center gap-2">
-                    <span class="material-symbols-outlined">add</span>
-                    إنشاء التقرير
-                </button>
-            </div>
-        </form>
-    `;
-
-    createPopup('تقرير جديد', content, 'medium');
-}
-
-function handleCreateReport(event) {
-    event.preventDefault();
-    showToast('جاري إنشاء التقرير...', 'info');
-    setTimeout(() => {
-        closeAllPopups();
-        showToast('تم إنشاء التقرير بنجاح!', 'success');
-    }, 1500);
+    createPopup('تقرير جديد', template.innerHTML, 'medium');
 }
 
 // عرض تقرير
-function viewReport(reportTitle) {
+function viewReport(reportTitle, reportContent = '', levelName = '', reportDate = '') {
     const content = `
         <div class="space-y-5">
             <div class="bg-primary/10 p-5 rounded-xl border-r-4 border-primary">
                 <h4 class="text-xl font-bold mb-2">${reportTitle}</h4>
-                <p class="text-sm text-[#638863] dark:text-[#a0b0a0]">فصل الزهور (أ) - ${new Date().toLocaleDateString('ar-EG')}</p>
+                <p class="text-sm text-[#638863] dark:text-[#a0b0a0]">${levelName || 'بدون فصل محدد'} - ${reportDate || new Date().toLocaleDateString('ar-EG')}</p>
             </div>
 
             <div class="prose dark:prose-invert max-w-none">
-                <p class="text-[#638863] dark:text-[#a0b0a0]">
-                    كان يوماً رائعاً مليئاً بالأنشطة المفيدة. بدأنا اليوم بحلقة الصباح حيث تعلم الأطفال عن فصل الربيع وأهمية النباتات.
-                </p>
-                <p class="text-[#638863] dark:text-[#a0b0a0] mt-3">
-                    في النشاط الفني، قام الأطفال بالرسم بالألوان المائية وأظهروا إبداعاً كبيراً. كان أحمد وليلى متميزين بشكل خاص.
-                </p>
-                <p class="text-[#638863] dark:text-[#a0b0a0] mt-3">
-                    نسبة الحضور اليوم كانت ممتازة (22 من 25 طالب). جميع الأطفال كانوا متعاونين ومتفاعلين.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-3 gap-4">
-                <div class="bg-white dark:bg-[#112111] p-4 rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] text-center">
-                    <p class="text-2xl font-bold text-primary">3</p>
-                    <p class="text-xs text-[#638863] dark:text-[#a0b0a0] mt-1">أنشطة</p>
-                </div>
-                <div class="bg-white dark:bg-[#112111] p-4 rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] text-center">
-                    <p class="text-2xl font-bold text-green-500">88%</p>
-                    <p class="text-xs text-[#638863] dark:text-[#a0b0a0] mt-1">حضور</p>
-                </div>
-                <div class="bg-white dark:bg-[#112111] p-4 rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] text-center">
-                    <p class="text-2xl font-bold text-blue-500">25</p>
-                    <p class="text-xs text-[#638863] dark:text-[#a0b0a0] mt-1">طالب</p>
-                </div>
+                <p class="text-[#638863] dark:text-[#a0b0a0] whitespace-pre-line">${reportContent || 'لا يوجد محتوى لهذا التقرير.'}</p>
             </div>
 
             <div class="flex justify-end gap-3 pt-4 border-t border-[#dce5dc] dark:border-[#2a3a2a]">
