@@ -20,17 +20,17 @@
 </head>
 <body class="flex min-h-screen flex-col bg-[#f6f8f6]">
     <header class="sticky top-0 z-50 flex items-center justify-between border border-b-[#dce5dc] bg-white px-6 py-3 md:px-40">
-        <div class="flex items-center gap-4 text-[#111811]">
+        <a href="{{ route('register') }}" class="flex items-center gap-4 text-[#111811]">
             <div class="flex size-8 items-center justify-center rounded-lg bg-[#0ea60e] text-white">
                 <span class="material-symbols-outlined">child_care</span>
             </div>
             <h2 class="text-lg font-bold leading-tight tracking-[-0.015em] text-[#111811]">نظام إدارة الحضانة</h2>
-        </div>
+        </a>
 
         <div class="flex flex-1 justify-end gap-8">
             <div class="hidden items-center gap-9 md:flex">
                 <a class="text-sm font-medium leading-normal text-[#111811] transition-colors hover:text-[#0ea60e]" href="{{ url('/') }}">الرئيسية</a>
-                <a class="text-sm font-medium leading-normal text-[#111811] transition-colors hover:text-[#0ea60e]" href="#">اتصل بنا</a>
+                <a class="text-sm font-medium leading-normal text-[#111811] transition-colors hover:text-[#0ea60e]" href="{{ url('contactus') }}">اتصل بنا</a>
             </div>
         </div>
     </header>

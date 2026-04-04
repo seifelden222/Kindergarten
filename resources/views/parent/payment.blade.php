@@ -83,10 +83,6 @@
                                         <p class="text-sm text-[#638863] dark:text-[#a3c2a3]">الرسوم الشهرية</p>
                                         <p class="text-2xl font-black">1,850 ج.م</p>
                                     </div>
-                                    <div>
-                                        <p class="text-sm text-[#638863] dark:text-[#a3c2a3]">عدد الأطفال</p>
-                                        <p class="text-2xl font-black">2</p>
-                                    </div>
                                 </div>
 
                                 <div class="pt-4 border-t border-[#dce5dc] dark:border-[#2d402d]">
@@ -199,9 +195,6 @@
                                 </button>
                             </div>
 
-                            <div class="text-center pt-4">
-                                <a href="#" class="text-sm text-primary hover:underline">الدفع الجزئي متاح</a>
-                            </div>
                         </form>
                     </div>
 

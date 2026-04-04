@@ -6,6 +6,31 @@ let currentPopup = null;
 let selectedStudents = [];
 let currentChat = null;
 let attachedFiles = [];
+const teacherGalleryStorageKey = 'teacher_gallery_images';
+const teacherDefaultGalleryImages = [
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuDdhplbP3H82o9tEb9D0XLjLv3e1XX5SsR-FK99wrAcicty2ECPmJwIGrkZqEjnjTSoR2yImla3FV669ZIi9cAeaqe2a6yi4i7qWbztcf9kgS6JPV5Xh5MjMZojR_MdW01lliEr5FNm2QDhx1a0qwrw1R4NGa20FNtJRqfzUugADZ2vvhG4Bu3oXEngcq-wMTE_-8IzDDuBWIpssenetbL308QpG8AKHmzCen0XTGp-Na38kO2lpmR1WmUMdN2f2_BIzIb1LinGhGBI',
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuALdWpXUijdTqTuku3D3WsLRVrnDsZ0NSqzHG2e3T13eklGSTvo-zCSJ6yThJUTA7iTahCCp0bqkVSDlch_qo0ONCGGRzgE4s59Joa8BZSEWd3P8Wk_vKPBH0Dh3x6JzAMqUtjsD-YFXyEQ0jBa_xXF1znheYBUDD1_2yF1rECDkkQRVvv00nSX7WHYFoth4-CYKhK3t1bxTsDrepWrti7PEkG9Z84SjbmNkW2qhwBxH2mQYnD41v6VhmOzS10q8U-y367BuRpsCvsq',
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuA-qcip3O8MklKeBV1IFIl8fwHN6kjzxjwkcdB1E1-u7WN2S4qfmFbDc-xeMBWG3yM3h2mN4M2lN5O0ocYodrXLJxOMY8nyUZORE5eUQfK2m3F6vaAj-0H5CTFR1o1QZxT45K6kUlVqBoVVX2u_kxWmaTcvXwKHEG1Ryw_Lt8eYCcW53k0A-_H_LAlOdKrvlFlm7fuyuwvOQahwpnABSMqfLkl-KXprr4hgYLnX45jxjS_Hy2s7psBWg57z4rFrYheHN0KnQ58fxxDs'
+];
+
+function getTeacherGalleryImages() {
+    const stored = localStorage.getItem(teacherGalleryStorageKey);
+
+    if (!stored) {
+        return [...teacherDefaultGalleryImages];
+    }
+
+    try {
+        const parsed = JSON.parse(stored);
+        return Array.isArray(parsed) && parsed.length > 0 ? parsed : [...teacherDefaultGalleryImages];
+    } catch {
+        return [...teacherDefaultGalleryImages];
+    }
+}
+
+function setTeacherGalleryImages(images) {
+    localStorage.setItem(teacherGalleryStorageKey, JSON.stringify(images));
+}
 
 // ==================== CSS Styles for Popups ====================
 (function() {
@@ -370,22 +395,49 @@ function addPhotos() {
     input.multiple = true;
     input.onchange = (e) => {
         const files = Array.from(e.target.files);
-        if (files.length > 0) {
-            showToast(`تم اختيار ${files.length} صورة`, 'success');
-            // هنا يمكن إضافة كود رفع الصور
+
+        if (files.length === 0) {
+            return;
         }
+
+        const images = getTeacherGalleryImages();
+        let loadedCount = 0;
+
+        files.forEach((file) => {
+            const reader = new FileReader();
+            reader.onload = (loadEvent) => {
+                const result = loadEvent.target?.result;
+
+                if (typeof result === 'string') {
+                    images.unshift(result);
+                }
+
+                loadedCount += 1;
+
+                if (loadedCount === files.length) {
+                    setTeacherGalleryImages(images.slice(0, 30));
+                    showToast(`تمت إضافة ${files.length} صورة إلى المعرض`, 'success');
+                    viewAllPhotos();
+                }
+            };
+
+            reader.readAsDataURL(file);
+        });
     };
+
     input.click();
 }
 
 // عرض جميع الصور
 function viewAllPhotos() {
+    const images = getTeacherGalleryImages();
+
     const content = `
         <div class="space-y-5">
-            <div class="grid grid-cols-3 gap-4">
-                ${Array(9).fill(0).map((_, i) => `
-                    <div class="aspect-square rounded-xl bg-cover bg-center border border-[#dce5dc] dark:border-[#2a3a2a] cursor-pointer hover:scale-105 transition-transform" 
-                         style="background-image: url('https://images.unsplash.com/photo-${1500000000000 + i * 1000000}?w=400&h=400&fit=crop');"
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                ${images.map((image, i) => `
+                    <div class="aspect-square rounded-xl bg-cover bg-center border border-[#dce5dc] dark:border-[#2a3a2a] cursor-pointer hover:scale-105 transition-transform"
+                         style="background-image: url('${image}')"
                          onclick="viewPhotoDetails(${i})">
                     </div>
                 `).join('')}
@@ -404,6 +456,29 @@ function viewAllPhotos() {
     `;
     
     createPopup('معرض الصور', content, 'large');
+}
+
+function viewPhotoDetails(index) {
+    const images = getTeacherGalleryImages();
+    const selectedImage = images[index];
+
+    if (!selectedImage) {
+        return;
+    }
+
+    const content = `
+        <div class="space-y-5">
+            <div class="rounded-2xl overflow-hidden border border-[#dce5dc] dark:border-[#2a3a2a]">
+                <img src="${selectedImage}" alt="صورة النشاط" class="w-full h-auto" />
+            </div>
+            <div class="flex justify-between items-center">
+                <p class="text-sm text-[#638863] dark:text-[#a0b0a0]">الصورة ${index + 1} من ${images.length}</p>
+                <button onclick="viewAllPhotos()" class="px-5 py-2 bg-primary text-white rounded-xl hover:brightness-110 transition-colors font-medium">رجوع للمعرض</button>
+            </div>
+        </div>
+    `;
+
+    createPopup('تفاصيل الصورة', content, 'large');
 }
 
 // إرسال التقرير اليومي

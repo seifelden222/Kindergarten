@@ -180,58 +180,6 @@
         </main>
     </div>
 
-    <script src="parent-functions.js"></script>
-    <script>
-        // ربط أزرار الرسائل
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Messages page loaded');
-
-            // ربط زر الإرسال
-            const sendBtn = document.querySelector('.p-5.border-t button[class*="bg-primary"]');
-            if (sendBtn) {
-                sendBtn.onclick = function(e) {
-                    e.preventDefault();
-                    console.log('Send button clicked');
-                    sendMessage();
-                };
-                console.log('Send button connected');
-            }
-
-            // ربط حقل الإدخال
-            const messageInput = document.querySelector('input[placeholder*="اكتب رسالتك"]');
-            if (messageInput) {
-                messageInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        console.log('Enter pressed');
-                        sendMessage();
-                    }
-                });
-                console.log('Message input connected');
-            }
-
-            // ربط زر المرفقات
-            const attachBtn = document.querySelector('.p-5.border-t button:first-child');
-            if (attachBtn) {
-                attachBtn.onclick = function(e) {
-                    e.preventDefault();
-                    console.log('Attach button clicked');
-                    attachFile();
-                };
-                console.log('Attach button connected');
-            }
-
-            // ربط زر رسالة جديدة
-            const newMsgBtn = document.querySelector('header button[class*="bg-primary"]');
-            if (newMsgBtn) {
-                newMsgBtn.onclick = function(e) {
-                    e.preventDefault();
-                    composeNewMessage();
-                };
-                console.log('New message button connected');
-            }
-        });
-    </script>
     <script src="{{ asset('js/parent-functions.js') }}"></script>
 </body>
 

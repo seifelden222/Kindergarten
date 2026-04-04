@@ -80,7 +80,6 @@
         <x-child-navbar />
 
         <main class="flex-1 max-w-4xl mx-auto w-full flex flex-col p-4 gap-6">
-            <x-child-navbar />
             <div class="message-stream space-y-4 px-2">
                 <div class="flex items-end gap-3 justify-start">
                     <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-12 h-12 shrink-0 border-2 border-primary" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAZy0GS4vz_pj55ok6xgwbRnSwyGl6oHxN_i5OoEJHgn4ektfjxhbYtVavWDo1tfQ3DQOxXINK-z1zZysjuGg4OdfAQUE5wqjz2-NfcBFM5PvMn2UAZ8ZyaMjtVhOLeVktYT4gVz-h9FCbdHylOh0p3xXvuiLfsMcJfkdQsj9gwjzZ626r4TYhm8RKnJmRN9b0k9ZvJTO26tBtsLAKlEkoVvNyNJ_F0c3ravHTI5QnRazNLe7iATyXyjkY4QwNX72CN4C9SbstUzD7N");'></div>
@@ -127,31 +126,31 @@
             <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-4xl px-4">
                 <div class="bg-white dark:bg-zinc-900 p-6 rounded-[2.5rem] shadow-2xl border-2 border-primary/20 flex flex-col gap-6">
                     <div class="grid grid-cols-5 gap-4">
-                        <button class="aspect-square flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded-2xl hover:bg-primary/10 hover:scale-105 transition-all group">
+                        <button onclick="sendEmoji('😊')" class="aspect-square flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded-2xl hover:bg-primary/10 hover:scale-105 transition-all group">
                             <span class="text-4xl group-active:scale-125 transition-transform">😊</span>
                         </button>
-                        <button class="aspect-square flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded-2xl hover:bg-primary/10 hover:scale-105 transition-all group">
+                        <button onclick="sendEmoji('👍')" class="aspect-square flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded-2xl hover:bg-primary/10 hover:scale-105 transition-all group">
                             <span class="text-4xl group-active:scale-125 transition-transform">👍</span>
                         </button>
-                        <button class="aspect-square flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded-2xl hover:bg-primary/10 hover:scale-105 transition-all group">
+                        <button onclick="sendEmoji('⭐')" class="aspect-square flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded-2xl hover:bg-primary/10 hover:scale-105 transition-all group">
                             <span class="text-4xl group-active:scale-125 transition-transform">⭐</span>
                         </button>
-                        <button class="aspect-square flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded-2xl hover:bg-primary/10 hover:scale-105 transition-all group">
+                        <button onclick="sendEmoji('🍎')" class="aspect-square flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded-2xl hover:bg-primary/10 hover:scale-105 transition-all group">
                             <span class="text-4xl group-active:scale-125 transition-transform">🍎</span>
                         </button>
-                        <button class="aspect-square flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded-2xl hover:bg-primary/10 hover:scale-105 transition-all group">
+                        <button onclick="sendEmoji('💧')" class="aspect-square flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded-2xl hover:bg-primary/10 hover:scale-105 transition-all group">
                             <span class="text-4xl group-active:scale-125 transition-transform">💧</span>
                         </button>
                     </div>
                     <div class="flex items-center justify-between gap-6">
-                        <button class="flex flex-col items-center gap-2 flex-1 p-4 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-3xl font-bold hover:bg-blue-200 transition-colors">
+                        <button onclick="finishActivity()" class="flex flex-col items-center gap-2 flex-1 p-4 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-3xl font-bold hover:bg-blue-200 transition-colors">
                             <span class="material-symbols-outlined !text-4xl">task_alt</span>
                             <span>انتهيت!</span>
                         </button>
-                        <button class="bg-primary text-white w-24 h-24 rounded-full flex items-center justify-center shadow-xl shadow-primary/40 hover:scale-110 active:scale-95 transition-all outline outline-offset-4 outline-primary/20">
+                        <button onclick="startVoiceMessage()" class="bg-primary text-white w-24 h-24 rounded-full flex items-center justify-center shadow-xl shadow-primary/40 hover:scale-110 active:scale-95 transition-all outline outline-offset-4 outline-primary/20">
                             <span class="material-symbols-outlined !text-5xl">mic</span>
                         </button>
-                        <button class="flex flex-col items-center gap-2 flex-1 p-4 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 rounded-3xl font-bold hover:bg-orange-200 transition-colors">
+                        <button onclick="askForHelp()" class="flex flex-col items-center gap-2 flex-1 p-4 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 rounded-3xl font-bold hover:bg-orange-200 transition-colors">
                             <span class="material-symbols-outlined !text-4xl">help</span>
                             <span>ساعديني</span>
                         </button>

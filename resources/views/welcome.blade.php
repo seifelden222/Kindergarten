@@ -65,12 +65,12 @@
         <header
             class="sticky top-0 z-50 w-full border-b border-solid border-[#dce5dc] bg-white/80 dark:bg-background-dark/80 backdrop-blur-md px-4 md:px-20 lg:px-40 py-3">
             <div class="flex items-center justify-between whitespace-nowrap">
-                <div class="flex items-center gap-4 text-[#111811] dark:text-white">
+                <a href="{{ route('register') }}" class="flex items-center gap-4 text-[#111811] dark:text-white">
                     <div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
                         <span class="material-symbols-outlined">child_care</span>
                     </div>
                     <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">نظام إدارة الحضانة</h2>
-                </div>
+                </a>
                 <nav class="hidden md:flex flex-1 justify-center gap-8">
                     <a class="text-[#111811] dark:text-white text-sm font-medium hover:text-primary transition-colors"
                         href="{{ url('/') }}">الرئيسية</a>
@@ -79,10 +79,10 @@
                         href="{{ url('contactus') }}">اتصل بنا</a>
                 </nav>
                 <div class="flex items-center gap-4">
-                    <button
+                    <a href="{{ route('login') }}"
                         class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-xl h-10 px-4 bg-primary text-[#111811] text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity">
-                        <span class="truncate"><a href="{{ url('login') }}">بوابة الدخول</a></span>
-                    </button>
+                        <span class="truncate">بوابة الدخول</span>
+                    </a>
                 </div>
             </div>
         </header>

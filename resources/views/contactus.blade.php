@@ -50,20 +50,20 @@
 
     <header class="sticky top-0 z-50 w-full border-b border-solid border-[#dce5dc] bg-white/80 dark:bg-background-dark/80 backdrop-blur-md px-4 md:px-20 lg:px-40 py-3">
       <div class="flex items-center justify-between whitespace-nowrap">
-        <div class="flex items-center gap-4 text-[#111811] dark:text-white">
+        <a href="{{ route('register') }}" class="flex items-center gap-4 text-[#111811] dark:text-white">
           <div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
             <span class="material-symbols-outlined">child_care</span>
           </div>
           <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">نظام إدارة الحضانة</h2>
-        </div>
+        </a>
         <nav class="hidden md:flex flex-1 justify-center gap-8">
           <a class="text-[#111811] dark:text-white text-sm font-medium hover:text-primary transition-colors" href="{{ url('/') }}">الرئيسية</a>
           <a class="text-[#111811] dark:text-white text-sm font-medium hover:text-primary transition-colors" href="{{url('contactus')}}">اتصل بنا</a>
         </nav>
         <div class="flex items-center gap-4">
-          <button class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-xl h-10 px-4 bg-primary text-[#111811] text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity">
-            <span class="truncate"><a href="{{route('login')}}">بوابة الدخول</a></span>
-          </button>
+          <a href="{{ route('login') }}" class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-xl h-10 px-4 bg-primary text-[#111811] text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity">
+            <span class="truncate">بوابة الدخول</span>
+          </a>
         </div>
       </div>
     </header>
@@ -86,21 +86,21 @@
               <span class="material-symbols-outlined text-primary text-5xl">call</span>
               <h3 class="text-xl font-bold mt-2">اتصال هاتفي</h3>
               <p class="text-[#638863] dark:text-gray-300 mt-1">متاح يومياً</p>
-              <p class="text-2xl font-bold text-primary mt-3">+20 101 234 5678</p>
+              <a href="tel:+201012345678" class="text-2xl font-bold text-primary mt-3 hover:underline">+20 101 234 5678</a>
             </div>
 
             <div class="flex flex-col items-center gap-4 rounded-xl border border-[#dce5dc] dark:border-white/10 bg-white dark:bg-background-dark/40 p-10 text-center hover:border-primary transition-all shadow-sm hover:shadow-lg">
               <span class="material-symbols-outlined text-primary text-5xl">mail</span>
               <h3 class="text-xl font-bold mt-2">البريد الإلكتروني</h3>
               <p class="text-[#638863] dark:text-gray-300 mt-1">رد خلال 24 ساعة</p>
-              <p class="text-xl font-medium text-primary mt-3">info@nursery.edu.eg</p>
+              <a href="mailto:info@nursery.edu.eg" class="text-xl font-medium text-primary mt-3 hover:underline">info@nursery.edu.eg</a>
             </div>
 
             <div class="flex flex-col items-center gap-4 rounded-xl border border-[#dce5dc] dark:border-white/10 bg-white dark:bg-background-dark/40 p-10 text-center hover:border-primary transition-all shadow-sm hover:shadow-lg">
               <span class="material-symbols-outlined text-primary text-5xl">location_on</span>
               <h3 class="text-xl font-bold mt-2">موقعنا</h3>
               <p class="text-[#638863] dark:text-gray-300 mt-1">جمهورية مصر العربية</p>
-              <p class="text-lg font-medium mt-3">القاهرة – الجيزة – الإسكندرية</p>
+              <p class="text-lg font-medium mt-3">جمهورية مصر العربية</p>
             </div>
           </div>
         </div>
@@ -170,7 +170,7 @@
         <div class="flex flex-col gap-4">
           <h4 class="text-lg font-bold dark:text-white">روابط سريعة</h4>
           <nav class="flex flex-col gap-2">
-            <a class="text-[#638863] dark:text-gray-400 hover:text-primary text-sm transition-colors" href="index.html">الرئيسية</a>
+            <a class="text-[#638863] dark:text-gray-400 hover:text-primary text-sm transition-colors" href="{{ url('/') }}">الرئيسية</a>
             <a class="text-[#638863] dark:text-gray-400 hover:text-primary text-sm transition-colors" href="{{ url('/contactus') }}">اتصل بنا</a>
           </nav>
         </div>
@@ -179,11 +179,11 @@
           <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2 text-[#638863] dark:text-gray-400 text-sm">
               <span class="material-symbols-outlined text-sm text-primary">mail</span>
-              info@nursery.edu.eg
+              <a href="mailto:info@nursery.edu.eg" class="hover:text-primary transition-colors">info@nursery.edu.eg</a>
             </div>
             <div class="flex items-center gap-2 text-[#638863] dark:text-gray-400 text-sm">
               <span class="material-symbols-outlined text-sm text-primary">call</span>
-              +201012345678
+              <a href="tel:+201012345678" class="hover:text-primary transition-colors">+201012345678</a>
             </div>
             <div class="flex items-center gap-2 text-[#638863] dark:text-gray-400 text-sm">
               <span class="material-symbols-outlined text-sm text-primary">location_on</span>
@@ -194,10 +194,10 @@
         <div class="flex flex-col gap-4">
           <h4 class="text-lg font-bold dark:text-white">النشرة البريدية</h4>
           <p class="text-[#638863] dark:text-gray-400 text-sm">اشترك لتصلك أحدث نصائح تربية الأطفال</p>
-          <div class="flex gap-2">
-            <input class="flex-1 rounded-xl border-[#dce5dc] dark:border-white/20 dark:bg-background-dark/50 p-2 text-sm focus:border-primary focus:ring-primary" placeholder="البريد الإلكتروني" type="email" />
-            <button class="bg-primary text-[#111811] rounded-xl px-4 py-2 font-bold hover:opacity-90">اشترك</button>
-          </div>
+          <form id="newsletterForm" class="flex gap-2">
+            <input id="newsletterEmail" class="flex-1 rounded-xl border-[#dce5dc] dark:border-white/20 dark:bg-background-dark/50 p-2 text-sm focus:border-primary focus:ring-primary" placeholder="البريد الإلكتروني" type="email" required />
+            <button type="submit" class="bg-primary text-[#111811] rounded-xl px-4 py-2 font-bold hover:opacity-90">اشترك</button>
+          </form>
         </div>
       </div>
       <div class="mt-12 pt-8 border-t border-[#dce5dc] dark:border-white/10 text-center text-[#638863] dark:text-gray-400 text-sm">
@@ -206,6 +206,27 @@
     </footer>
 
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('newsletterForm');
+      const emailInput = document.getElementById('newsletterEmail');
+
+      if (!form || !emailInput) {
+        return;
+      }
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        if (!emailInput.value.trim()) {
+          return;
+        }
+
+        alert('تم استلام طلب الاشتراك بنجاح.');
+        emailInput.value = '';
+      });
+    });
+  </script>
 </body>
 
 </html>

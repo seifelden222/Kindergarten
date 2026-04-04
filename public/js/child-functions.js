@@ -3,7 +3,8 @@
 
 // ==================== Global Variables ====================
 let currentPopup = null;
-let stars = 8;
+const childStarsStorageKey = 'child_portal_stars';
+let stars = Number.parseInt(localStorage.getItem(childStarsStorageKey) || '8', 10);
 let soundEnabled = true;
 
 // ==================== CSS Styles & Animations ====================
@@ -191,12 +192,19 @@ function showToast(message, emoji = '😊') {
 // ==================== Star Collection ====================
 function addStar() {
     stars++;
+    localStorage.setItem(childStarsStorageKey, String(stars));
     updateStarDisplay();
     showCelebration('نجمة جديدة! 🌟');
     playSound('star');
 }
 
 function updateStarDisplay() {
+    const countElement = document.getElementById('child-star-count');
+
+    if (countElement) {
+        countElement.textContent = String(stars);
+    }
+
     const starElements = document.querySelectorAll('.text-primary.text-3xl.font-bold');
     starElements.forEach(el => {
         if (el.textContent.match(/^\d+$/)) {
@@ -1164,6 +1172,7 @@ function finishActivity() {
 function confirmFinish() {
     closeAllPopups();
     stars += 3;
+    localStorage.setItem(childStarsStorageKey, String(stars));
     updateStarDisplay();
     showCelebration('🌟 +3 نجوم! 🌟');
 }
@@ -1314,6 +1323,13 @@ function viewMemory(day, activity) {
 // ==================== Event Listeners ====================
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🎨 Child Portal JavaScript Loaded!');
+
+    if (Number.isNaN(stars) || stars < 0) {
+        stars = 8;
+        localStorage.setItem(childStarsStorageKey, String(stars));
+    }
+
+    updateStarDisplay();
     
     // ==================== HOME PAGE ====================
     

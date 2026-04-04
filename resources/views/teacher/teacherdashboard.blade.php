@@ -58,10 +58,16 @@
                             <h1 class="text-4xl font-black leading-tight tracking-tight">لوحة تحكم المعلم</h1>
                             <p class="text-lg text-[#638863] dark:text-[#a0b0a0]">مرحباً بك مجدداً، تدير اليوم <span class="text-primary font-bold">فصل الزهور (أ)</span></p>
                         </div>
-                        <button class="flex items-center justify-center rounded-xl h-11 px-6 bg-white dark:bg-[#1a2a1a] border border-[#dce5dc] dark:border-[#2a3a2a] text-sm font-bold shadow-sm hover:bg-gray-50 transition-all">
-                            <span class="material-symbols-outlined ml-2 text-xl">edit</span>
-                            تعديل الملف الشخصي
-                        </button>
+                        <div class="flex items-center gap-3">
+                            <a href="{{ route('teacher.levels.index') }}" class="flex items-center justify-center rounded-xl h-11 px-6 bg-primary/10 text-primary border border-primary/20 text-sm font-bold shadow-sm hover:bg-primary/20 transition-all">
+                                <span class="material-symbols-outlined ml-2 text-xl">groups</span>
+                                صفحة الفصول
+                            </a>
+                            <button class="flex items-center justify-center rounded-xl h-11 px-6 bg-white dark:bg-[#1a2a1a] border border-[#dce5dc] dark:border-[#2a3a2a] text-sm font-bold shadow-sm hover:bg-gray-50 transition-all">
+                                <span class="material-symbols-outlined ml-2 text-xl">edit</span>
+                                تعديل الملف الشخصي
+                            </button>
+                        </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -165,13 +171,13 @@
                             <div class="flex flex-col gap-4">
                                 <div class="flex items-center justify-between">
                                     <h3 class="text-xl font-bold">آخر الصور المضافة</h3>
-                                    <button class="text-primary text-sm font-bold">مشاهدة الكل</button>
+                                    <button id="teacher-view-all-photos" onclick="viewAllPhotos()" class="text-primary text-sm font-bold">مشاهدة الكل</button>
                                 </div>
                                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                                     <div class="aspect-square rounded-xl bg-cover bg-center border border-[#dce5dc] dark:border-[#2a3a2a]" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDdhplbP3H82o9tEb9D0XLjLv3e1XX5SsR-FK99wrAcicty2ECPmJwIGrkZqEjnjTSoR2yImla3FV669ZIi9cAeaqe2a6yi4i7qWbztcf9kgS6JPV5Xh5MjMZojR_MdW01lliEr5FNm2QDhx1a0qwrw1R4NGa20FNtJRqfzUugADZ2vvhG4Bu3oXEngcq-wMTE_-8IzDDuBWIpssenetbL308QpG8AKHmzCen0XTGp-Na38kO2lpmR1WmUMdN2f2_BIzIb1LinGhGBI');"></div>
                                     <div class="aspect-square rounded-xl bg-cover bg-center border border-[#dce5dc] dark:border-[#2a3a2a]" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuALdWpXUijdTqTuku3D3WsLRVrnDsZ0NSqzHG2e3T13eklGSTvo-zCSJ6yThJUTA7iTahCCp0bqkVSDlch_qo0ONCGGRzgE4s59Joa8BZSEWd3P8Wk_vKPBH0Dh3x6JzAMqUtjsD-YFXyEQ0jBa_xXF1znheYBUDD1_2yF1rECDkkQRVvv00nSX7WHYFoth4-CYKhK3t1bxTsDrepWrti7PEkG9Z84SjbmNkW2qhwBxH2mQYnD41v6VhmOzS10q8U-y367BuRpsCvsq');"></div>
                                     <div class="aspect-square rounded-xl bg-cover bg-center border border-[#dce5dc] dark:border-[#2a3a2a]" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA-qcip3O8MklKeBV1IFIl8fwHN6kjzxjwkcdB1E1-u7WN2S4qfmFbDc-xeMBWG3yM3h2mN4M2lN5O0ocYodrXLJxOMY8nyUZORE5eUQfK2m3F6vaAj-0H5CTFR1o1QZxT45K6kUlVqBoVVX2u_kxWmaTcvXwKHEG1Ryw_Lt8eYCcW53k0A-_H_LAlOdKrvlFlm7fuyuwvOQahwpnABSMqfLkl-KXprr4hgYLnX45jxjS_Hy2s7psBWg57z4rFrYheHN0KnQ58fxxDs');"></div>
-                                    <div class="aspect-square rounded-xl bg-[#f0f4f0] dark:bg-[#2a3a2a] flex flex-col items-center justify-center gap-2 border-2 border-dashed border-[#dce5dc] dark:border-[#3a4a3a] cursor-pointer hover:bg-primary/10 group transition-colors">
+                                    <div onclick="addPhotos()" class="aspect-square rounded-xl bg-[#f0f4f0] dark:bg-[#2a3a2a] flex flex-col items-center justify-center gap-2 border-2 border-dashed border-[#dce5dc] dark:border-[#3a4a3a] cursor-pointer hover:bg-primary/10 group transition-colors">
                                         <span class="material-symbols-outlined text-3xl text-primary group-hover:scale-110 transition-transform">add_a_photo</span>
                                         <span class="text-xs font-bold">إضافة صور</span>
                                     </div>
@@ -265,17 +271,17 @@
                     <span class="material-symbols-outlined">home</span>
                     <span class="text-[10px]">الرئيسية</span>
                 </button>
-                <button class="flex flex-col items-center text-[#638863]">
+                <a href="{{ route('teacher.levels.index') }}" class="flex flex-col items-center text-[#638863]">
                     <span class="material-symbols-outlined">groups</span>
                     <span class="text-[10px]">الفصول</span>
-                </button>
+                </a>
                 <button class="size-12 rounded-full bg-primary text-white flex items-center justify-center -mt-8 border-4 border-[#f6f8f6] dark:border-background-dark shadow-lg">
                     <span class="material-symbols-outlined">add</span>
                 </button>
-                <button class="flex flex-col items-center text-[#638863]">
+                <a href="{{ route('teacher.messages') }}" class="flex flex-col items-center text-[#638863]">
                     <span class="material-symbols-outlined">chat_bubble</span>
                     <span class="text-[10px]">الرسائل</span>
-                </button>
+                </a>
                 <button class="flex flex-col items-center text-[#638863]">
                     <span class="material-symbols-outlined">account_circle</span>
                     <span class="text-[10px]">حسابي</span>
@@ -283,7 +289,7 @@
             </div>
         </div>
     </div>
-    <script src={{asset("js/teacher-functions.js")}}></script>
+    <script src="{{ asset('js/teacher-functions.js') }}"></script>
 
 </body>
 

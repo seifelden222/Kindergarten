@@ -90,7 +90,7 @@
                         <span class="bg-primary/20 text-primary px-6 py-2 rounded-full font-bold text-lg">النشاط الحالي</span>
                         <h3 class="text-5xl font-bold">وقت الرسم الحر</h3>
                         <p class="text-2xl text-[#8a7560] dark:text-[#cbb8a6]">استخدم الألوان لتعبر عن خيالك الرائع!</p>
-                        <button class="mt-4 bg-primary text-white text-2xl font-bold py-6 px-12 rounded-full shadow-xl hover:scale-105 transition-transform flex items-center gap-4">
+                        <button onclick="startActivity('وقت الرسم الحر')" class="mt-4 bg-primary text-white text-2xl font-bold py-6 px-12 rounded-full shadow-xl hover:scale-105 transition-transform flex items-center gap-4">
                             <span class="material-symbols-outlined text-4xl">play_circle</span>
                             ابدأ الآن
                         </button>

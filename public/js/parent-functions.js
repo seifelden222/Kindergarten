@@ -573,6 +573,25 @@ function sendMessage(event) {
     attachedFiles = [];
     updateAttachedFilesDisplay();
     showToast('تم إرسال الرسالة', 'success');
+
+    // رد تلقائي بسيط لإظهار استلام الرسالة.
+    setTimeout(() => {
+        const autoReply = document.createElement('div');
+        autoReply.className = 'flex items-start gap-4 max-w-3xl';
+        autoReply.style.marginTop = '1.5rem';
+        autoReply.innerHTML = `
+            <div class="w-10 h-10 rounded-full bg-cover bg-center flex-shrink-0" style="background-image: url('${currentChat.image}')"></div>
+            <div class="flex-1">
+                <div class="bg-gray-100 dark:bg-[#112111] rounded-2xl rounded-tr-none p-4">
+                    <p>تم استلام رسالتك، وسيتم الرد عليك في أقرب وقت ممكن.</p>
+                </div>
+                <span class="text-xs text-[#638863] dark:text-[#a3c2a3] mt-1 block">الآن</span>
+            </div>
+        `;
+
+        messagesContainer.appendChild(autoReply);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }, 900);
 }
 
 // تنسيق حجم الملف
@@ -1256,6 +1275,23 @@ function toggleDarkMode(checkbox) {
     }
 }
 
+function findButtonsByText(text) {
+    return Array.from(document.querySelectorAll('button')).filter((button) =>
+        button.textContent.trim().includes(text)
+    );
+}
+
+function findButtonByText(text) {
+    return findButtonsByText(text)[0] ?? null;
+}
+
+function findButtonByIcon(iconName) {
+    return Array.from(document.querySelectorAll('button')).find((button) => {
+        const icon = button.querySelector('.material-symbols-outlined');
+        return icon && icon.textContent.trim() === iconName;
+    }) ?? null;
+}
+
 // ==================== Event Listeners ====================
 document.addEventListener('DOMContentLoaded', function() {
     // تفعيل الوضع الليلي من localStorage
@@ -1267,7 +1303,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // ربط أزرار التقرير اليومي
-    const reportButtons = document.querySelectorAll('button:has-text("عرض التقرير اليومي")');
+    const reportButtons = findButtonsByText('عرض التقرير اليومي');
     reportButtons.forEach(button => {
         button.onclick = function() {
             const childCard = this.closest('.bg-white, .dark\\:bg-\\[\\#1a2e1a\\]');
@@ -1286,7 +1322,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // ربط زر إرسال الرسالة
-    const sendButton = document.querySelector('button:has(.material-symbols-outlined:has-text("send"))');
+    const sendButton = findButtonByIcon('send');
     if (sendButton && window.location.pathname.includes('messages')) {
         sendButton.onclick = sendMessage;
         
@@ -1299,10 +1335,10 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         
-        const attachButton = document.querySelector('button:has(.material-symbols-outlined:has-text("attach_file"))');
+        const attachButton = findButtonByIcon('attach_file');
         if (attachButton) attachButton.onclick = attachFile;
         
-        const newMessageButton = document.querySelector('button:has-text("رسالة جديدة")');
+        const newMessageButton = findButtonByText('رسالة جديدة');
         if (newMessageButton) newMessageButton.onclick = composeNewMessage;
     }
     
@@ -1343,7 +1379,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (index === 2) form.onsubmit = changePassword;
         });
         
-        const deleteButton = document.querySelector('button:has-text("حذف الحساب نهائياً")');
+        const deleteButton = findButtonByText('حذف الحساب نهائياً');
         if (deleteButton) deleteButton.onclick = deleteAccount;
         
         const darkModeToggle = document.querySelector('input[type="checkbox"]');
@@ -1352,16 +1388,16 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // ربط أزرار الحضور
     if (window.location.pathname.includes('absence')) {
-        const printButton = document.querySelector('button:has-text("طباعة التقرير")');
+        const printButton = findButtonByText('طباعة التقرير');
         if (printButton) printButton.onclick = printAttendanceReport;
         
-        const showAllButton = document.querySelector('button:has-text("عرض جميع أيام الشهر")');
+        const showAllButton = findButtonByText('عرض جميع أيام الشهر');
         if (showAllButton) showAllButton.onclick = showAllMonthDays;
     }
     
     // ربط أزرار الأنشطة
     if (window.location.pathname.includes('activities')) {
-        const previousMonthButton = document.querySelector('button:has-text("عرض أنشطة الشهر الماضي")');
+        const previousMonthButton = findButtonByText('عرض أنشطة الشهر الماضي');
         if (previousMonthButton) previousMonthButton.onclick = showPreviousMonthActivities;
     }
 });

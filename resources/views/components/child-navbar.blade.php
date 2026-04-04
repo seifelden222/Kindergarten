@@ -59,7 +59,7 @@
                         </button>
                     </form>
                     <div class="flex flex-col items-center bg-white dark:bg-[#322820] px-7 py-4 rounded-full shadow-md border-2 border-primary/20">
-                        <span class="text-primary text-3xl font-bold">8</span>
+                        <span id="child-star-count" class="text-primary text-3xl font-bold">0</span>
                         <span class="material-symbols-outlined text-yellow-400 text-3xl">stars</span>
                     </div>
                     <div class="w-20 h-20 rounded-full border-4 border-white shadow-xl overflow-hidden bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDf0Ix67ogfzlpkNqBflrYiwgGhqYcmOqrg4ZEuemA8nLmNxxPYTbqSaiEhaZHaHk7GBWXUEb0OvbcgflNmhHdm9Pwq3qlTPYvCsrUams_WKKTY3BrFI9wYxkn37NIt2IvMlFJq7daZTa9nAv3YN0ItfXGz6Ahel8qmdDm-VbJSzqwOQzlwcXLNDzFvPFmznjrgwlJXlVETgAEGz9Pvt2MnCw_3NjJ3aKLlHzj2pzLk5u9O4qopCeFX3LNj-rEyNaEaAJK83XVFu8vo");'>

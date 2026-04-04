@@ -80,11 +80,11 @@
     <div class="px-4 lg:px-40 flex justify-center py-2">
         <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
             <div class="flex items-center justify-between px-4 pb-3 pt-6">
-                <button class="bg-white dark:bg-zinc-800 p-3 rounded-full shadow-md text-primary flex items-center justify-center">
+                <button id="attendance-next-month" class="bg-white dark:bg-zinc-800 p-3 rounded-full shadow-md text-primary flex items-center justify-center">
                     <span class="material-symbols-outlined text-3xl">arrow_forward</span>
                 </button>
-                <h1 class="text-[#111811] dark:text-white tracking-light text-[36px] font-black leading-tight text-center">شهر أكتوبر 2026</h1>
-                <button class="bg-white dark:bg-zinc-800 p-3 rounded-full shadow-md text-primary flex items-center justify-center">
+                <h1 id="attendance-month-title" class="text-[#111811] dark:text-white tracking-light text-[36px] font-black leading-tight text-center">شهر أكتوبر 2026</h1>
+                <button id="attendance-prev-month" class="bg-white dark:bg-zinc-800 p-3 rounded-full shadow-md text-primary flex items-center justify-center">
                     <span class="material-symbols-outlined text-3xl">arrow_back</span>
                 </button>
             </div>
@@ -171,7 +171,7 @@
                 <div class="flex flex-col items-center gap-3 p-4 bg-white dark:bg-zinc-800 rounded-2xl shadow-sm border-2 border-primary/20 hover:scale-105 transition-transform border-4 border-primary">
                     <div class="w-full flex justify-center text-primary relative">
                         <span class="material-symbols-outlined text-5xl md:text-6xl">light_mode</span>
-                        <div class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">اليوم!</div>
+                        <div id="attendance-today-badge" class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">اليوم!</div>
                     </div>
                     <div class="text-center">
                         <p class="text-primary text-xl font-black">5</p>
@@ -215,6 +215,44 @@
     </div>
     </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const title = document.getElementById('attendance-month-title');
+            const nextMonthButton = document.getElementById('attendance-next-month');
+            const prevMonthButton = document.getElementById('attendance-prev-month');
+
+            let currentDate = new Date();
+
+            function renderMonthTitle() {
+                if (!title) {
+                    return;
+                }
+
+                const monthText = currentDate.toLocaleDateString('ar-EG', {
+                    month: 'long',
+                    year: 'numeric'
+                });
+
+                title.textContent = `شهر ${monthText}`;
+            }
+
+            if (nextMonthButton) {
+                nextMonthButton.addEventListener('click', function () {
+                    currentDate.setMonth(currentDate.getMonth() + 1);
+                    renderMonthTitle();
+                });
+            }
+
+            if (prevMonthButton) {
+                prevMonthButton.addEventListener('click', function () {
+                    currentDate.setMonth(currentDate.getMonth() - 1);
+                    renderMonthTitle();
+                });
+            }
+
+            renderMonthTitle();
+        });
+    </script>
     <script src="{{ asset('js/child-functions.js') }}"></script>
 
 </body>
