@@ -61,7 +61,7 @@
 
     <div class="max-w-[1200px] mx-auto px-6 py-8">
 
-        <section class="bg-white dark:bg-[#322820] p-8 rounded-xl shadow-sm mb-12 border-b-8 border-primary/10">
+        {{-- <section class="bg-white dark:bg-[#322820] p-8 rounded-xl shadow-sm mb-12 border-b-8 border-primary/10">
             <div class="flex flex-col gap-6">
                 <div class="flex justify-between items-end">
                     <div class="flex items-center gap-3">
@@ -79,7 +79,7 @@
                 </div>
                 <p class="text-lg font-medium text-[#8a7560] dark:text-[#cbb8a6] text-center">شارفت على الانتهاء! أنت مبدع جداً</p>
             </div>
-        </section>
+        </section> --}}
         <section class="mb-12">
             <h2 class="text-3xl font-bold mb-6 px-4">أنا أفعل الآن...</h2>
             <div class="relative overflow-hidden rounded-xl bg-gradient-to-l from-orange-400 to-primary p-1 shadow-2xl">

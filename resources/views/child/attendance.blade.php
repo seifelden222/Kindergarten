@@ -236,10 +236,53 @@
                 title.textContent = `شهر ${monthText}`;
             }
 
+            function syncTodayBadge() {
+                const todayBadge = document.getElementById('attendance-today-badge');
+
+                if (!todayBadge) {
+                    return;
+                }
+
+                const dayCards = Array.from(document.querySelectorAll('div.grid > div'));
+
+                dayCards.forEach((card) => {
+                    card.classList.remove('border-4', 'border-primary');
+                });
+
+                const todayDay = String(new Date().getDate());
+                const matchingCard = dayCards.find((card) => {
+                    const dayNumberElement = card.querySelector('p.text-primary.text-xl.font-black, p.text-indigo-600.dark\\:text-indigo-400.text-xl.font-black, p.text-zinc-400.text-xl.font-black');
+
+                    if (!dayNumberElement) {
+                        return false;
+                    }
+
+                    return dayNumberElement.textContent.trim() === todayDay;
+                });
+
+                if (!matchingCard) {
+                    todayBadge.classList.add('hidden');
+                    return;
+                }
+
+                const iconWrapper = matchingCard.querySelector('.w-full.flex.justify-center');
+
+                if (!iconWrapper) {
+                    todayBadge.classList.add('hidden');
+                    return;
+                }
+
+                matchingCard.classList.add('border-4', 'border-primary');
+                iconWrapper.classList.add('relative');
+                iconWrapper.appendChild(todayBadge);
+                todayBadge.classList.remove('hidden');
+            }
+
             if (nextMonthButton) {
                 nextMonthButton.addEventListener('click', function () {
                     currentDate.setMonth(currentDate.getMonth() + 1);
                     renderMonthTitle();
+                    syncTodayBadge();
                 });
             }
 
@@ -247,10 +290,12 @@
                 prevMonthButton.addEventListener('click', function () {
                     currentDate.setMonth(currentDate.getMonth() - 1);
                     renderMonthTitle();
+                    syncTodayBadge();
                 });
             }
 
             renderMonthTitle();
+            syncTodayBadge();
         });
     </script>
     <script src="{{ asset('js/child-functions.js') }}"></script>
