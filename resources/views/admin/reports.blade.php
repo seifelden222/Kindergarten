@@ -73,7 +73,7 @@
                     </div>
                 </div>
 
-           
+
 
                 <div class="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 shadow-sm overflow-hidden">
                     <div class="p-6 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
