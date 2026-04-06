@@ -49,7 +49,9 @@
             </nav>
 
             <div class="p-6 border-t border-[#dce5dc] dark:border-[#2a3a2a] flex items-center gap-4">
-                <div class="bg-center bg-cover rounded-full size-12 border-2 border-primary" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA-NWq3LGx-QdmdnVL0WxNPG-VwwZK1NCc9Mj53x3yw5XhAJ3DIfCVftHnyYny6HViotlVBVUIW9ZPYMpklXDKdhjP-7J9bBTkMkx32TSOO6k9aiZgqTbXpKf9p0jL7ycUzJr3fQbKnGs7htazQvmO8zPYdFbS7Qo7FhxFhXOQKX-t8vad7Kbp2hBbJ5km2WtYLv6GvXQJqwHrvCveb8afZYJTYakHfakW9ruSuAJKsx-Lrl5T72Za2YeX4bXeErPTynTfMORrhbDu7');"></div>
+                <div class="size-12 rounded-full border-2 border-primary bg-primary/10 text-primary flex items-center justify-center">
+                    <span class="material-symbols-outlined text-3xl">person</span>
+                </div>
                 <div>
                     <p class="font-bold">{{ $user?->name ?? 'مستخدم النظام' }}</p>
                     <p class="text-xs text-[#638863] dark:text-[#a0b0a0]">{{ $user?->specialization ?? $user?->role ?? 'معلم' }}</p>

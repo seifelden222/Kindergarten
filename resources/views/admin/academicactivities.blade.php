@@ -60,7 +60,7 @@
                         <h1 class="text-[#111811] dark:text-white text-3xl sm:text-4xl font-black leading-tight tracking-tight">صفحة الأنشطة اليومية والتعليمية</h1>
                         <p class="text-[#638863] dark:text-white/60 text-base font-normal">تابع وأدر جميع الأنشطة التعليمية والترفيهية للأطفال في حضانتنا</p>
                     </div>
-                    <button class="flex items-center gap-2 px-6 py-3 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all">
+                    <button type="button" onclick="openActivityComposer()" class="flex items-center gap-2 px-6 py-3 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all">
                         <span class="material-symbols-outlined">add_circle</span>
                         <span>إضافة نشاط جديد</span>
                     </button>
@@ -71,11 +71,11 @@
                     <aside class="lg:col-span-3 flex flex-col gap-6 order-2 lg:order-1">
                         <div class="bg-white dark:bg-white/5 p-5 rounded-2xl shadow-sm border border-[#f0f4f0] dark:border-white/5">
                             <div class="flex items-center justify-between mb-5">
-                                <button class="size-9 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
+                                <button type="button" onclick="shiftActivityMonth(-1)" class="size-9 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
                                     <span class="material-symbols-outlined text-sm">arrow_forward_ios</span>
                                 </button>
-                                <p class="text-[#111811] dark:text-white text-base font-bold">أكتوبر 2023</p>
-                                <button class="size-9 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
+                                <p id="activityMonthLabel" class="text-[#111811] dark:text-white text-base font-bold">أكتوبر 2023</p>
+                                <button type="button" onclick="shiftActivityMonth(1)" class="size-9 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
                                     <span class="material-symbols-outlined text-sm">arrow_back_ios</span>
                                 </button>
                             </div>
@@ -133,20 +133,20 @@
 
                         <div class="bg-white dark:bg-white/5 rounded-2xl shadow-sm border border-[#f0f4f0] dark:border-white/5 overflow-hidden">
                             <div class="flex border-b border-[#f0f4f0] dark:border-white/10">
-                                <button class="flex-1 py-4 text-sm font-bold border-b-2 border-primary text-primary transition-all">كل الأنشطة</button>
-                                <button class="flex-1 py-4 text-sm font-medium text-[#638863] dark:text-white/60 hover:text-primary transition-all">أنشطة فصلي</button>
-                                <button class="flex-1 py-4 text-sm font-medium text-[#638863] dark:text-white/60 hover:text-primary transition-all">المهام المعلقة</button>
+                                <button type="button" onclick="setActivityTab(this, 'كل الأنشطة')" class="flex-1 py-4 text-sm font-bold border-b-2 border-primary text-primary transition-all">كل الأنشطة</button>
+                                <button type="button" onclick="setActivityTab(this, 'أنشطة فصلي')" class="flex-1 py-4 text-sm font-medium text-[#638863] dark:text-white/60 hover:text-primary transition-all">أنشطة فصلي</button>
+                                <button type="button" onclick="setActivityTab(this, 'المهام المعلقة')" class="flex-1 py-4 text-sm font-medium text-[#638863] dark:text-white/60 hover:text-primary transition-all">المهام المعلقة</button>
                             </div>
                             <div class="flex gap-3 p-5 flex-wrap">
-                                <button class="flex h-10 items-center justify-center gap-x-2 rounded-xl bg-primary/10 border border-primary/20 px-5">
+                                <button type="button" onclick="setActivityStatus(this, 'اليوم')" class="flex h-10 items-center justify-center gap-x-2 rounded-xl bg-primary/10 border border-primary/20 px-5">
                                     <span class="text-primary text-sm font-bold">اليوم</span>
                                     <span class="material-symbols-outlined text-primary text-xl">calendar_today</span>
                                 </button>
-                                <button class="flex h-10 items-center justify-center gap-x-2 rounded-xl bg-[#f0f4f0] dark:bg-white/10 px-5">
+                                <button type="button" onclick="setActivityStatus(this, 'مكتمل')" class="flex h-10 items-center justify-center gap-x-2 rounded-xl bg-[#f0f4f0] dark:bg-white/10 px-5">
                                     <span class="text-[#111811] dark:text-white text-sm font-medium">مكتمل</span>
                                     <span class="material-symbols-outlined text-[#111811] dark:text-white text-xl">check_circle</span>
                                 </button>
-                                <button class="flex h-10 items-center justify-center gap-x-2 rounded-xl bg-[#f0f4f0] dark:bg-white/10 px-5">
+                                <button type="button" onclick="setActivityStatus(this, 'قادم')" class="flex h-10 items-center justify-center gap-x-2 rounded-xl bg-[#f0f4f0] dark:bg-white/10 px-5">
                                     <span class="text-[#111811] dark:text-white text-sm font-medium">قادم</span>
                                     <span class="material-symbols-outlined text-[#111811] dark:text-white text-xl">schedule</span>
                                 </button>
@@ -178,7 +178,7 @@
                                             <div class="size-8 rounded-full border-2 border-white dark:border-background-dark bg-gray-200 dark:bg-white/10 flex items-center justify-center text-xs font-bold">+12</div>
                                         </div>
                                     </div>
-                                    <button class="w-full py-3 bg-[#f0f4f0] dark:bg-white/5 text-[#111811] dark:text-white rounded-xl text-sm font-bold hover:bg-primary hover:text-white transition-all">عرض التفاصيل</button>
+                                    <button type="button" onclick="openActivityDetailsFromCard(this)" class="w-full py-3 bg-[#f0f4f0] dark:bg-white/5 text-[#111811] dark:text-white rounded-xl text-sm font-bold hover:bg-primary hover:text-white transition-all">عرض التفاصيل</button>
                                 </div>
                             </div>
 
@@ -208,7 +208,7 @@
                                             <div class="size-8 rounded-full border-2 border-white dark:border-background-dark bg-gray-200 dark:bg-white/10 flex items-center justify-center text-xs font-bold">+15</div>
                                         </div>
                                     </div>
-                                    <button class="w-full py-3 bg-[#f0f4f0] dark:bg-white/5 text-[#111811] dark:text-white rounded-xl text-sm font-bold hover:bg-primary hover:text-white transition-all">مشاهدة الصور</button>
+                                    <button type="button" onclick="openActivityDetailsFromCard(this)" class="w-full py-3 bg-[#f0f4f0] dark:bg-white/5 text-[#111811] dark:text-white rounded-xl text-sm font-bold hover:bg-primary hover:text-white transition-all">مشاهدة الصور</button>
                                 </div>
                             </div>
 
@@ -244,7 +244,7 @@
                                             <div class="size-8 rounded-full border-2 border-white dark:border-background-dark bg-gray-200 dark:bg-white/10 flex items-center justify-center text-xs font-bold">+8</div>
                                         </div>
                                     </div>
-                                    <button class="w-full py-3 bg-[#f0f4f0] dark:bg-white/5 text-[#111811] dark:text-white rounded-xl text-sm font-bold hover:bg-primary hover:text-white transition-all">عرض التفاصيل</button>
+                                    <button type="button" onclick="openActivityDetailsFromCard(this)" class="w-full py-3 bg-[#f0f4f0] dark:bg-white/5 text-[#111811] dark:text-white rounded-xl text-sm font-bold hover:bg-primary hover:text-white transition-all">عرض التفاصيل</button>
                                 </div>
                             </div>
 
@@ -255,7 +255,7 @@
         </main>
 
         <div class="fixed bottom-8 left-8 z-50">
-            <button class="flex items-center justify-center size-16 bg-primary text-white rounded-full shadow-2xl shadow-primary/40 hover:scale-110 active:scale-95 transition-all group">
+            <button type="button" onclick="openActivityComposer()" class="flex items-center justify-center size-16 bg-primary text-white rounded-full shadow-2xl shadow-primary/40 hover:scale-110 active:scale-95 transition-all group">
                 <span class="material-symbols-outlined text-3xl group-hover:rotate-90 transition-transform">add</span>
             </button>
             <div class="absolute bottom-20 left-0 bg-white dark:bg-background-dark border border-gray-100 dark:border-white/10 p-3 rounded-2xl shadow-xl hidden group-hover:block w-56 animate-in fade-in slide-in-from-bottom-2">
@@ -273,8 +273,124 @@
             </div>
         </div>
 
+            </div>
+        </div>
+    <div id="activityModal" onclick="if (event.target === this) closeActivityModal()" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 px-4">
+        <div class="w-full max-w-2xl rounded-3xl bg-white p-6 shadow-2xl dark:bg-[#1a2a1a]">
+            <div class="flex items-start justify-between gap-4 border-b border-[#dce5dc] pb-4 dark:border-white/10">
+                <div>
+                    <h3 id="activityModalTitle" class="text-2xl font-black text-[#111811] dark:text-white">عنوان النشاط</h3>
+                    <p id="activityModalMeta" class="mt-1 text-sm text-[#638863] dark:text-white/60">تفاصيل النشاط</p>
+                </div>
+                <button type="button" onclick="closeActivityModal()" class="rounded-full bg-[#f0f4f0] p-2 text-[#111811] dark:bg-white/10 dark:text-white">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div id="activityModalBody" class="space-y-4 pt-5 text-sm leading-7 text-[#638863] dark:text-white/70"></div>
+            <div class="mt-6 flex justify-end gap-3">
+                <button type="button" onclick="closeActivityModal()" class="rounded-xl border border-[#dce5dc] px-5 py-3 font-bold dark:border-white/10">إغلاق</button>
+                <button type="button" onclick="openActivityComposer()" class="rounded-xl bg-primary px-5 py-3 font-bold text-white">إضافة نشاط مشابه</button>
+            </div>
+        </div>
     </div>
-    </div>
+    <script>
+        const activityState = {
+            monthLabel: 'أكتوبر 2023',
+            activeTab: 'كل الأنشطة',
+            activeStatus: 'اليوم',
+        };
+
+        function openActivityModal(title, meta, body) {
+            document.getElementById('activityModalTitle').textContent = title;
+            document.getElementById('activityModalMeta').textContent = meta;
+            document.getElementById('activityModalBody').innerHTML = body;
+            document.getElementById('activityModal').classList.remove('hidden');
+            document.getElementById('activityModal').classList.add('flex');
+        }
+
+        function closeActivityModal() {
+            const modal = document.getElementById('activityModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function openActivityComposer() {
+            openActivityModal(
+                'إضافة نشاط جديد',
+                'يمكنك هنا تجهيز نشاط جديد للفصل',
+                `
+                    <p>زر الإضافة أصبح يعمل الآن. لو أردت، نقدر نحول هذا النموذج لاحقاً لحفظ نشاط فعلي في قاعدة البيانات.</p>
+                    <div class="rounded-2xl bg-primary/10 p-4 text-primary">
+                        هذه نسخة تفاعلية جاهزة حالياً بدل الصفحة الثابتة.
+                    </div>
+                `
+            );
+        }
+
+        function openActivityDetailsFromCard(button) {
+            const card = button.closest('.group');
+            if (!card) {
+                return;
+            }
+
+            const title = card.querySelector('h3')?.textContent?.trim() || 'تفاصيل النشاط';
+            const description = card.querySelector('p.text-sm')?.textContent?.trim() || 'لا توجد تفاصيل إضافية.';
+            const teacher = card.querySelector('.flex-1 p.text-sm.font-bold')?.textContent?.trim() || 'المعلم غير محدد';
+            const className = card.querySelector('.flex-1 p.text-xs')?.textContent?.trim() || 'فصل غير محدد';
+
+            openActivityModal(
+                title,
+                `${teacher} • ${className}`,
+                `
+                    <p>${description}</p>
+                    <div class="grid grid-cols-1 gap-3 rounded-2xl bg-[#f0f4f0] p-4 dark:bg-white/5">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-[#111811] dark:text-white">الحالة</span>
+                            <span class="rounded-full bg-primary px-3 py-1 text-xs font-bold text-white">جاهز للعرض</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-[#111811] dark:text-white">الوقت</span>
+                            <span>${activityState.monthLabel}</span>
+                        </div>
+                    </div>
+                `
+            );
+        }
+
+        function setActivityTab(button, label) {
+            activityState.activeTab = label;
+            document.querySelectorAll('[onclick^="setActivityTab"]').forEach((item) => {
+                item.classList.remove('border-primary', 'text-primary', 'font-bold');
+                item.classList.add('text-[#638863]', 'dark:text-white/60', 'font-medium');
+            });
+            button.classList.add('border-primary', 'text-primary', 'font-bold');
+            button.classList.remove('text-[#638863]', 'dark:text-white/60', 'font-medium');
+        }
+
+        function setActivityStatus(button, label) {
+            activityState.activeStatus = label;
+            document.querySelectorAll('[onclick^="setActivityStatus"]').forEach((item) => {
+                item.classList.remove('bg-primary/10', 'border-primary/20');
+                item.classList.add('bg-[#f0f4f0]', 'dark:bg-white/10');
+            });
+            button.classList.add('bg-primary/10', 'border-primary/20');
+            button.classList.remove('bg-[#f0f4f0]', 'dark:bg-white/10');
+            button.classList.add('border', 'border-primary/20');
+        }
+
+        function shiftActivityMonth(direction) {
+            activityState.monthLabel = direction < 0 ? 'سبتمبر 2023' : 'نوفمبر 2023';
+            const monthLabel = document.getElementById('activityMonthLabel');
+            if (monthLabel) {
+                monthLabel.textContent = activityState.monthLabel;
+            }
+            openActivityModal(
+                'تغيير الشهر',
+                'عرض سريع للمحتوى',
+                `<p>تم تغيير العرض إلى <strong>${activityState.monthLabel}</strong>.</p>`
+            );
+        }
+    </script>
 </body>
 
 </html>

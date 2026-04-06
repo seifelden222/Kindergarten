@@ -240,7 +240,12 @@
                                                     class="p-2 hover:text-primary transition-colors">
                                                     <span class="material-symbols-outlined">edit</span>
                                                 </button>
-                                                <button class="p-2 hover:text-red-500 transition-colors"><span class="material-symbols-outlined">more_vert</span></button>
+                                                <button
+                                                    type="button"
+                                                    onclick="openEditModal({{ $child->id }}, '{{ $child->name }}', '{{ $isPresent ? 'present' : 'absent' }}', '{{ $isPresent ? $attendance->id : '' }}', '{{ $isPresent ? $attendance->check_in?->format('H:i') : '' }}', '{{ $isPresent ? $attendance->check_out?->format('H:i') : '' }}')"
+                                                    class="p-2 hover:text-primary transition-colors">
+                                                    <span class="material-symbols-outlined">more_vert</span>
+                                                </button>
                                             </td>
                                         </tr>
                                     @endforeach

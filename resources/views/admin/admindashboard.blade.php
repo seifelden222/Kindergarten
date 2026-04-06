@@ -92,7 +92,7 @@
                         </div>
                         <div>
                             <p class="text-zinc-500 dark:text-zinc-400 text-sm font-medium">مدفوعات معلقة</p>
-                            <h3 class="text-3xl font-bold mt-1">{{ number_format((float) $pendingPayments, 0) }} <span class="text-sm font-normal text-zinc-400">ر.س</span></h3>
+                            <h3 class="text-3xl font-bold mt-1">{{ number_format((float) $pendingPayments, 0) }} <span class="text-sm font-normal text-zinc-400">ج.م</span></h3>
                         </div>
                     </div>
                     <div class="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-100 dark:border-zinc-800 flex flex-col gap-4 shadow-sm">
@@ -114,7 +114,7 @@
                                 <p class="text-zinc-500 text-sm">مقارنة بآخر 6 أشهر</p>
                             </div>
                             <div class="text-left">
-                                <h3 class="text-2xl font-bold text-primary">45,000 ر.س</h3>
+                                <h3 class="text-2xl font-bold text-primary">45,000 ج.م</h3>
                                 <span class="text-xs text-green-500 font-bold">+15% زيادة</span>
                             </div>
                         </div>

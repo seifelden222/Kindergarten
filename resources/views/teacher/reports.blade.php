@@ -72,7 +72,7 @@
                         <div class="bg-white dark:bg-[#1a2a1a] rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] shadow-sm p-6">
                             <div class="flex items-center justify-between mb-6">
                                 <h3 class="text-xl font-bold">التقارير الأخيرة</h3>
-                                <span class="text-primary text-sm font-medium">عرض الكل</span>
+                                <button type="button" class="text-primary text-sm font-medium hover:underline">عرض الكل</button>
                             </div>
                             <div class="space-y-4">
                                 @forelse ($recentReports as $report)
@@ -123,10 +123,10 @@
                         </div>
                     </div>
 
-                    <div class="bg-white dark:bg-[#1a2a1a] rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] shadow-sm p-6">
+                    <div id="all-reports-section" class="bg-white dark:bg-[#1a2a1a] rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] shadow-sm p-6">
                         <div class="flex items-center justify-between mb-6">
                             <h3 class="text-xl font-bold">آخر التقارير المرسلة</h3>
-                            <span class="text-primary text-sm font-medium">تصدير الكل</span>
+                            <button type="button" onclick="exportAllReports()" class="text-primary text-sm font-medium hover:underline">تصدير الكل</button>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-right">
@@ -161,7 +161,7 @@
                                             <td class="py-4">{{ $report->teacher?->name ?? auth()->user()?->name }}</td>
                                             <td class="py-4"><span class="inline-block rounded-full px-3 py-1 text-xs {{ $statusClasses }}">{{ $statusLabel }}</span></td>
                                             <td class="py-4">
-                                                <button type="button" class="text-primary hover:underline text-sm" onclick="viewReport(@js($report->title), @js($report->content), @js($report->level?->name ?? '-'), @js(optional($report->report_date)->format('Y-m-d')))">عرض</button>
+                                                <button type="button" class="text-primary hover:underline text-sm" onclick="viewReport(@js($report->title), @js($report->content), @js($report->level_name ?? 'بدون فصل محدد'), @js(optional($report->report_date)->format('Y-m-d')))">عرض</button>
                                             </td>
                                         </tr>
                                     @empty

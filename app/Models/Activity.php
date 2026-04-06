@@ -17,6 +17,10 @@ class Activity extends Model
         'name',
         'activity_date',
         'activity_type',
+        'description',
+        'activity_time',
+        'duration_minutes',
+        'image_path',
         'user_id',
     ];
 
@@ -27,6 +31,7 @@ class Activity extends Model
     {
         return [
             'activity_date' => 'date',
+            'duration_minutes' => 'integer',
         ];
     }
 

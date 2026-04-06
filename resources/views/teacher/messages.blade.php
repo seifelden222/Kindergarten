@@ -58,10 +58,10 @@
                             <h1 class="text-4xl font-black leading-tight tracking-tight">الرسائل</h1>
                             <p class="text-lg text-[#638863] dark:text-[#a0b0a0]">التواصل مع أولياء الأمور والإدارة</p>
                         </div>
-                        <button class="flex items-center justify-center rounded-xl h-11 px-6 bg-primary text-white text-sm font-bold shadow-sm hover:brightness-105 transition-all">
+                        {{-- <button type="button" onclick="composeNewMessage()" class="flex items-center justify-center rounded-xl h-11 px-6 bg-primary text-white text-sm font-bold shadow-sm hover:brightness-105 transition-all">
                             <span class="material-symbols-outlined ml-2 text-xl">edit</span>
                             رسالة جديدة
-                        </button>
+                        </button> --}}
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -158,11 +158,11 @@
                             </div>
 
                             <div class="p-5 border-t border-[#dce5dc] dark:border-[#2a3a2a] flex items-center gap-3">
-                                <button class="text-[#638863] dark:text-[#a0b0a0] hover:text-primary">
+                                <button type="button" onclick="attachFileToMessage()" class="text-[#638863] dark:text-[#a0b0a0] hover:text-primary">
                                     <span class="material-symbols-outlined text-2xl">attach_file</span>
                                 </button>
                                 <input type="text" class="flex-1 bg-[#f0f4f0] dark:bg-[#2a3a2a] border-none rounded-xl px-5 py-3 focus:ring-0 placeholder:text-[#638863]" placeholder="اكتب رسالتك هنا..." />
-                                <button class="bg-primary text-white rounded-xl px-6 py-3 hover:brightness-105 transition-all">
+                                <button type="button" onclick="sendChatMessage()" class="bg-primary text-white rounded-xl px-6 py-3 hover:brightness-105 transition-all">
                                     <span class="material-symbols-outlined">send</span>
                                 </button>
                             </div>

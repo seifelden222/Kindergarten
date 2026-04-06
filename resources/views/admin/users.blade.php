@@ -106,7 +106,7 @@
                             <div>
                                 <label class="block text-sm mb-1">النوع</label>
                                 <select name="role" class="w-full rounded-xl border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800">
-                                    @foreach (['admin', 'doctor', 'specialist', 'teacher', 'guardian', 'child'] as $role)
+                                    @foreach (['admin', 'teacher', 'guardian', 'child'] as $role)
                                         <option value="{{ $role }}" @selected(old('role', $editingUser->role) === $role)>{{ $role }}</option>
                                     @endforeach
                                 </select>

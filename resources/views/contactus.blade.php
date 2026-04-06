@@ -96,12 +96,12 @@
               <a href="mailto:info@nursery.edu.eg" class="text-xl font-medium text-primary mt-3 hover:underline">info@nursery.edu.eg</a>
             </div>
 
-            <div class="flex flex-col items-center gap-4 rounded-xl border border-[#dce5dc] dark:border-white/10 bg-white dark:bg-background-dark/40 p-10 text-center hover:border-primary transition-all shadow-sm hover:shadow-lg">
+            <a href="https://www.google.com/maps/search/?api=1&query=Egypt" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-4 rounded-xl border border-[#dce5dc] dark:border-white/10 bg-white dark:bg-background-dark/40 p-10 text-center hover:border-primary hover:shadow-lg transition-all shadow-sm">
               <span class="material-symbols-outlined text-primary text-5xl">location_on</span>
               <h3 class="text-xl font-bold mt-2">موقعنا</h3>
-              <p class="text-[#638863] dark:text-gray-300 mt-1">جمهورية مصر العربية</p>
+              <p class="text-[#638863] dark:text-gray-300 mt-1">اضغط لفتح الموقع على الخريطة</p>
               <p class="text-lg font-medium mt-3">جمهورية مصر العربية</p>
-            </div>
+            </a>
           </div>
         </div>
       </section>

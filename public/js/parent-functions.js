@@ -994,8 +994,9 @@ function showPaymentHistory() {
 function exportPaymentHistory() {
     showToast('جاري تصدير سجل الدفعات...', 'info');
     setTimeout(() => {
-        showToast('تم تصدير السجل بنجاح', 'success');
-    }, 1500);
+        window.print();
+        showToast('تم فتح نافذة الطباعة. يمكنك حفظها كملف PDF.', 'success');
+    }, 500);
 }
 
 // معالجة الدفع

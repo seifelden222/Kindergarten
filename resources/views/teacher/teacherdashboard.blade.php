@@ -125,11 +125,11 @@
                                     <span class="material-symbols-outlined ml-2">check_circle</span>
                                     تسجيل الحضور
                                 </button>
-                                <button class="flex min-w-[140px] flex-1 items-center justify-center rounded-xl h-14 px-6 bg-white dark:bg-[#1a2a1a] border-2 border-primary text-primary text-base font-bold">
+                                <button type="button" onclick="addDailyActivity()" class="flex min-w-[140px] flex-1 items-center justify-center rounded-xl h-14 px-6 bg-white dark:bg-[#1a2a1a] border-2 border-primary text-primary text-base font-bold">
                                     <span class="material-symbols-outlined ml-2">draw</span>
                                     إضافة نشاط يومي
                                 </button>
-                                <button class="flex min-w-[140px] flex-1 items-center justify-center rounded-xl h-14 px-6 bg-[#f0f4f0] dark:bg-[#2a3a2a] text-base font-bold">
+                                <button type="button" onclick="addBehaviorNote()" class="flex min-w-[140px] flex-1 items-center justify-center rounded-xl h-14 px-6 bg-[#f0f4f0] dark:bg-[#2a3a2a] text-base font-bold">
                                     <span class="material-symbols-outlined ml-2">add_comment</span>
                                     ملاحظة سلوكية
                                 </button>
@@ -143,9 +143,20 @@
                                 </div>
                                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                                     @foreach ($recentPhotos as $photo)
-                                        <div class="aspect-square rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-[#dce5dc] dark:border-[#2a3a2a] p-3 flex flex-col justify-end">
-                                            <p class="text-sm font-bold line-clamp-2">{{ $photo->name }}</p>
-                                            <p class="text-xs text-[#638863]">{{ optional($photo->activity_date)->format('Y-m-d') }}</p>
+                                        <div class="aspect-square rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-[#dce5dc] dark:border-[#2a3a2a] p-3 flex flex-col justify-between overflow-hidden">
+                                            @if ($photo->image_path)
+                                                <div class="h-20 rounded-lg overflow-hidden bg-zinc-200 dark:bg-zinc-700">
+                                                    <img src="{{ asset('storage/'.$photo->image_path) }}" alt="{{ $photo->name }}" class="h-full w-full object-cover">
+                                                </div>
+                                            @else
+                                                <div class="h-20 rounded-lg border border-dashed border-[#dce5dc] dark:border-[#2a3a2a] flex items-center justify-center text-[#638863] dark:text-[#a0b0a0] text-xs">
+                                                    بدون صورة
+                                                </div>
+                                            @endif
+                                            <div class="pt-2">
+                                                <p class="text-sm font-bold line-clamp-2">{{ $photo->name }}</p>
+                                                <p class="text-xs text-[#638863]">{{ optional($photo->activity_date)->format('Y-m-d') }}</p>
+                                            </div>
                                         </div>
                                     @endforeach
                                     <div onclick="addPhotos()" class="aspect-square rounded-xl bg-[#f0f4f0] dark:bg-[#2a3a2a] flex flex-col items-center justify-center gap-2 border-2 border-dashed border-[#dce5dc] dark:border-[#3a4a3a] cursor-pointer hover:bg-primary/10 group transition-colors">
@@ -192,7 +203,7 @@
                                 </ul>
                             </div>
 
-                            <button class="w-full flex items-center justify-between p-4 bg-primary text-white rounded-xl font-bold shadow-lg">
+                            <button type="button" onclick="sendDailyReport()" class="w-full flex items-center justify-between p-4 bg-primary text-white rounded-xl font-bold shadow-lg">
                                 <div class="flex items-center gap-3">
                                     <span class="material-symbols-outlined">description</span>
                                     <span>إرسال التقرير اليومي</span>
@@ -243,6 +254,9 @@
         </form>
     </template>
 
+    <script>
+        window.teacherActivityStoreUrl = @json(route('teacher.activities.store'));
+    </script>
     <script src="{{ asset('js/teacher-functions.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {

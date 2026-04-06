@@ -81,36 +81,40 @@
             <div class="px-6 md:px-40 py-5">
                 <div class="layout-content-container flex flex-col max-w-[960px] mx-auto">
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 p-4">
-                        <div onclick="openGiftBox('وسام')" class="gift-card cursor-pointer group relative flex flex-col items-center justify-center bg-white dark:bg-background-dark p-8 rounded-xl shadow-xl border-b-8 border-primary transition-all">
+                        <div onclick="openGiftBox('badge')" class="gift-card cursor-pointer group relative flex flex-col items-center justify-center bg-white dark:bg-background-dark p-8 rounded-xl shadow-xl border-b-8 border-primary transition-all">
                             <div class="absolute -top-4 -right-4 bg-red-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-md animate-bounce">
-                                جديد! ✨
+                                {{ $surpriseCards['badge']['label'] }}
                             </div>
                             <div class="size-32 bg-yellow-100 dark:bg-yellow-900/30 rounded-full flex items-center justify-center mb-6">
                                 <span class="material-symbols-outlined text-primary" style="font-size: 64px;">emoji_events</span>
                             </div>
-                            <h3 class="text-[#181611] dark:text-white text-2xl font-bold mb-2">وسام جديد!</h3>
-                            <p class="text-[#8a8060] dark:text-gray-400 text-center">أنت طفل مبدع اليوم</p>
+                            <h3 class="text-[#181611] dark:text-white text-2xl font-bold mb-2">{{ $surpriseCards['badge']['title'] }}</h3>
+                            <p class="text-[#8a8060] dark:text-gray-400 text-center">{{ $surpriseCards['badge']['message'] }}</p>
                         </div>
-                        <div onclick="openGiftBox('رسالة')" class="gift-card cursor-pointer group relative flex flex-col items-center justify-center bg-white dark:bg-background-dark p-8 rounded-xl shadow-xl border-b-8 border-blue-400 transition-all">
+                        <div onclick="openGiftBox('message')" class="gift-card cursor-pointer group relative flex flex-col items-center justify-center bg-white dark:bg-background-dark p-8 rounded-xl shadow-xl border-b-8 border-blue-400 transition-all">
                             <div class="size-32 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mb-6">
                                 <span class="material-symbols-outlined text-blue-500" style="font-size: 64px;">face_6</span>
                             </div>
-                            <h3 class="text-[#181611] dark:text-white text-2xl font-bold mb-2">رسالة المعلمة</h3>
-                            <p class="text-[#8a8060] dark:text-gray-400 text-center">اضغط لتعرف ماذا قالت لك</p>
+                            <h3 class="text-[#181611] dark:text-white text-2xl font-bold mb-2">{{ $surpriseCards['message']['title'] }}</h3>
+                            <p class="text-[#8a8060] dark:text-gray-400 text-center">{{ $surpriseCards['message']['message'] }}</p>
                         </div>
-                        <div onclick="openGiftBox('صورة')" class="gift-card cursor-pointer group relative flex flex-col items-center justify-center bg-white dark:bg-background-dark p-8 rounded-xl shadow-xl border-b-8 border-green-400 transition-all">
+                        <div onclick="openGiftBox('activity')" class="gift-card cursor-pointer group relative flex flex-col items-center justify-center bg-white dark:bg-background-dark p-8 rounded-xl shadow-xl border-b-8 border-green-400 transition-all">
                             <div class="size-32 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-6">
-                                <span class="material-symbols-outlined text-green-500" style="font-size: 64px;">palette</span>
+                                @if (!empty($surpriseCards['activity']['image']))
+                                    <img src="{{ $surpriseCards['activity']['image'] }}" alt="صورة النشاط" class="size-32 rounded-full object-cover">
+                                @else
+                                    <span class="material-symbols-outlined text-green-500" style="font-size: 64px;">palette</span>
+                                @endif
                             </div>
-                            <h3 class="text-[#181611] dark:text-white text-2xl font-bold mb-2">صورة النشاط</h3>
-                            <p class="text-[#8a8060] dark:text-gray-400 text-center">انظر إلى رسمتك الجميلة</p>
+                            <h3 class="text-[#181611] dark:text-white text-2xl font-bold mb-2">{{ $surpriseCards['activity']['title'] }}</h3>
+                            <p class="text-[#8a8060] dark:text-gray-400 text-center">{{ $surpriseCards['activity']['message'] }}</p>
                         </div>
-                        <div onclick="openGiftBox('وجبة')" class="gift-card cursor-pointer group relative flex flex-col items-center justify-center bg-white dark:bg-background-dark p-8 rounded-xl shadow-xl border-b-8 border-orange-400 transition-all">
+                        <div onclick="openGiftBox('meal')" class="gift-card cursor-pointer group relative flex flex-col items-center justify-center bg-white dark:bg-background-dark p-8 rounded-xl shadow-xl border-b-8 border-orange-400 transition-all">
                             <div class="size-32 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center mb-6">
                                 <span class="material-symbols-outlined text-orange-500" style="font-size: 64px;">restaurant</span>
                             </div>
-                            <h3 class="text-[#181611] dark:text-white text-2xl font-bold mb-2">وقت الوجبة</h3>
-                            <p class="text-[#8a8060] dark:text-gray-400 text-center">وجبتك الشهية جاهزة الآن</p>
+                            <h3 class="text-[#181611] dark:text-white text-2xl font-bold mb-2">{{ $surpriseCards['meal']['title'] }}</h3>
+                            <p class="text-[#8a8060] dark:text-gray-400 text-center">{{ $surpriseCards['meal']['message'] }}</p>
                         </div>
                     </div>
                 </div>
@@ -153,6 +157,9 @@
             </button>
         </div>
     </div>
+    <script>
+        window.childSurpriseCards = @json($surpriseCards);
+    </script>
     <script src="{{ asset('js/child-functions.js') }}"></script>
 </body>
 

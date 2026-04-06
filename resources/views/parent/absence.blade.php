@@ -60,9 +60,7 @@
                             @endforeach
                         </select>
 
-                        <button type="submit" class="px-5 py-2 bg-primary text-[#111811] rounded-xl text-sm font-bold hover:brightness-110 transition-colors shadow-lg shadow-primary/20">
-                            تصفية
-                        </button>
+                     
 
                         <button type="button" onclick="window.print()" class="px-5 py-2 bg-zinc-200 text-zinc-700 rounded-xl text-sm font-bold hover:bg-zinc-300 transition-colors">
                             طباعة التقرير

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTeacherActivityRequest;
 use App\Http\Requests\StoreTeacherAttendanceRequest;
 use App\Http\Requests\UpdateTeacherProfileRequest;
 use App\Models\Activity;
@@ -11,6 +12,7 @@ use App\Models\TeacherReport;
 use App\Models\User;
 use App\Models\WeeklySchedule;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -23,15 +25,18 @@ class TeacherDashboardController extends Controller
     {
         $teacher = $request->user();
         $levels = $teacher->levels()->orderBy('name')->get();
+        $levelNames = $levels->pluck('name')->filter()->values();
 
         $className = $levels->first()?->name ?? 'غير محدد';
-        $totalChildren = (int) $levels->sum('children_count');
-
         $students = User::query()
             ->where('role', 'child')
-            ->latest('registration_date')
-            ->limit(max($totalChildren, 1))
+            ->when($levelNames->isNotEmpty(), function ($query) use ($levelNames) {
+                $query->whereIn('level_name', $levelNames);
+            })
+            ->orderBy('registration_date')
             ->get(['id', 'name', 'level_name', 'allergies', 'chronic_diseases']);
+
+        $totalChildren = $students->count();
 
         $todayStart = now()->startOfDay();
         $todayEnd = now()->endOfDay();
@@ -80,7 +85,10 @@ class TeacherDashboardController extends Controller
         $alerts = $this->buildAlerts($students);
 
         $recentPhotos = Activity::query()
-            ->whereIn('user_id', $students->pluck('id'))
+            ->where(function ($query) use ($students, $teacher) {
+                $query->whereIn('user_id', $students->pluck('id'))
+                    ->orWhere('user_id', $teacher->id);
+            })
             ->latest()
             ->take(3)
             ->get();
@@ -104,6 +112,33 @@ class TeacherDashboardController extends Controller
             'alerts' => $alerts,
             'recentPhotos' => $recentPhotos,
         ]);
+    }
+
+    public function storeActivity(StoreTeacherActivityRequest $request): JsonResponse|RedirectResponse
+    {
+        $teacher = $request->user();
+        $validated = $request->validated();
+
+        Activity::query()->create([
+            'name' => $validated['name'],
+            'activity_date' => now()->toDateString(),
+            'activity_type' => $this->activityTypeLabel($validated['activity_type']),
+            'description' => $validated['description'],
+            'activity_time' => $validated['activity_time'],
+            'duration_minutes' => $validated['duration_minutes'],
+            'image_path' => $request->file('activity_image')?->store('activities', 'public'),
+            'user_id' => $teacher->id,
+        ]);
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'تم إضافة النشاط بنجاح.',
+            ], 201);
+        }
+
+        return redirect()
+            ->route('teacher.teacherdashboard')
+            ->with('status', 'تم إضافة النشاط بنجاح.');
     }
 
     /**
@@ -137,6 +172,18 @@ class TeacherDashboardController extends Controller
             Carbon::FRIDAY => 'الجمعة',
             Carbon::SATURDAY => 'السبت',
             default => '-',
+        };
+    }
+
+    private function activityTypeLabel(string $activityType): string
+    {
+        return match ($activityType) {
+            'art' => 'نشاط فني',
+            'sport' => 'نشاط رياضي',
+            'music' => 'نشاط موسيقي',
+            'reading' => 'قراءة وقصص',
+            'science' => 'نشاط علمي',
+            default => 'نشاط يومي',
         };
     }
 

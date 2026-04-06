@@ -22,6 +22,10 @@ class TeacherReportController extends Controller
             ->latest()
             ->get();
 
+        $reports->each(function (TeacherReport $report): void {
+            $report->setAttribute('level_name', $report->level?->name);
+        });
+
         $levels = $teacher->levels()
             ->orderBy('name')
             ->get(['id', 'name']);

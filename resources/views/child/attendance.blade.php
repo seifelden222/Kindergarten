@@ -207,7 +207,7 @@
                 </div>
                 <h3 class="text-2xl font-black text-[#111811] dark:text-white mb-2">يا لك من رائع!</h3>
                 <p class="text-lg text-[#8a7560] dark:text-zinc-400">لقد جمعت 14 شمساً مشرقة هذا الشهر. استمر في التألق!</p>
-                <button class="mt-6 bg-primary hover:bg-primary/90 text-white font-black py-4 px-10 rounded-full text-xl shadow-lg transition-transform hover:scale-105">
+                <button type="button" onclick="window.location.href='{{ route('child.home') }}'" class="mt-6 bg-primary hover:bg-primary/90 text-white font-black py-4 px-10 rounded-full text-xl shadow-lg transition-transform hover:scale-105">
                     نراك غداً!
                 </button>
             </div>

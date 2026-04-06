@@ -265,15 +265,17 @@ function confirmSubmitAttendance() {
 // إضافة نشاط يومي
 function addDailyActivity() {
     const content = `
-        <form onsubmit="handleAddActivity(event)" class="space-y-5">
+        <form id="teacher-daily-activity-form" action="${window.teacherActivityStoreUrl || '#'}" method="POST" onsubmit="return handleAddActivity(event)" class="space-y-5">
+            <input type="hidden" name="_token" value="${document.querySelector('meta[name=csrf-token]')?.content || ''}">
+            <div class="hidden rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700" data-activity-errors></div>
             <div>
                 <label class="block text-sm font-medium mb-2">عنوان النشاط</label>
-                <input type="text" required placeholder="مثال: الرسم بالألوان المائية" class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
+                <input name="name" type="text" required placeholder="مثال: الرسم بالألوان المائية" class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
             </div>
 
             <div>
                 <label class="block text-sm font-medium mb-2">نوع النشاط</label>
-                <select required class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
+                <select name="activity_type" required class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
                     <option value="">اختر نوع النشاط</option>
                     <option value="art">نشاط فني</option>
                     <option value="sport">نشاط رياضي</option>
@@ -285,17 +287,23 @@ function addDailyActivity() {
 
             <div>
                 <label class="block text-sm font-medium mb-2">الوصف</label>
-                <textarea required rows="4" placeholder="اكتب وصف النشاط..." class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
+                <textarea name="description" required rows="4" placeholder="اكتب وصف النشاط..." class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-2">صورة النشاط</label>
+                <input name="activity_image" type="file" accept="image/*" class="w-full rounded-xl border border-dashed border-[#dce5dc] bg-[#f0f4f0] px-4 py-3 text-sm text-[#638863] dark:border-[#2a3a2a] dark:bg-[#2a3a2a]">
+                <p class="mt-2 text-xs text-[#638863]">اختياري، ويمكنك تركه بدون صورة.</p>
             </div>
 
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium mb-2">الوقت</label>
-                    <input type="time" required class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
+                    <input name="activity_time" type="time" required class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
                 </div>
                 <div>
                     <label class="block text-sm font-medium mb-2">المدة (دقيقة)</label>
-                    <input type="number" required placeholder="30" class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
+                    <input name="duration_minutes" type="number" min="1" max="480" required placeholder="30" class="w-full px-4 py-3 bg-[#f0f4f0] dark:bg-[#2a3a2a] border border-[#dce5dc] dark:border-[#2a3a2a] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50">
                 </div>
             </div>
 
@@ -314,13 +322,64 @@ function addDailyActivity() {
     createPopup('إضافة نشاط يومي', content, 'medium');
 }
 
-function handleAddActivity(event) {
+async function handleAddActivity(event) {
     event.preventDefault();
-    showToast('جاري إضافة النشاط...', 'info');
-    setTimeout(() => {
+
+    const form = event.currentTarget;
+    const errorsContainer = form.querySelector('[data-activity-errors]');
+    const submitButton = form.querySelector('button[type="submit"]');
+    const defaultButtonHtml = submitButton?.innerHTML || '';
+
+    if (errorsContainer) {
+        errorsContainer.classList.add('hidden');
+        errorsContainer.innerHTML = '';
+    }
+
+    if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<span class="material-symbols-outlined">hourglass_top</span> جاري الإضافة';
+    }
+
+    try {
+        const response = await fetch(form.action, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
+            },
+            body: new FormData(form),
+        });
+
+        if (!response.ok) {
+            const payload = await response.json().catch(() => ({}));
+            const errors = payload.errors || {};
+            const errorMessages = Object.values(errors).flat();
+
+            if (errorsContainer && errorMessages.length > 0) {
+                errorsContainer.innerHTML = `<ul class="list-disc space-y-1 pr-5">${errorMessages.map((message) => `<li>${message}</li>`).join('')}</ul>`;
+                errorsContainer.classList.remove('hidden');
+            } else {
+                showToast(payload.message || 'تعذر إضافة النشاط حالياً.', 'error');
+            }
+
+            return false;
+        }
+
         closeAllPopups();
         showToast('تم إضافة النشاط بنجاح!', 'success');
-    }, 1000);
+        setTimeout(() => window.location.reload(), 700);
+        return true;
+    } catch (error) {
+        console.error('Failed to add activity:', error);
+        showToast('حدث خطأ أثناء إضافة النشاط.', 'error');
+        return false;
+    } finally {
+        if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.innerHTML = defaultButtonHtml;
+        }
+    }
 }
 
 
@@ -1150,16 +1209,18 @@ function viewReport(reportTitle, reportContent = '', levelName = '', reportDate 
 function downloadReport() {
     showToast('جاري تحميل التقرير...', 'info');
     setTimeout(() => {
-        showToast('تم تحميل التقرير بنجاح!', 'success');
-    }, 1500);
+        window.print();
+        showToast('تم فتح نافذة الطباعة. يمكنك حفظ التقرير كـ PDF.', 'success');
+    }, 500);
 }
 
 // تصدير جميع التقارير
 function exportAllReports() {
     showToast('جاري تصدير جميع التقارير...', 'info');
     setTimeout(() => {
-        showToast('تم تصدير التقارير بنجاح!', 'success');
-    }, 2000);
+        window.print();
+        showToast('تم فتح نافذة الطباعة. يمكنك حفظ كل التقارير كـ PDF.', 'success');
+    }, 500);
 }
 
 
@@ -1171,7 +1232,16 @@ function filterReports(period) {
 
 // عرض الكل
 function viewAllReports() {
-    showToast('عرض جميع التقارير', 'info');
+    const section = document.getElementById('all-reports-section');
+    if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        section.classList.add('ring-4', 'ring-primary/30');
+        setTimeout(() => section.classList.remove('ring-4', 'ring-primary/30'), 1500);
+        showToast('تم عرض كل التقارير', 'info');
+        return;
+    }
+
+    showToast('قسم كل التقارير غير موجود حالياً', 'warning');
 }
 
 // ==================== Event Listeners ====================

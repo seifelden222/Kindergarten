@@ -50,7 +50,7 @@
             <div class="max-w-6xl mx-auto p-8">
                 <header class="flex flex-wrap justify-between items-end gap-6 mb-8">
                     <div class="flex flex-col gap-2">
-                        <h2 class="text-4xl font-black tracking-tight">أهلاً بك، أحمد 👋</h2>
+                        <h2 class="text-4xl font-black tracking-tight">أهلاً بك 👋</h2>
                         <p class="text-[#638863] dark:text-[#a3c2a3] text-lg">نظرة عامة على حالة أطفالك اليوم</p>
                     </div>
                     <div class="flex gap-3">
@@ -64,36 +64,19 @@
                         </button>
                     </div>
                 </header>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                    <div class="bg-white dark:bg-[#1a2e1a] rounded-xl p-6 border border-[#dce5dc] dark:border-[#2d402d] shadow-sm">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                                <span class="material-symbols-outlined text-blue-600 dark:text-blue-400">how_to_reg</span>
-                            </div>
-                            <span class="text-[#078823] text-sm font-bold">+100%</span>
+                <div class="mb-10 rounded-2xl border border-[#dce5dc] dark:border-[#2d402d] bg-white dark:bg-[#1a2e1a] p-6 shadow-sm">
+                    <div class="flex flex-wrap items-center justify-between gap-4">
+                        <div>
+                            <p class="text-sm text-[#638863] dark:text-[#a3c2a3]">الأطفال المسجلين</p>
+                            <p class="text-4xl font-black mt-2">{{ auth()->user()?->children()->where('role', 'child')->count() ?? 0 }}</p>
                         </div>
-                        <p class="text-[#638863] dark:text-[#a3c2a3] text-sm font-medium">الحضور اليوم</p>
-                        <p class="text-3xl font-black mt-1">2 / 2</p>
-                    </div>
-                    <div class="bg-white dark:bg-[#1a2e1a] rounded-xl p-6 border border-[#dce5dc] dark:border-[#2d402d] shadow-sm">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
-                                <span class="material-symbols-outlined text-purple-600 dark:text-purple-400">task_alt</span>
+                        <div class="flex items-center gap-3 rounded-xl bg-primary/10 px-4 py-3 text-primary">
+                            <span class="material-symbols-outlined">notifications</span>
+                            <div>
+                                <p class="font-bold">أحدث تحديثات أطفالك</p>
+                                <p class="text-sm opacity-80">ستجد كل جديد في بطاقات الأطفال بالأسفل</p>
                             </div>
-                            <span class="text-[#078823] text-sm font-bold">+20%</span>
                         </div>
-                        <p class="text-[#638863] dark:text-[#a3c2a3] text-sm font-medium">الأنشطة المكتملة</p>
-                        <p class="text-3xl font-black mt-1">12</p>
-                    </div>
-                    <div class="bg-white dark:bg-[#1a2e1a] rounded-xl p-6 border border-[#dce5dc] dark:border-[#2d402d] shadow-sm">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="p-2 bg-orange-100 dark:bg-orange-900/30 rounded-lg">
-                                <span class="material-symbols-outlined text-orange-600 dark:text-orange-400">sentiment_satisfied</span>
-                            </div>
-                            <span class="text-[#638863] dark:text-[#a3c2a3] text-sm font-medium">0%</span>
-                        </div>
-                        <p class="text-[#638863] dark:text-[#a3c2a3] text-sm font-medium">ملاحظات سلوكية</p>
-                        <p class="text-3xl font-black mt-1">3</p>
                     </div>
                 </div>
                 <div class="flex items-center justify-between mb-6">
@@ -188,7 +171,6 @@
         </main>
     </div>
 
-    <script src="parent-functions.js"></script>
     <script>
         // ربط أزرار التقرير اليومي في الصفحة الرئيسية
         document.querySelectorAll('button').forEach(button => {

@@ -1226,40 +1226,28 @@ function selectHelp(type) {
 
 // فتح صندوق المفاجآت
 function openGiftBox(giftType) {
-    const gifts = {
-        'وسام': {
-            emoji: '🏆',
-            title: 'وسام البطل!',
-            message: 'أنت طفل مبدع ومجتهد!',
-            reward: 'نجمتين'
-        },
-        'رسالة': {
-            emoji: '💌',
-            title: 'رسالة من المعلمة',
-            message: 'أنت طفل رائع! استمر في التفوق يا بطل!',
-            reward: 'نجمة'
-        },
-        'صورة': {
-            emoji: '🖼️',
-            title: 'صورة نشاطك',
-            message: 'شوف رسمتك الجميلة!',
-            reward: 'نجمة'
-        },
-        'وجبة': {
-            emoji: '🍕',
-            title: 'وقت الأكل!',
-            message: 'وجبتك الشهية جاهزة!',
-            reward: 'نجمة'
-        }
+    const defaultGift = {
+        emoji: '🎁',
+        title: 'مفاجأة جميلة',
+        message: 'عندك حاجة لطيفة النهاردة!',
+        reward: 'نجمة واحدة',
+        meta: '',
     };
-
-    const gift = gifts[giftType] || gifts['وسام'];
+    const giftData = window.childSurpriseCards?.[giftType] || {};
+    const gift = {
+        emoji: giftData.emoji || defaultGift.emoji,
+        title: giftData.title || defaultGift.title,
+        message: giftData.message || defaultGift.message,
+        reward: giftData.reward || defaultGift.reward,
+        meta: giftData.meta || defaultGift.meta,
+    };
 
     const content = `
         <div class="space-y-6 text-center">
             <div class="text-9xl animate-bounce">${gift.emoji}</div>
             <h4 class="text-5xl font-bold text-primary">${gift.title}</h4>
             <p class="text-3xl text-[#8a7560] dark:text-[#cbb8a6]">${gift.message}</p>
+            ${gift.meta ? `<p class="text-xl text-[#8a7560] dark:text-[#cbb8a6]">${gift.meta}</p>` : ''}
 
             <div class="bg-gradient-to-r from-yellow-400 to-orange-400 p-8 rounded-3xl">
                 <p class="text-white text-3xl font-bold mb-4">مكافأتك:</p>
@@ -1270,7 +1258,7 @@ function openGiftBox(giftType) {
                 </div>
             </div>
 
-            ${giftType === 'صورة' ? `
+            ${giftType === 'activity' ? `
                 <div class="bg-white dark:bg-[#322820] p-4 rounded-3xl">
                     <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400" class="w-full rounded-2xl" alt="رسمتك">
                 </div>
@@ -1701,4 +1689,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
     console.log('✨ All event listeners attached successfully!');
 });
-

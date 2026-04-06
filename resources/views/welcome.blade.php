@@ -112,7 +112,7 @@
                             </button>
                             <button
                                 class="flex min-w-[160px] cursor-pointer items-center justify-center rounded-xl h-14 px-6 border-2 border-primary text-primary text-lg font-bold hover:bg-primary/10 transition-colors">
-                                <span class="truncate">تعرف على المزيد</span>
+                                <a href="{{ route('contactus') }}">تعرف على المزيد</a>
                             </button>
                         </div>
                     </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -19,7 +20,7 @@ class UpdateAdminUserRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
@@ -34,7 +35,7 @@ class UpdateAdminUserRequest extends FormRequest
                 Rule::unique(User::class)->ignore($this->route('user')?->id),
             ],
             'phone' => ['nullable', 'string', 'max:20'],
-            'role' => ['required', Rule::in(['admin', 'doctor', 'specialist', 'teacher', 'guardian', 'child'])],
+            'role' => ['required', Rule::in(['admin', 'teacher', 'guardian', 'child'])],
             'status' => ['required', Rule::in(['active', 'unverified'])],
             'address' => ['nullable', 'string', 'max:255'],
         ];

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\TableScheduleController;
 use App\Http\Controllers\Admin\UserManagementController;
+use App\Http\Controllers\Child\SurpriseController;
 use App\Http\Controllers\Guardian\AbsenceController;
 use App\Http\Controllers\Guardian\ChildController;
 use App\Http\Controllers\Guardian\PaymentController;
@@ -21,7 +22,7 @@ Route::get('/', function () {
 });
 Route::get('/contactus', function () {
     return view('contactus');
-});
+})->name('contactus');
 
 Route::get('/dashboard', function () {
     $dashboardRoute = auth()->user()->dashboardRoute();
@@ -62,7 +63,7 @@ Route::group(['prefix' => 'child', 'middleware' => ['auth', 'role:child']], func
     Route::view('/activties', 'child.activties')->name('child.activties');
     Route::view('/attendance', 'child.attendance')->name('child.attendance');
     Route::view('/home', 'child.home')->name('child.home');
-    Route::view('/surprise', 'child.surprise')->name('child.surprise');
+    Route::get('/surprise', [SurpriseController::class, 'index'])->name('child.surprise');
     Route::view('/teachertalk', 'child.teachertalk')->name('child.teachertalk');
 });
 
@@ -91,6 +92,7 @@ Route::group(['prefix' => 'teacher', 'middleware' => ['auth', 'role:teacher']], 
     Route::post('/reports', [TeacherReportController::class, 'store'])->name('teacher.reports.store');
     Route::get('/teacherdashboard', [TeacherDashboardController::class, 'index'])->name('teacher.teacherdashboard');
     Route::post('/teacherdashboard/attendance', [TeacherDashboardController::class, 'storeAttendance'])->name('teacher.attendance.store');
+    Route::post('/teacherdashboard/activities', [TeacherDashboardController::class, 'storeActivity'])->name('teacher.activities.store');
     Route::patch('/teacherdashboard/profile', [TeacherDashboardController::class, 'updateProfile'])->name('teacher.profile.update');
 });
 

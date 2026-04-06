@@ -65,7 +65,7 @@
                     </div>
                     <div class="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 p-5">
                         <p class="text-sm text-zinc-500">إجمالي المدفوعات هذا الشهر</p>
-                        <p class="text-2xl font-bold mt-1 text-primary">{{ number_format((float) $monthlyPaymentsTotal, 2) }} ر.س</p>
+                        <p class="text-2xl font-bold mt-1 text-primary">{{ number_format((float) $monthlyPaymentsTotal, 2) }} ج.م</p>
                     </div>
                     <div class="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 p-5">
                         <p class="text-sm text-zinc-500">نسبة الحضور</p>
