@@ -50,7 +50,7 @@
 
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
     <div class="flex h-screen overflow-hidden">
-        
+
 <x-admin-slider />
         <main class="flex-1 overflow-y-auto px-6 py-8">
             <div class="max-w-[1280px] mx-auto">
@@ -167,9 +167,11 @@
                                     <h3 class="text-xl font-bold text-[#111811] dark:text-white">وقت الرسم والألوان المائية</h3>
                                     <p class="text-sm text-[#638863] dark:text-white/60 leading-relaxed">نشاط إبداعي يهدف لتطوير المهارات الحركية الدقيقة لدى الأطفال من خلال الرسم الحر والتلوين بالألوان المائية.</p>
                                     <div class="flex items-center gap-4 mt-5 py-4 border-t border-gray-100 dark:border-white/5">
-                                        <div class="size-10 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBn2pZCX_-kl3In62_RYON-tz8a2uXkKSLZHHNCVJI1ZosXBDlp3rqB7h-AzUyG5Tw56M8iNvm3BuGX2Nte7q4CNo4HrCL_Ui4pwW0GBUTk3ra_sHpsXr6Hnwy18ZdD2kyVFaVFp9AZ6p56de_3__yfSHwyJ74yK0SQmpWW14HMqHHWlxYACAzOsguAMi_I8qEiL02v2u5T0krHvPRaHqqjZGTOWZazxGn1cpwHqRM1260gboaZbxY8sMktcrHBxGEtL10lOLFpCVQ0");'></div>
+                                        <div class="size-10 rounded-full overflow-hidden border border-gray-200">
+                                            <img src="{{ asset('img/Kindergarten-logo.jpeg') }}" alt="المعلمة" class="h-full w-full object-cover">
+                                        </div>
                                         <div class="flex-1">
-                                            <p class="text-sm font-bold text-[#111811] dark:text-white">المعلمة: سارة الأحمد</p>
+                                            <p class="text-sm font-bold text-[#111811] dark:text-white">المعلمة: {{ isset($activity) ? (data_get($activity, 'teacher.name') ?? data_get($activity, 'teacher_name') ?? 'المعلمة') : 'المعلمة' }}</p>
                                             <p class="text-xs text-[#638863] dark:text-white/40">فصل العصافير</p>
                                         </div>
                                         <div class="flex -space-x-2 space-x-reverse">
@@ -197,9 +199,11 @@
                                     <h3 class="text-xl font-bold text-[#111811] dark:text-white">التمارين الصباحية والألعاب الخارجية</h3>
                                     <p class="text-sm text-[#638863] dark:text-white/60 leading-relaxed">وقت النشاط البدني في الحديقة الخارجية، يتضمن الجري الخفيف وألعاب الكرة الجماعية لتعزيز اللياقة البدنية.</p>
                                     <div class="flex items-center gap-4 mt-5 py-4 border-t border-gray-100 dark:border-white/5">
-                                        <div class="size-10 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBMYEylWVMQKGcPHbZIiJYZ2qgXoOKTQ2HCc1gvBx6VndLf8OyStdB7HlPoJTg_rCDSUTVTwFNCoj5WjRKDlS59iIrrzONlqohRMj5YCvCBHz6yarAkFF3qT-OySEyKG0cWnwdlAvQpdvm6GqqTYPQjYxvy7Isa8xSDlX45p_hS19t1ZL6uOlxEZLmO8WvUSyQHiKkWPm11O96xUZt-vkkSrHNXmKsZ9H0RpuPCBreYW3PmWHRFXnIUlvKzOMwpPlXv0fS8C2V1OxQg");'></div>
+                                        <div class="size-10 rounded-full overflow-hidden border border-gray-200">
+                                            <img src="{{ asset('img/Kindergarten-logo.jpeg') }}" alt="المعلم" class="h-full w-full object-cover">
+                                        </div>
                                         <div class="flex-1">
-                                            <p class="text-sm font-bold text-[#111811] dark:text-white">المعلم: محمد كريم</p>
+                                            <p class="text-sm font-bold text-[#111811] dark:text-white">المعلم: {{ isset($activity) ? (data_get($activity, 'teacher.name') ?? data_get($activity, 'teacher_name') ?? 'المعلم') : 'المعلم' }}</p>
                                             <p class="text-xs text-[#638863] dark:text-white/40">فصل النجوم</p>
                                         </div>
                                         <div class="flex -space-x-2 space-x-reverse">
@@ -234,9 +238,11 @@
                                     <h3 class="text-xl font-bold text-[#111811] dark:text-white">بناء المكعبات والمهارات الذهنية</h3>
                                     <p class="text-sm text-[#638863] dark:text-white/60 leading-relaxed">جلسة بناء تفاعلية باستخدام مكعبات الليغو الكبيرة، تركز على العمل الجماعي وحل المشكلات الهندسية البسيطة.</p>
                                     <div class="flex items-center gap-4 mt-5 py-4 border-t border-gray-100 dark:border-white/5">
-                                        <div class="size-10 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDocVa7crKYnvySYfb5gjD8W3wiAHFalWTe4IZiqXY97kOBCxFd13oI0XT1oCRsgTmE8bsMm7uUsgUDUOwj3CKYCpKJl85XlipYJ6rwcls-tECLee45ss4vdvEbGYBhU6Pon9aVsn0duVFgsqudIM-U_ishDKRtqmv8WIostaqOWWEnOBinXGAfe8Z83omSq52SPTWBRQNECtzi4YE2u4FcVtUqM_KAhim-F7TQxd1FBKDmUok53oXFkISYAMfrkT2CgWK6xaBG76WJ");'></div>
+                                        <div class="size-10 rounded-full overflow-hidden border border-gray-200">
+                                            <img src="{{ asset('img/Kindergarten-logo.jpeg') }}" alt="المعلمة" class="h-full w-full object-cover">
+                                        </div>
                                         <div class="flex-1">
-                                            <p class="text-sm font-bold text-[#111811] dark:text-white">المعلمة: مريم العلي</p>
+                                            <p class="text-sm font-bold text-[#111811] dark:text-white">المعلمة: {{ isset($activity) ? (data_get($activity, 'teacher.name') ?? data_get($activity, 'teacher_name') ?? 'المعلمة') : 'المعلمة' }}</p>
                                             <p class="text-xs text-[#638863] dark:text-white/40">فصل الزهور</p>
                                         </div>
                                         <div class="flex -space-x-2 space-x-reverse">

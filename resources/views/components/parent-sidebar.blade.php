@@ -11,8 +11,12 @@
 <aside class="w-72 bg-white dark:bg-[#1a2e1a] border-l border-[#dce5dc] dark:border-[#2d402d] flex flex-col justify-between p-6 overflow-y-auto">
     <div class="flex flex-col gap-8">
         <div class="flex items-center gap-3 px-2">
-            <div class="bg-primary rounded-xl p-2 flex items-center justify-center">
-                <span class="material-symbols-outlined text-white text-3xl">child_care</span>
+                <div class="size-20 rounded-2xl overflow-hidden border-2 border-primary/20 bg-white flex items-center justify-center">
+                    <img
+                        src="{{ asset('img/Kindergarten-logo.jpeg') }}"
+                        alt="شعار الحضانة"
+                        class="h-full w-full object-cover"
+                    >
             </div>
             <div class="flex flex-col">
                 <h1 class="text-lg font-bold leading-tight">نظام الحضانة</h1>
@@ -49,7 +53,7 @@
     </div>
     <div class="flex flex-col gap-4">
         <div class="bg-zinc-50 dark:bg-zinc-800/50 p-4 rounded-xl flex items-center gap-3">
-            <div class="size-10 rounded-full bg-cover bg-center border-2 border-primary" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAgiplVXOh0xcoOTBaM8Ak_8PGDlffuK4F6klF_Pm5GBw3eAy5V-afsqUc_UqjKsutDmMQiIpaJrD8tZMcAj1yXv42k_lqP36nrivBiGMCrWEl9z200-ePOa72Qs7Ka2TZQ0fOgeyrU3UNn5KaEj9ulGOklBXbFnQT3RdPecrXXKhOlooj5hO_cF-bBRIGJOhxrBIIbphXui0CJG2JWrk1AXFkpatglk5EgSSHDwyd7yIiQPdn4texHrh7297piAupNUjfcmqIkNFnd')"></div>
+            <div class="size-10 rounded-full bg-cover bg-center border-2 border-primary" style="background-image: url('{{ asset('img/fasther.jpeg') }}')"></div>
             <div class="flex flex-col truncate">
                 <span class="text-sm font-bold truncate">{{ auth()->user()?->name ?? 'مستخدم النظام' }}</span>
                 <span class="text-[10px] text-zinc-500 uppercase tracking-wider">{{ auth()->user()?->role ?? 'user' }}</span>

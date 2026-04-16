@@ -75,10 +75,10 @@
                 <div class="bg-white dark:bg-[#322820] rounded-[2.8rem] p-10 text-center">
                     <h2 class="text-6xl font-bold mb-8 text-primary">جاهز للمغامرة اليوم؟</h2>
                     <p class="text-3xl text-[#8a7560] dark:text-[#cbb8a6] mb-10">اختر نشاطك المفضل وابدأ المتعة الآن!</p>
-                    <button class="bg-primary text-white text-3xl font-bold py-8 px-16 rounded-full shadow-2xl hover:scale-105 transition-transform flex items-center gap-6 mx-auto">
+                    <a href="{{ route('child.activties') }}" class="bg-primary text-white text-3xl font-bold py-8 px-16 rounded-full shadow-2xl hover:scale-105 transition-transform flex items-center gap-6 mx-auto">
                         <span class="material-symbols-outlined text-5xl">rocket_launch</span>
                         ابدأ اليوم!
-                    </button>
+                    </a>
                 </div>
             </div>
         </section>
@@ -99,7 +99,7 @@
                 <div class="h-64 bg-cover bg-center" style='background-image: url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80");'></div>
                 <div class="p-8 text-center">
                     <h3 class="text-4xl font-bold mb-4">لعبة الحركة</h3>
-                    <p class="text-2xl text-[#8a7560] dark:text-[#cbb8a6] mb-6">ارقص وتحرك معنا!</p>
+                    <p class="text-2xl text-[#8a7560] dark:text-[#cbb8a6] mb-6">انضم وارقص الآن!</p>
                     <button class="bg-green-500 text-white text-2xl py-5 px-12 rounded-full hover:bg-green-600 transition">
                         ابدأ الحركة
                     </button>

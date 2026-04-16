@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Auth\Events\Lockout;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -22,20 +23,41 @@ class LoginRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
+    /**
+     * Known legitimate email domains.
+     *
+     * @var array<int, string>
+     */
+    protected array $allowedDomains = [
+        'gmail.com', 'yahoo.com', 'yahoo.co.uk', 'yahoo.fr', 'yahoo.de',
+        'outlook.com', 'hotmail.com', 'hotmail.co.uk', 'live.com', 'msn.com',
+        'icloud.com', 'me.com', 'mac.com',
+        'protonmail.com', 'proton.me',
+        'aol.com', 'zoho.com',
+        'edu.eg', 'gov.eg',
+    ];
+
     public function rules(): array
     {
         return [
             'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
+            'password' => ['required', 'min:8'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'password.min' => 'كلمة المرور يجب أن تكون 8 أحرف على الأقل.',
         ];
     }
 
     /**
      * Attempt to authenticate the request's credentials.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function authenticate(): void
     {
@@ -55,7 +77,7 @@ class LoginRequest extends FormRequest
     /**
      * Ensure the login request is not rate limited.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function ensureIsNotRateLimited(): void
     {

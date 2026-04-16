@@ -29,8 +29,8 @@
 <body class="flex min-h-screen flex-col bg-[#f6f8f6] text-[#111811]">
     <header class="sticky top-0 z-50 flex items-center justify-between border-b border-[#dce5dc] bg-white/90 px-6 py-3 backdrop-blur-sm lg:px-40">
         <a href="{{ route('register') }}" class="flex items-center gap-4 text-[#111811]">
-            <div class="flex size-8 items-center justify-center rounded-lg bg-[#0ea60e] text-white">
-                <span class="material-symbols-outlined">child_care</span>
+            <div class="flex size-8 items-center justify-center rounded-lg bg-transparent text-white">
+                <img src="{{ asset('img/Kindergarten-logo.jpeg') }}" alt="لوغو الحضانة" class="h-12 w-12 rounded-full object-cover">
             </div>
             <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">نظام إدارة الحضانة</h2>
         </a>
@@ -51,8 +51,7 @@
         <div class="relative grid w-full max-w-[960px] grid-cols-1 overflow-hidden rounded-[28px] bg-white shadow-2xl lg:grid-cols-2">
             <div class="flex flex-col justify-center p-8 md:p-12">
                 <div class="mb-8">
-                    <h1 class="pb-2 text-[32px] font-bold leading-tight tracking-tight text-[#111811]">مرحباً بك مجدداً</h1>
-                    <p class="text-base font-normal leading-normal text-[#638863]">سجّل دخولك ببياناتك، وسيتم توجيهك تلقائيًا إلى البوابة المناسبة حسب نوع الحساب.</p>
+                    <h1 class="pb-2 text-[32px] font-bold leading-tight tracking-tight text-[#111811]">مرحباً بك</h1>
                 </div>
 
                 <div class="mb-8 rounded-2xl border border-[#dce5dc] bg-[#f6fbf6] px-4 py-4 text-sm text-[#4a5f4a]">
@@ -79,6 +78,7 @@
                             <input class="form-input h-14 w-full flex-1 rounded-l-xl rounded-r-none border border-r-0 border-[#dce5dc] bg-white p-[15px] text-base font-normal leading-normal text-[#111811] placeholder:text-[#638863] focus:border-[#0ea60e] focus:outline-0 focus:ring-0" id="email" name="email" placeholder="user@example.com" type="email" value="{{ old('email') }}" required autofocus autocomplete="username" />
                         </div>
                         <x-input-error :messages="$errors->get('email')" class="mt-2 text-sm text-red-600" />
+                        <p id="email-domain-error" class="mt-2 hidden text-sm text-red-600"></p>
                     </div>
 
                     <div class="flex flex-col">
@@ -98,6 +98,7 @@
                             </button>
                         </div>
                         <x-input-error :messages="$errors->get('password')" class="mt-2 text-sm text-red-600" />
+                        <p id="password-live-error" class="mt-2 hidden text-sm text-red-600"></p>
                     </div>
 
                     <label class="mt-2 inline-flex items-center gap-3 text-sm text-[#638863]">
@@ -113,7 +114,7 @@
                 <div class="mt-8 text-center">
                     <p class="text-sm text-[#638863]">
                         ليس لديك حساب؟
-                        <a class="font-bold text-[#0ea60e] hover:underline" href="{{ route('register') }}">أنشئ حساباً جديداً الآن</a>
+                        <a class="font-bold text-[#0ea60e] hover:underline" href="{{ route('register') }}">انشاء حساب جديد</a>
                     </p>
                 </div>
             </div>
@@ -136,11 +137,11 @@
                 <div class="mt-12 grid w-full max-w-xs grid-cols-2 gap-4">
                     <div class="rounded-xl bg-white/50 p-4 text-center backdrop-blur-md">
                         <span class="material-symbols-outlined mb-2 block text-[#0ea60e]">trending_up</span>
-                        <span class="text-xs font-bold">تتبع التقدم</span>
+                        <span class="text-xs font-bold">متابعة يومية</span>
                     </div>
                     <div class="rounded-xl bg-white/50 p-4 text-center backdrop-blur-md">
                         <span class="material-symbols-outlined mb-2 block text-[#0ea60e]">forum</span>
-                        <span class="text-xs font-bold">تواصل مباشر</span>
+                        <span class="text-xs font-bold">رسائل مباشرة</span>
                     </div>
                 </div>
 
@@ -153,19 +154,6 @@
         <p>© 2026 نظام إدارة الحضانة الذكي. جميع الحقوق محفوظة.</p>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const toggleButton = document.querySelector('[data-toggle-password]');
-            const passwordInput = document.getElementById('password');
 
-            if (toggleButton && passwordInput) {
-                toggleButton.addEventListener('click', function () {
-                    const isPassword = passwordInput.type === 'password';
-                    passwordInput.type = isPassword ? 'text' : 'password';
-                    toggleButton.querySelector('span').textContent = isPassword ? 'visibility_off' : 'visibility';
-                });
-            }
-        });
-    </script>
 </body>
 </html>

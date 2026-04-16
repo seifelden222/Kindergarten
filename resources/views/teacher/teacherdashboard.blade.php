@@ -50,7 +50,7 @@
                     <div class="flex flex-wrap justify-between items-end gap-4">
                         <div class="flex min-w-72 flex-col gap-2">
                             <h1 class="text-4xl font-black leading-tight tracking-tight">لوحة تحكم المعلم</h1>
-                            <p class="text-lg text-[#638863] dark:text-[#a0b0a0]">مرحباً بك مجدداً، تدير اليوم <span class="text-primary font-bold">{{ $className }}</span></p>
+                            <p class="text-lg text-[#638863] dark:text-[#a0b0a0]">الفصل الحالي: <span class="text-primary font-bold">{{ $className }}</span></p>
                         </div>
                         <div class="flex items-center gap-3">
                             <a href="{{ route('teacher.levels.index') }}" class="flex items-center justify-center rounded-xl h-11 px-6 bg-primary/10 text-primary border border-primary/20 text-sm font-bold shadow-sm hover:bg-primary/20 transition-all">

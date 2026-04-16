@@ -54,94 +54,56 @@
 
                 </header>
 
+                @php
+                    $children = auth()->user()?->children()->where('role', 'child')
+                        ->with(['activities' => fn($q) => $q->latest()->take(5)])
+                        ->get() ?? collect();
+                @endphp
+
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-7 mb-12">
+                    @forelse($children as $child)
                     <div class="bg-white dark:bg-[#1a2e1a] rounded-2xl border border-[#dce5dc] dark:border-[#2d402d] overflow-hidden shadow-md">
                         <div class="p-5 border-b border-[#dce5dc] dark:border-[#2d402d] flex items-center justify-between">
-                            <h3 class="font-bold text-lg">ليلى أحمد - تمهيدي أول (أ)</h3>
+                            <h3 class="font-bold text-lg">{{ $child->name }}</h3>
                             <span class="text-xs text-[#638863] dark:text-[#a3c2a3]">الأسبوع الحالي</span>
                         </div>
                         <div class="divide-y divide-[#dce5dc] dark:divide-[#2d402d]">
+                            @forelse($child->activities as $activity)
                             <div class="p-5 hover:bg-gray-50/50 dark:hover:bg-white/5 transition-colors">
                                 <div class="flex justify-between items-start mb-2">
                                     <div>
-                                        <p class="font-bold">رسم بالألوان المائية</p>
-                                        <p class="text-sm text-[#638863] dark:text-[#a3c2a3] mt-0.5">الأحد ٢٤ أكتوبر • ١١:٣٠ ص</p>
+                                        <p class="font-bold">{{ $activity->name }}</p>
+                                        <p class="text-sm text-[#638863] dark:text-[#a3c2a3] mt-0.5">
+                                            {{ $activity->activity_date?->translatedFormat('l j F') ?? '' }}
+                                            {{ $activity->activity_time ? '• ' . $activity->activity_time : '' }}
+                                        </p>
                                     </div>
                                     <span class="px-3 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 text-xs font-bold rounded-full">مكتمل</span>
                                 </div>
-                                <p class="text-sm text-[#638863] dark:text-[#a3c2a3] mb-3">أظهرت مهارة ممتازة في المزج بين الألوان وإبداع تصميم زهور مختلفة.</p>
-                                <div class="flex gap-3">
-                                    <div class="w-20 h-20 rounded-lg bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuByufOVs7TgM8TZAo-ile37dmmCDy9Q9457iyeiUZNlC-TEM8lBh7llUzU8ileO_Ggk68QWxa7yLf4goNkWyPXTF6SSULq6mhaN3mnalQ9zIdol3PS17gRzlTDhUI5I1pasHwY-G0ySAKTrNf9euBg-q4v80uzhL9F5ayHxLEW6eS2BUgmLXY25YYOZDsn-jtzF6HkGzMKZbYtd7EcEA-xWPik2UwXZRjJoHyY6AlqaPoyO1tNur7hMjjEqp0LDeFGcbIxd6MysLD61')"></div>
-                                    <div class="w-20 h-20 rounded-lg bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB3MUXutIQ3CMVkAgZkwnLBQIDCk-LjBh7bMq8UqUhS1Ti07Oa9pnYFnXYhYEYQF5G7MvFsgcW5FAbl5eHiw1yjrLihZ1HE4ovd4J-yna-ojgXg-bkwOTCtT4erjFecQ9mX0_deZaVCrHKxTAh3gm5xHcClG8QE6jZ_uUgUo5Plq2-AA8qrRpXzUaZ1UmougrBoNbDPI-9sNByVjL-_BTS3yLCFdYmXZswpNxXwUtASvvk3GDRcdIUILyaPJ5SuwJEGRFQpHcfgwXNH')"></div>
-                                </div>
-                            </div>
-
-                            <div class="p-5 hover:bg-gray-50/50 dark:hover:bg-white/5 transition-colors">
-                                <div class="flex justify-between items-start mb-2">
-                                    <div>
-                                        <p class="font-bold">قصة قبل النوم الجماعية</p>
-                                        <p class="text-sm text-[#638863] dark:text-[#a3c2a3] mt-0.5">الثلاثاء ٢٦ أكتوبر • ١:١٥ م</p>
+                                @if($activity->description)
+                                    <p class="text-sm text-[#638863] dark:text-[#a3c2a3]">{{ $activity->description }}</p>
+                                @endif
+                                @if($activity->image_path)
+                                    <div class="mt-3">
+                                        <div class="w-20 h-20 rounded-lg bg-cover bg-center" style="background-image: url('{{ asset('storage/' . $activity->image_path) }}')"></div>
                                     </div>
-                                    <span class="px-3 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 text-xs font-bold rounded-full">مكتمل</span>
-                                </div>
-                                <p class="text-sm text-[#638863] dark:text-[#a3c2a3]">شاركت بنشاط وأضافت تعليقات جميلة على أحداث القصة.</p>
+                                @endif
                             </div>
-
-                            <div class="p-5 hover:bg-gray-50/50 dark:hover:bg-white/5 transition-colors">
-                                <div class="flex justify-between items-start mb-2">
-                                    <div>
-                                        <p class="font-bold">ألعاب حركية في الحديقة</p>
-                                        <p class="text-sm text-[#638863] dark:text-[#a3c2a3] mt-0.5">الأربعاء ٢٧ أكتوبر • ١٠:٤٥ ص</p>
-                                    </div>
-                                    <span class="px-3 py-1 bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 text-xs font-bold rounded-full">غائبة</span>
-                                </div>
+                            @empty
+                            <div class="p-8 text-center text-[#638863]">
+                                <span class="material-symbols-outlined text-3xl block mb-2">auto_stories</span>
+                                <p class="text-sm">لا توجد أنشطة مسجلة بعد.</p>
                             </div>
+                            @endforelse
                         </div>
                     </div>
-
-                    <div class="bg-white dark:bg-[#1a2e1a] rounded-2xl border border-[#dce5dc] dark:border-[#2d402d] overflow-hidden shadow-md">
-                        <div class="p-5 border-b border-[#dce5dc] dark:border-[#2d402d] flex items-center justify-between">
-                            <h3 class="font-bold text-lg">عمر أحمد - حضانة (ب)</h3>
-                            <span class="text-xs text-[#638863] dark:text-[#a3c2a3]">الأسبوع الحالي</span>
-                        </div>
-                        <div class="divide-y divide-[#dce5dc] dark:divide-[#2d402d]">
-                            <div class="p-5 hover:bg-gray-50/50 dark:hover:bg-white/5 transition-colors">
-                                <div class="flex justify-between items-start mb-2">
-                                    <div>
-                                        <p class="font-bold">بناء أبراج بالمكعبات</p>
-                                        <p class="text-sm text-[#638863] dark:text-[#a3c2a3] mt-0.5">الإثنين ٢٥ أكتوبر • ٩:٣٠ ص</p>
-                                    </div>
-                                    <span class="px-3 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 text-xs font-bold rounded-full">مكتمل</span>
-                                </div>
-                                <p class="text-sm text-[#638863] dark:text-[#a3c2a3] mb-3">أبدع في بناء برج شاهق وشارك زملاءه في اللعب الجماعي.</p>
-                                <div class="flex gap-3 mt-3">
-                                    <div class="w-20 h-20 rounded-lg bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=800&auto=format&fit=crop&q=80')"></div>
-                                </div>
-                            </div>
-
-                            <div class="p-5 hover:bg-gray-50/50 dark:hover:bg-white/5 transition-colors">
-                                <div class="flex justify-between items-start mb-2">
-                                    <div>
-                                        <p class="font-bold">أغنية وإيقاع جماعي</p>
-                                        <p class="text-sm text-[#638863] dark:text-[#a3c2a3] mt-0.5">الثلاثاء ٢٦ أكتوبر • ١١:٠٠ ص</p>
-                                    </div>
-                                    <span class="px-3 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 text-xs font-bold rounded-full">مكتمل</span>
-                                </div>
-                                <p class="text-sm text-[#638863] dark:text-[#a3c2a3]">كان متحمساً جداً وردد الكلمات بصوت عالٍ.</p>
-                            </div>
-
-                            <div class="p-5 hover:bg-gray-50/50 dark:hover:bg-white/5 transition-colors">
-                                <div class="flex justify-between items-start mb-2">
-                                    <div>
-                                        <p class="font-bold">زراعة بذور الفاصوليا</p>
-                                        <p class="text-sm text-[#638863] dark:text-[#a3c2a3] mt-0.5">الخميس ٢٨ أكتوبر • ١٠:١٥ ص</p>
-                                    </div>
-                                    <span class="px-3 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 text-xs font-bold rounded-full">قيد التنفيذ</span>
-                                </div>
-                                <p class="text-sm text-[#638863] dark:text-[#a3c2a3]">وضع البذور في التربة وسقاها بنفسه بحماس.</p>
-                            </div>
-                        </div>
+                    @empty
+                    <div class="col-span-full py-16 text-center text-[#638863]">
+                        <span class="material-symbols-outlined text-5xl block mb-3">child_care</span>
+                        <p class="text-lg font-bold">لا يوجد أطفال مسجلون بعد.</p>
+                        <p class="text-sm mt-1">يمكنك إضافة طفل من لوحة التحكم.</p>
                     </div>
+                    @endforelse
                 </div>
 
 

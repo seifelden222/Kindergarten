@@ -81,7 +81,7 @@
                                         </div>
                                         <div class="flex-1 min-w-0">
                                             <div class="flex justify-between items-baseline">
-                                                <p class="font-medium truncate">أم أحمد علي</p>
+                                                <p class="font-medium truncate">ولي أمر أحمد علي</p>
                                                 <span class="text-xs text-[#638863] dark:text-[#a0b0a0]">10:32 ص</span>
                                             </div>
                                             <p class="text-sm text-[#638863] dark:text-[#a0b0a0] truncate">شكراً على التقرير اليومي، هل يمكن...</p>
@@ -96,7 +96,7 @@
                                         </div>
                                         <div class="flex-1 min-w-0">
                                             <div class="flex justify-between items-baseline">
-                                                <p class="font-medium truncate">أبو ليلى محمود</p>
+                                                <p class="font-medium truncate">ولي أمر ليلى محمود</p>
                                                 <span class="text-xs text-[#638863] dark:text-[#a0b0a0]">أمس</span>
                                             </div>
                                             <p class="text-sm text-[#638863] dark:text-[#a0b0a0] truncate">موعد الاستلام المبكر غداً ممكن؟</p>
@@ -106,7 +106,7 @@
                                 <div class="p-4 hover:bg-[#f0f4f0] dark:hover:bg-[#2a3a2a] cursor-pointer">
                                     <div class="flex items-center gap-3">
                                         <div class="relative">
-                                            <div class="size-12 rounded-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=987&q=80');"></div>
+                                            <div class="size-12 rounded-full bg-cover bg-center" style="background-image: url('{{ asset('img/Kindergarten-logo.jpeg') }}');"></div>
                                             <div class="absolute bottom-0 right-0 size-3 bg-gray-400 rounded-full border-2 border-white dark:border-[#1a2a1a]"></div>
                                         </div>
                                         <div class="flex-1 min-w-0">
@@ -122,11 +122,11 @@
                         </div>
 
                         <div class="lg:col-span-8 bg-white dark:bg-[#1a2a1a] rounded-xl border border-[#dce5dc] dark:border-[#2a3a2a] shadow-sm flex flex-col h-[70vh] lg:h-auto">
-                            <div class="p-5 border-b border-[#dce5dc] dark:border-[#2a3a2a] flex items-center gap-3">
-                                <div class="size-10 rounded-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=987&q=80');"></div>
+                                <div class="p-5 border-b border-[#dce5dc] dark:border-[#2a3a2a] flex items-center gap-3">
+                                <div class="size-10 rounded-full bg-cover bg-center" style="background-image: url('{{ asset('img/Kindergarten-logo.jpeg') }}');"></div>
                                 <div>
-                                    <p class="font-bold">أم أحمد علي</p>
-                                    <p class="text-xs text-[#638863] dark:text-[#a0b0a0]">أم / ولي أمر - أحمد علي</p>
+                                    <p class="font-bold">ولي أمر أحمد علي</p>
+                                    <p class="text-xs text-[#638863] dark:text-[#a0b0a0]">ولي أمر — أحمد علي</p>
                                 </div>
                             </div>
 

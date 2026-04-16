@@ -51,8 +51,8 @@
     <header class="sticky top-0 z-50 w-full border-b border-solid border-[#dce5dc] bg-white/80 dark:bg-background-dark/80 backdrop-blur-md px-4 md:px-20 lg:px-40 py-3">
       <div class="flex items-center justify-between whitespace-nowrap">
         <a href="{{ route('register') }}" class="flex items-center gap-4 text-[#111811] dark:text-white">
-          <div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
-            <span class="material-symbols-outlined">child_care</span>
+          <div class="size-8 bg-transparent rounded-lg flex items-center justify-center text-white p-0">
+            <img src="{{ asset('img/Kindergarten-logo.jpeg') }}" alt="لوغو الحضانة" class="h-8 w-8 rounded-full object-cover">
           </div>
           <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">نظام إدارة الحضانة</h2>
         </a>
@@ -100,7 +100,7 @@
               <span class="material-symbols-outlined text-primary text-5xl">location_on</span>
               <h3 class="text-xl font-bold mt-2">موقعنا</h3>
               <p class="text-[#638863] dark:text-gray-300 mt-1">اضغط لفتح الموقع على الخريطة</p>
-              <p class="text-lg font-medium mt-3">جمهورية مصر العربية</p>
+              <p class="text-lg font-medium mt-3">القاهرة، مصر</p>
             </a>
           </div>
         </div>
@@ -183,11 +183,11 @@
             </div>
             <div class="flex items-center gap-2 text-[#638863] dark:text-gray-400 text-sm">
               <span class="material-symbols-outlined text-sm text-primary">call</span>
-              <a href="tel:+201012345678" class="hover:text-primary transition-colors">+201012345678</a>
+              <a href="tel:+201012345678" class="hover:text-primary transition-colors">+20 101 234 5678</a>
             </div>
             <div class="flex items-center gap-2 text-[#638863] dark:text-gray-400 text-sm">
               <span class="material-symbols-outlined text-sm text-primary">location_on</span>
-              جمهورية مصر العربية
+              القاهرة، مصر
             </div>
           </div>
         </div>

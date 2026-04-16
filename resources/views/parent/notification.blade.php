@@ -61,76 +61,10 @@
                 </header>
 
                 <div class="space-y-5">
-                    <div class="bg-white dark:bg-[#1a2e1a] rounded-2xl border border-[#dce5dc] dark:border-[#2d402d] overflow-hidden shadow-md">
-                        <div class="p-5 border-b border-[#dce5dc] dark:border-[#2d402d] flex items-center justify-between bg-red-50/50 dark:bg-red-950/20">
-                            <div class="flex items-center gap-3">
-                                <span class="material-symbols-outlined text-red-600 dark:text-red-400 text-2xl">warning</span>
-                                <h3 class="font-bold text-lg text-red-700 dark:text-red-300">تنبيه عاجل</h3>
-                            </div>
-                            <span class="text-xs text-[#638863] dark:text-[#a3c2a3]">منذ ٤٥ دقيقة</span>
-                        </div>
-                        <div class="p-6">
-                            <p class="text-base font-medium mb-3">غياب مفاجئ لـ ليلى أحمد اليوم دون إبلاغ مسبق</p>
-                            <p class="text-sm text-[#638863] dark:text-[#a3c2a3] mb-4">يرجى التواصل مع إدارة الحضانة في أقرب وقت ممكن لتوضيح سبب الغياب.</p>
-                            <div class="flex gap-4">
-                                <button onclick="callNursery()" class="px-5 py-2 bg-red-600 text-white text-sm font-bold rounded-xl hover:brightness-110 transition-colors">الاتصال بالحضانة</button>
-                                <button onclick="snoozeReminder()" class="px-5 py-2 bg-gray-200 dark:bg-[#2d402d] text-sm font-bold rounded-xl hover:bg-gray-300 dark:hover:bg-[#3a523a] transition-colors">تأجيل التذكير</button>
-                                <button onclick="showNotificationDetails('غياب مفاجئ', 'غياب مفاجئ لـ ليلى أحمد اليوم دون إبلاغ مسبق. يرجى التواصل مع إدارة الحضانة في أقرب وقت ممكن لتوضيح سبب الغياب.')" class="px-5 py-2 bg-background-light dark:bg-[#112111] text-sm font-bold rounded-xl hover:bg-gray-200 dark:hover:bg-[#1e3a1e] transition-colors">عرض التفاصيل</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white dark:bg-[#1a2e1a] rounded-2xl border border-[#dce5dc] dark:border-[#2d402d] overflow-hidden shadow-md">
-                        <div class="p-5 border-b border-[#dce5dc] dark:border-[#2d402d] flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <span class="material-symbols-outlined text-primary text-2xl">campaign</span>
-                                <h3 class="font-bold text-lg">إعلان عام</h3>
-                            </div>
-                            <span class="text-xs text-[#638863] dark:text-[#a3c2a3]">منذ ٣ ساعات</span>
-                        </div>
-                        <div class="p-6">
-                            <p class="text-base font-medium mb-3">موعد التقييم الشهري للأطفال</p>
-                            <p class="text-sm text-[#638863] dark:text-[#a3c2a3] mb-4">سيتم إجراء التقييم الشهري يوم الأحد القادم الموافق ٢ نوفمبر من الساعة ٩ صباحاً حتى ١٢ ظهراً. يرجى الحضور في الموعد المحدد.</p>
-                            <div class="flex gap-3 mt-4">
-                                <button onclick="addToCalendar('التقييم الشهري', '٢ نوفمبر')" class="px-5 py-2 bg-primary text-[#111811] text-sm font-bold rounded-xl hover:brightness-110 transition-colors">إضافة إلى التقويم</button>
-                                <button onclick="showNotificationDetails('موعد التقييم الشهري', 'سيتم إجراء التقييم الشهري يوم الأحد القادم الموافق ٢ نوفمبر من الساعة ٩ صباحاً حتى ١٢ ظهراً. يرجى الحضور في الموعد المحدد. سيتم تقييم المهارات الأكاديمية والاجتماعية والحركية للأطفال.')" class="px-5 py-2 bg-background-light dark:bg-[#112111] text-sm font-bold rounded-xl hover:bg-gray-200 dark:hover:bg-[#1e3a1e] transition-colors">عرض التفاصيل</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white dark:bg-[#1a2e1a] rounded-2xl border border-[#dce5dc] dark:border-[#2d402d] overflow-hidden shadow-md">
-                        <div class="p-5 border-b border-[#dce5dc] dark:border-[#2d402d] flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-2xl">restaurant_menu</span>
-                                <h3 class="font-bold text-lg">تحديث وجبة اليوم</h3>
-                            </div>
-                            <span class="text-xs text-[#638863] dark:text-[#a3c2a3]">منذ ٥ ساعات</span>
-                        </div>
-                        <div class="p-6">
-                            <p class="text-base font-medium mb-3">تغيير في قائمة وجبة الغداء اليوم</p>
-                            <p class="text-sm text-[#638863] dark:text-[#a3c2a3] mb-4">تم تعديل وجبة الغداء اليوم لتصبح: رز بالدجاج + خضار مشوية + زبادي بالعسل بدلاً من المعكرونة بالصلصة.</p>
-                            <p class="text-sm text-[#638863] dark:text-[#a3c2a3]">يرجى إبلاغنا في حال وجود حساسية غذائية لم يتم الإفصاح عنها مسبقاً.</p>
-                            <div class="flex gap-3 mt-4">
-                                <button onclick="showNotificationDetails('تحديث وجبة اليوم', 'تم تعديل وجبة الغداء اليوم لتصبح: رز بالدجاج + خضار مشوية + زبادي بالعسل بدلاً من المعكرونة بالصلصة. يرجى إبلاغنا في حال وجود حساسية غذائية لم يتم الإفصاح عنها مسبقاً.')" class="px-5 py-2 bg-background-light dark:bg-[#112111] text-sm font-bold rounded-xl hover:bg-gray-200 dark:hover:bg-[#1e3a1e] transition-colors">عرض التفاصيل</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white dark:bg-[#1a2e1a] rounded-2xl border border-[#dce5dc] dark:border-[#2d402d] overflow-hidden shadow-md">
-                        <div class="p-5 border-b border-[#dce5dc] dark:border-[#2d402d] flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <span class="material-symbols-outlined text-amber-600 dark:text-amber-400 text-2xl">event</span>
-                                <h3 class="font-bold text-lg">تذكير بموعد</h3>
-                            </div>
-                            <span class="text-xs text-[#638863] dark:text-[#a3c2a3]">منذ يوم واحد</span>
-                        </div>
-                        <div class="p-6">
-                            <p class="text-base font-medium mb-3">موعد تسليم التقرير الطبي الدوري</p>
-                            <p class="text-sm text-[#638863] dark:text-[#a3c2a3] mb-4">يُرجى تسليم التقرير الطبي المحدث لكلا الطفلين (ليلى وعمر) قبل نهاية الأسبوع القادم.</p>
-                            <div class="flex gap-3 mt-4">
-                                <button onclick="showNotificationDetails('تذكير بموعد', 'يُرجى تسليم التقرير الطبي المحدث لكلا الطفلين (ليلى وعمر) قبل نهاية الأسبوع القادم. التقرير يجب أن يتضمن: الفحص الطبي العام، التطعيمات، أي أدوية دورية، وأي ملاحظات صحية خاصة.')" class="px-5 py-2 bg-background-light dark:bg-[#112111] text-sm font-bold rounded-xl hover:bg-gray-200 dark:hover:bg-[#1e3a1e] transition-colors">عرض التفاصيل</button>
-                            </div>
-                        </div>
+                    <div class="py-16 text-center text-[#638863]">
+                        <span class="material-symbols-outlined text-5xl block mb-3">notifications_none</span>
+                        <p class="text-lg font-bold">لا توجد تنبيهات حالياً</p>
+                        <p class="text-sm mt-1">ستظهر هنا التنبيهات والإشعارات الخاصة بطفلك بمجرد وصولها.</p>
                     </div>
                 </div>
 

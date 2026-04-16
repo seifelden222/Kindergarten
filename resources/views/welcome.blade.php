@@ -65,10 +65,13 @@
         <header
             class="sticky top-0 z-50 w-full border-b border-solid border-[#dce5dc] bg-white/80 dark:bg-background-dark/80 backdrop-blur-md px-4 md:px-20 lg:px-40 py-3">
             <div class="flex items-center justify-between whitespace-nowrap">
-                <a href="{{ route('register') }}" class="flex items-center gap-4 text-[#111811] dark:text-white">
-                    <div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
-                        <span class="material-symbols-outlined">child_care</span>
-                    </div>
+                <a href="{{ route('register') }}" class="flex items-center gap-3 text-[#111811] dark:text-white">
+                    <img
+                        src="{{ asset('img/Kindergarten-logo.jpeg') }}"
+                        alt="شعار الحضانة"
+                        class="h-12 w-12 shrink-0 rounded-lg object-contain"
+                    />
+
                     <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">نظام إدارة الحضانة</h2>
                 </a>
                 <nav class="hidden md:flex flex-1 justify-center gap-8">
@@ -347,8 +350,7 @@
                         <div class="flex items-center gap-2 text-[#638863] dark:text-gray-400 text-sm">
                             <span class="material-symbols-outlined text-sm text-primary">location_on</span>
                             <button onclick="showMapPopup()"
-                                class="hover:text-primary transition-colors cursor-pointer">جمهورية مصر
-                                العربية</button>
+                                class="hover:text-primary transition-colors cursor-pointer">القاهرة، مصر</button>
                         </div>
                     </div>
                 </div>
@@ -390,7 +392,7 @@
         <div class="bg-white dark:bg-background-dark rounded-2xl shadow-2xl max-w-4xl w-full overflow-hidden"
             onclick="event.stopPropagation()">
             <div class="flex items-center justify-between p-6 border-b border-[#dce5dc] dark:border-white/10">
-                <h3 class="text-2xl font-bold text-[#111811] dark:text-white">موقعنا - جمهورية مصر العربية</h3>
+                <h3 class="text-2xl font-bold text-[#111811] dark:text-white">موقعنا - القاهرة، مصر</h3>
                 <button onclick="closeMapPopup()" class="text-[#638863] hover:text-primary transition-colors">
                     <span class="material-symbols-outlined text-3xl">close</span>
                 </button>

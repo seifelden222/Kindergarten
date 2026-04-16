@@ -107,7 +107,7 @@
                     <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-12 h-12 shrink-0 border-2 border-primary" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBPoyWni9trdZVI9m39IPG2Py-PEeyZ4RWgzX1nGQM8uocNUuSDLO4BdwIL8aEFySM0NMeI6z3t-t-qzURpDazEwYSV_QGjtfbFWcY0vckgja5qIvpdxus7p2awD39snhZ5BuNkmBF_zYSwZ4MN35ioD9SuWrkQQYyrtYBW4_171XHv8HxAdASoPYnzuIxYAygC36uIlbgntZHb791FpPjl17FO154V2t-F9ZClb6pCclpe-38qo9LDMLURf6BUuBp3MgOyvDMQjl5_");'></div>
                     <div class="flex flex-col gap-1 items-start">
                         <div class="text-base font-medium rounded-2xl px-4 py-3 bg-white dark:bg-zinc-800 text-[#111811] dark:text-white shadow-sm border border-zinc-100 dark:border-zinc-700">
-                            أهلاً بك يا بطل! كيف حالك اليوم؟
+                            مرحباً بك! المعلمة قادمة إليك.
                         </div>
                         <div class="bg-center bg-no-repeat aspect-square bg-contain w-32 h-32" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCNp1CK6wIEhMN5kherRVtiubeEAIsJ7N1GgnOsLVUvo_KKYaCTa5520T8vGT0ZOHUqH9Q86_prNMdqJrcdEiqXHJZo6eif2L9CPHTIcwB4svggqJsXPoNLWXJzUP9i1YF9zmXmPKo8UVKB9I4xhW61Vbh501bII-GP6JN-uwmgPQnexNH6FaD9zw3TWgeJebe9TN4JXsHPC65ab6TyAFVTquBiLH--LR6GN0rzk2eFIbsn9McIOGdGZet7oFTgJOvJyH-g3R_-1p-o");'></div>
                     </div>
@@ -152,7 +152,7 @@
                         </button>
                         <button onclick="askForHelp()" class="flex flex-col items-center gap-2 flex-1 p-4 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 rounded-3xl font-bold hover:bg-orange-200 transition-colors">
                             <span class="material-symbols-outlined !text-4xl">help</span>
-                            <span>ساعديني</span>
+                            <span>هل تحتاج مساعدة؟</span>
                         </button>
                     </div>
                 </div>

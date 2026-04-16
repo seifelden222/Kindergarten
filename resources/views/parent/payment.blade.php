@@ -100,12 +100,14 @@
                                     </div>
                                 </div>
 
+                                @if(!empty($payments) && method_exists($payments, 'isNotEmpty') && $payments->isNotEmpty())
                                 <div class="pt-6">
                                     <div class="flex items-center gap-3 mb-4">
                                         <span class="material-symbols-outlined text-amber-600 dark:text-amber-400 text-2xl">schedule</span>
                                         <p class="text-lg font-medium text-amber-700 dark:text-amber-300">آخر موعد للدفع بدون غرامة: ١٥ أبريل ٢٠٢٦</p>
                                     </div>
                                 </div>
+                                @endif
                             </div>
                         </div>
 

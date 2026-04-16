@@ -149,11 +149,11 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <h4 class="text-lg font-bold">اتجاهات التسجيل</h4>
-                                <p class="text-zinc-500 text-sm">عدد المسجلين الجدد ربع سنوياً</p>
+                                <p class="text-zinc-500 text-sm">معدل نمو التسجيل</p>
                             </div>
                             <div class="text-left">
                                 <h3 class="text-2xl font-bold">+12 طفل</h3>
-                                <span class="text-xs text-red-500 font-bold">-5% عن الربع السابق</span>
+                                <span class="text-xs text-green-500 font-bold">منذ آخر ربع سنة</span>
                             </div>
                         </div>
                         <div class="flex-1 relative min-h-[180px] mt-4">

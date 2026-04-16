@@ -65,7 +65,6 @@
 </head>
 
 <body class="bg-background-light dark:bg-background-dark min-h-screen">
-    <script src="child-functions.js"></script>
     <div class="layout-container flex h-full grow flex-col">
         <!-- Top Navigation Bar -->
         <x-child-navbar />
@@ -73,7 +72,7 @@
             <div class="px-6 md:px-40 py-8">
                 <div class="layout-content-container flex flex-col max-w-[960px] mx-auto text-center">
                     <h1 class="text-[#181611] dark:text-white tracking-light text-[40px] font-bold leading-tight pb-3">
-                        مرحباً بك يا بطل! 🎁
+                        مرحبا يا بطل
                     </h1>
                     <p class="text-[#8a8060] dark:text-gray-400 text-lg">انقر على الصناديق لتكتشف مفاجآت اليوم</p>
                 </div>
@@ -86,14 +85,14 @@
                                 {{ $surpriseCards['badge']['label'] }}
                             </div>
                             <div class="size-32 bg-yellow-100 dark:bg-yellow-900/30 rounded-full flex items-center justify-center mb-6">
-                                <span class="material-symbols-outlined text-primary" style="font-size: 64px;">emoji_events</span>
+                                <img src="{{ asset('img/Kindergarten-logo.jpeg') }}" alt="شهادة" class="h-16 w-16 object-cover rounded-full">
                             </div>
                             <h3 class="text-[#181611] dark:text-white text-2xl font-bold mb-2">{{ $surpriseCards['badge']['title'] }}</h3>
                             <p class="text-[#8a8060] dark:text-gray-400 text-center">{{ $surpriseCards['badge']['message'] }}</p>
                         </div>
                         <div onclick="openGiftBox('message')" class="gift-card cursor-pointer group relative flex flex-col items-center justify-center bg-white dark:bg-background-dark p-8 rounded-xl shadow-xl border-b-8 border-blue-400 transition-all">
                             <div class="size-32 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mb-6">
-                                <span class="material-symbols-outlined text-blue-500" style="font-size: 64px;">face_6</span>
+                                <img src="{{ asset('img/chiled.jpeg') }}" alt="رسالة" class="h-16 w-16 object-cover rounded-full">
                             </div>
                             <h3 class="text-[#181611] dark:text-white text-2xl font-bold mb-2">{{ $surpriseCards['message']['title'] }}</h3>
                             <p class="text-[#8a8060] dark:text-gray-400 text-center">{{ $surpriseCards['message']['message'] }}</p>
@@ -119,37 +118,7 @@
                     </div>
                 </div>
             </div>
-            <div class="px-6 md:px-40 pt-10">
-                <div class="layout-content-container flex flex-col max-w-[960px] mx-auto">
-                    <h2 class="text-[#181611] dark:text-white text-2xl font-bold px-4 pb-6">ذكريات الأسبوع الماضي 🎈</h2>
-                    <div class="flex overflow-x-auto gap-6 p-4 scrollbar-hide">
-                        <div class="flex-none w-64 bg-white dark:bg-background-dark rounded-lg overflow-hidden shadow-md">
-                            <div class="h-48 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBtQM3MI3V5zqX9j8smdtcyovdLFMR-mznr9b7rVXiNEVVVCzQpOLQP1oW_h2ryFHn41QMmssKNdXQuAscQfI-I3PPrDLM5BSePP1UjjunHe6Il-cW3SbpLgVIJFfb_JjhTV5GthwS67lqJR01GFQHHndQhpJ5LIbVX4ee9nIThGC1YKzn5kkpr_swj0M01lcGvH4PaT9AE8agNlTUqSUOkbtctPeIgXl9WYNlQubwuNXVgZwVCmTleINCLHvQAkLaomIw9R6ivQG-R");'>
-                            </div>
-                            <div class="p-4">
-                                <p class="text-[#181611] dark:text-white font-bold">لعبنا معاً</p>
-                                <p class="text-sm text-[#8a8060]">الأحد</p>
-                            </div>
-                        </div>
-                        <div class="flex-none w-64 bg-white dark:bg-background-dark rounded-lg overflow-hidden shadow-md">
-                            <div class="h-48 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuArOZsU3UWjMxVhkYZj4M4P-lmC3WhzExSoxTx4GHPGy1V90oOGnHcPL3FLDFNiu4GDc97UObCAhWay9GcZVhS9_-xHBDITJcbV9D0eztOm1eMB67kmsqopVQK0_IfKla0uaLwZoX6eaIEp8HiHPIelW0q0vnLlZvi5WEu8mntKLAav7OXFd1fz4BBMgjosFPwrV4552UYqNBcDR9dNe14lw0XobzIthrnYUKq1s4CdBi-X1oUo7sf2jNuOkGDquGW0kXVgTEG3IqqZ");'>
-                            </div>
-                            <div class="p-4">
-                                <p class="text-[#181611] dark:text-white font-bold">يوم الألوان</p>
-                                <p class="text-sm text-[#8a8060]">الاثنين</p>
-                            </div>
-                        </div>
-                        <div class="flex-none w-64 bg-white dark:bg-background-dark rounded-lg overflow-hidden shadow-md">
-                            <div class="h-48 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDBg3H1XWdasDGREqsB4E8xAzzVZHCvV7_mxVbbHt3Tr1bZp8rHmEqEQdhQ8xah3V7akGR_RuK60G7ZaUA6uo8TArpK2ZVnmIMFLRjSHPL8R5mXZynFUtoUgY0cBgGEUpg7sbGM0aAmV5ToG32ar6Vf64HL81SWYPax-0TK-r4zH7qRgObr7yW70C7n5YHzffjG9iFsVFzBiV2MI8kSleU8Q3SwiXcNKDnChj6pMFvNahVeTucP8vT_vV7EVwcD0I80cXfTilXzxTyB");'>
-                            </div>
-                            <div class="p-4">
-                                <p class="text-[#181611] dark:text-white font-bold">غداء صحي</p>
-                                <p class="text-sm text-[#8a8060]">الثلاثاء</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- Memories removed for new accounts (hidden by default) -->
         </main>
         <div class="fixed bottom-8 left-8">
             <button class="size-20 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all">

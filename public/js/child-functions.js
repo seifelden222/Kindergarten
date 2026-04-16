@@ -1226,6 +1226,108 @@ function selectHelp(type) {
 
 // فتح صندوق المفاجآت
 function openGiftBox(giftType) {
+    // محتويات متعددة لكل نوع كارت
+    const giftVariants = {
+        badge: [
+            {
+                emoji: "🏆",
+                title: "بطل اليوم!",
+                message: "أنت نجم المجموعة النهاردة!",
+            },
+            { emoji: "🥇", title: "الأول!", message: "أداؤك كان رائع اليوم!" },
+            {
+                emoji: "🌟",
+                title: "نجم متألق!",
+                message: "المعلمة فخورة بيك جداً!",
+            },
+            {
+                emoji: "🎖️",
+                title: "وسام الشجاعة!",
+                message: "شجاعتك ألهمت الجميع!",
+            },
+        ],
+        message: [
+            {
+                emoji: "💌",
+                title: "رسالة حلوة!",
+                message: "أنت من أجمل الأطفال!",
+            },
+            {
+                emoji: "🤗",
+                title: "عناق افتراضي!",
+                message: "المعلمة بتبعتلك حضن كبير!",
+            },
+            {
+                emoji: "😍",
+                title: "إنت تحفة!",
+                message: "ابتسامتك بتنور الفصل!",
+            },
+            {
+                emoji: "👏",
+                title: "برافو عليك!",
+                message: "تقدر تعمل أي حاجة تحبها!",
+            },
+        ],
+        activity: [
+            {
+                emoji: "🎨",
+                title: "فنان موهوب!",
+                message: "رسمتك كانت الأجمل!",
+            },
+            {
+                emoji: "⚽",
+                title: "لاعب نشيط!",
+                message: "تحركاتك كانت رائعة!",
+            },
+            { emoji: "🎭", title: "ممثل بارع!", message: "أبدعت في النشاط!" },
+            { emoji: "🧩", title: "عقل ذكي!", message: "حللت المشكلة بسرعة!" },
+        ],
+        meal: [
+            {
+                emoji: "🍎",
+                title: "أكلت كويس!",
+                message: "الأكل الصحي يخليك قوي!",
+            },
+            { emoji: "🥗", title: "أكل صحي!", message: "جسمك هيشكرك على ده!" },
+            {
+                emoji: "🍊",
+                title: "فيتامينات!",
+                message: "الفاكهة بتخلي دماغك يشتغل!",
+            },
+            {
+                emoji: "🥕",
+                title: "خضروات!",
+                message: "أكلك الصحي مثال للجميع!",
+            },
+        ],
+    };
+
+    // اختار عشوائي من الـ array
+    const variants = giftVariants[giftType] || giftVariants["badge"];
+    const randomGift = variants[Math.floor(Math.random() * variants.length)];
+
+    const content = `
+        <div class="space-y-6 text-center">
+            <div class="text-9xl animate-bounce">${randomGift.emoji}</div>
+            <h4 class="text-5xl font-bold text-primary">${randomGift.title}</h4>
+            <p class="text-3xl text-[#8a7560] dark:text-[#cbb8a6]">${randomGift.message}</p>
+
+            <div class="bg-gradient-to-r from-yellow-400 to-orange-400 p-8 rounded-3xl">
+                <p class="text-white text-3xl font-bold mb-4">مكافأتك:</p>
+                <div class="flex justify-center gap-3">
+                    <span class="text-7xl">⭐</span>
+                </div>
+            </div>
+
+            <button onclick="collectReward(1)" class="bg-primary text-white text-3xl font-bold py-6 px-12 rounded-full hover:scale-105 transition-transform w-full">
+                خد المكافأة! 🎁
+            </button>
+        </div>
+    `;
+
+    createPopup("مفاجأة!", content, "🎁");
+    playSound("celebration");
+}function openGiftBox(giftType) {
     const defaultGift = {
         emoji: '🎁',
         title: 'مفاجأة جميلة',
@@ -1376,22 +1478,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // بطاقات الأنشطة (النقر على البطاقة)
-    const activityCards = document.querySelectorAll('.group.flex.flex-col.bg-white');
-    activityCards.forEach(card => {
-        card.addEventListener('click', (e) => {
-            e.preventDefault();
-            const activityName = card.querySelector('h4')?.textContent || 'النشاط';
-            const time = card.querySelector('.text-lg')?.textContent || '9:00 صباحاً';
-            const statusBadge = card.querySelector('.rounded-full');
-            let status = 'قريباً';
-            if (statusBadge?.textContent.includes('مكتمل')) status = 'مكتمل';
-            else if (statusBadge?.textContent.includes('الآن')) status = 'الآن';
+// ✅ ضيف :not(.gift-card) في الـ selector
+const activityCards = document.querySelectorAll('.group.flex.flex-col.bg-white:not(.gift-card)');
+activityCards.forEach(card => {
+    card.addEventListener('click', (e) => {
+        const activityName = card.querySelector('h3')?.textContent || 'النشاط';
+        const time = card.querySelector('.text-lg')?.textContent || '9:00 صباحاً';
+        const statusBadge = card.querySelector('.rounded-full');
+        let status = 'قريباً';
+        if (statusBadge?.textContent.includes('مكتمل')) status = 'مكتمل';
+        else if (statusBadge?.textContent.includes('الآن')) status = 'الآن';
 
-            card.style.animation = 'pulse 0.3s ease';
-            showActivityDetails(activityName, time, status);
-        });
+        showActivityDetails(activityName, time, status);
     });
-
+});
 
     // ==================== ATTENDANCE PAGE ====================
 

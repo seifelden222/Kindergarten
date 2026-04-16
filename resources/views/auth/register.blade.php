@@ -22,13 +22,13 @@
     <header class="sticky top-0 z-50 flex items-center justify-between border border-b-[#dce5dc] bg-white px-6 py-3 md:px-40">
         <a href="{{ route('register') }}" class="flex items-center gap-4 text-[#111811]">
             <div class="flex size-8 items-center justify-center rounded-lg bg-[#0ea60e] text-white">
-                <span class="material-symbols-outlined">child_care</span>
+                <img src="{{ asset('img/Kindergarten-logo.jpeg') }}" alt="لوغو الحضانة" class="h-12 w-12 rounded-full object-cover">
             </div>
             <h2 class="text-lg font-bold leading-tight tracking-[-0.015em] text-[#111811]">نظام إدارة الحضانة</h2>
         </a>
 
         <div class="flex flex-1 justify-end gap-8">
-            <div class="hidden items-center gap-9 md:flex">
+            <div class="hidden items-center gap-9 md:flex"> 
                 <a class="text-sm font-medium leading-normal text-[#111811] transition-colors hover:text-[#0ea60e]" href="{{ url('/') }}">الرئيسية</a>
                 <a class="text-sm font-medium leading-normal text-[#111811] transition-colors hover:text-[#0ea60e]" href="{{ url('contactus') }}">اتصل بنا</a>
             </div>
@@ -89,6 +89,7 @@
                             <input class="w-full rounded-xl border border-[#dce5dc] bg-white px-4 py-3 pr-12 pl-4 text-[#111811] outline-none transition-all placeholder:text-gray-400 focus:border-[#0ea60e] focus:ring-1 focus:ring-[#0ea60e]" id="name" name="name" placeholder="أدخل اسمك الثلاثي" type="text" value="{{ old('name') }}" required autofocus autocomplete="name" />
                         </div>
                         <x-input-error :messages="$errors->get('name')" class="text-sm text-red-600" />
+                        <p id="name-live-error" class="hidden text-sm text-red-600"></p>
                     </div>
 
                     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -99,14 +100,16 @@
                                 <input class="w-full rounded-xl border border-[#dce5dc] bg-white px-4 py-3 pr-12 pl-4 text-[#111811] outline-none transition-all focus:border-[#0ea60e] focus:ring-1 focus:ring-[#0ea60e]" id="email" name="email" placeholder="example@mail.com" type="email" value="{{ old('email') }}" required autocomplete="username" />
                             </div>
                             <x-input-error :messages="$errors->get('email')" class="text-sm text-red-600" />
+                            <p id="email-domain-error" class="hidden text-sm text-red-600"></p>
                         </div>
                         <div class="flex flex-col gap-2">
                             <label class="text-sm font-semibold text-[#111811]">رقم الهاتف</label>
                             <div class="relative">
                                 <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-[#638863]">call</span>
-                                <input class="w-full rounded-xl border border-[#dce5dc] bg-white px-4 py-3 pr-12 pl-4 text-[#111811] outline-none transition-all focus:border-[#0ea60e] focus:ring-1 focus:ring-[#0ea60e]" id="phone" name="phone" placeholder="01XXXXXXXX" type="tel" value="{{ old('phone') }}" autocomplete="tel" />
+                                <input class="w-full rounded-xl border border-[#dce5dc] bg-white px-4 py-3 pr-12 pl-4 text-left [direction:ltr] text-[#111811] outline-none transition-all focus:border-[#0ea60e] focus:ring-1 focus:ring-[#0ea60e]" id="phone" name="phone" placeholder="+20 10 1234 5678" type="tel" value="{{ old('phone') }}" autocomplete="tel" inputmode="tel" />
                             </div>
                             <x-input-error :messages="$errors->get('phone')" class="text-sm text-red-600" />
+                            <p id="phone-live-error" class="hidden text-sm text-red-600"></p>
                         </div>
                     </div>
 
@@ -118,6 +121,7 @@
                             <button class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 cursor-pointer text-[#638863] hover:text-[#0ea60e]" type="button" data-toggle-password="password">visibility</button>
                         </div>
                         <x-input-error :messages="$errors->get('password')" class="text-sm text-red-600" />
+                        <p id="password-live-error" class="hidden text-sm text-red-600"></p>
                     </div>
 
                     <div class="flex flex-col gap-2">
@@ -157,18 +161,90 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Toggle password visibility
             document.querySelectorAll('[data-toggle-password]').forEach(function (toggleButton) {
                 toggleButton.addEventListener('click', function () {
                     const input = document.getElementById(toggleButton.dataset.togglePassword);
-
-                    if (!input) {
-                        return;
-                    }
-
+                    if (!input) { return; }
                     const isPassword = input.type === 'password';
                     input.type = isPassword ? 'text' : 'password';
                     toggleButton.textContent = isPassword ? 'visibility_off' : 'visibility';
                 });
+            });
+
+            // Real-time name validation (letters only)
+            const nameInput = document.getElementById('name');
+            const nameError = document.getElementById('name-live-error');
+            nameInput.addEventListener('input', function () {
+                const val = nameInput.value;
+                if (val.length === 0) { nameError.classList.add('hidden'); return; }
+                if (/[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(val)) {
+                    nameError.textContent = 'الاسم يجب أن يحتوي على حروف فقط بدون أرقام أو رموز.';
+                    nameError.classList.remove('hidden');
+                } else {
+                    nameError.classList.add('hidden');
+                }
+            });
+
+            // Real-time email domain validation
+            const allowedDomains = [
+                'gmail.com', 'yahoo.com', 'yahoo.co.uk', 'yahoo.fr', 'yahoo.de',
+                'outlook.com', 'hotmail.com', 'hotmail.co.uk', 'live.com', 'msn.com',
+                'icloud.com', 'me.com', 'mac.com',
+                'protonmail.com', 'proton.me',
+                'aol.com', 'zoho.com',
+                'edu.eg', 'gov.eg',
+            ];
+            const emailInput = document.getElementById('email');
+            const emailError = document.getElementById('email-domain-error');
+            emailInput.addEventListener('input', function () {
+                const atIndex = emailInput.value.indexOf('@');
+                if (atIndex !== -1) {
+                    const domain = emailInput.value.slice(atIndex + 1).toLowerCase();
+                    if (domain.length > 0 && !allowedDomains.includes(domain)) {
+                        emailError.textContent = 'يرجى استخدام بريد إلكتروني من نطاق معروف مثل gmail.com أو outlook.com.';
+                        emailError.classList.remove('hidden');
+                    } else {
+                        emailError.classList.add('hidden');
+                    }
+                } else {
+                    emailError.classList.add('hidden');
+                }
+            });
+
+            // Real-time phone validation (10-15 digits, optional + at start)
+            const phoneInput = document.getElementById('phone');
+            const phoneError = document.getElementById('phone-live-error');
+            phoneInput.addEventListener('input', function () {
+                const raw = phoneInput.value;
+                if (raw.length === 0) { phoneError.classList.add('hidden'); return; }
+
+                // Keep only digits and a possible leading plus sign
+                const hasLeadingPlus = raw.trim().startsWith('+');
+                const digitsOnly = raw.replace(/\D/g, '');
+                phoneInput.value = hasLeadingPlus ? `+${digitsOnly}` : digitsOnly;
+
+                if (!/^\+?\d{10,15}$/.test(phoneInput.value)) {
+                    phoneError.textContent = 'رقم الهاتف غير صالح. استخدم 10 إلى 15 رقمًا (يمكنك كتابة + في البداية).';
+                    phoneError.classList.remove('hidden');
+                    return;
+                }
+
+                phoneError.classList.add('hidden');
+            });
+
+            // Real-time password validation (min 8)
+            const passwordInput = document.getElementById('password');
+            const passwordError = document.getElementById('password-live-error');
+            passwordInput.addEventListener('input', function () {
+                const val = passwordInput.value;
+                if (val.length === 0) { passwordError.classList.add('hidden'); return; }
+                if (val.length < 8) {
+                    passwordError.textContent = 'كلمة المرور يجب أن تكون 8 أحرف على الأقل.';
+                    passwordError.classList.remove('hidden');
+                } else {
+                    passwordError.classList.add('hidden');
+                }
             });
         });
     </script>

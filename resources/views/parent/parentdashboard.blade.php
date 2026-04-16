@@ -51,7 +51,6 @@
                 <header class="flex flex-wrap justify-between items-end gap-6 mb-8">
                     <div class="flex flex-col gap-2">
                         <h2 class="text-4xl font-black tracking-tight">أهلاً بك 👋</h2>
-                        <p class="text-[#638863] dark:text-[#a3c2a3] text-lg">نظرة عامة على حالة أطفالك اليوم</p>
                     </div>
                     <div class="flex gap-3">
                         <button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-[#1a2e1a] border border-[#dce5dc] dark:border-[#2d402d] rounded-xl font-bold text-sm hover:bg-gray-50 transition-colors">
@@ -70,13 +69,7 @@
                             <p class="text-sm text-[#638863] dark:text-[#a3c2a3]">الأطفال المسجلين</p>
                             <p class="text-4xl font-black mt-2">{{ auth()->user()?->children()->where('role', 'child')->count() ?? 0 }}</p>
                         </div>
-                        <div class="flex items-center gap-3 rounded-xl bg-primary/10 px-4 py-3 text-primary">
-                            <span class="material-symbols-outlined">notifications</span>
-                            <div>
-                                <p class="font-bold">أحدث تحديثات أطفالك</p>
-                                <p class="text-sm opacity-80">ستجد كل جديد في بطاقات الأطفال بالأسفل</p>
-                            </div>
-                        </div>
+                        <!-- Notification summary removed for new accounts -->
                     </div>
                 </div>
                 <div class="flex items-center justify-between mb-6">
@@ -85,86 +78,40 @@
                         أطفالي المسجلين
                     </h3>
                 </div>
+                @php
+                    $myChildren = auth()->user()?->children()->where('role', 'child')->with('levels')->get() ?? collect();
+                @endphp
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                    @forelse($myChildren as $child)
                     <div class="bg-white dark:bg-[#1a2e1a] rounded-2xl overflow-hidden border border-[#dce5dc] dark:border-[#2d402d] shadow-md flex">
-                        <div class="w-1/3 bg-cover bg-center min-h-[220px]" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA3F1cn_Lj-NAEWTmKaldBWztRMkempBo3FecUCHyOEqSzVwsxkI44tf0XxTfzqRmOfQTXLIPBtkIz0Qvu-9SAlR1WeqCwFcVKwgaEbcFKbdAwlHW6Octap_T4G6kbDwffRYApFpJHa4YaUcYnpNUW52MCJ3lvhNtOdQoqFozlI_E9jd5cvMrwRXz3Tfda9RQNUB0tW3-u-omTcS7roUGNFp1dywEO2JtD0qRvasEagNkrVG7XiiNVlmJuSvzTa3ZhstqOc9hPNrznh')"></div>
+                        <div class="w-1/3 bg-cover bg-center min-h-[220px]" style="background-image: url('{{ asset('img/chiled.jpeg') }}')"></div>
                         <div class="w-2/3 p-6 flex flex-col justify-between">
                             <div>
                                 <div class="flex justify-between items-start">
-                                    <h4 class="text-xl font-bold">ليلى أحمد</h4>
-                                    <span class="px-3 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 text-xs font-bold rounded-full">في الفصل</span>
+                                    <h4 class="text-xl font-bold">{{ $child->name }}</h4>
+                                    <span class="px-3 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 text-xs font-bold rounded-full">مسجل</span>
                                 </div>
-                                <p class="text-[#638863] dark:text-[#a3c2a3] text-sm mb-4">المستوى: تمهيدي أول (أ)</p>
-                                <div class="space-y-3">
-                                    <div class="flex items-center gap-2 text-sm">
-                                        <span class="material-symbols-outlined text-primary text-lg">restaurant</span>
-                                        <span>الوجبة: تناول غداءه بالكامل</span>
-                                    </div>
-                                    <div class="flex items-center gap-2 text-sm">
-                                        <span class="material-symbols-outlined text-primary text-lg">draw</span>
-                                        <span>النشاط: رسم بالألوان المائية</span>
-                                    </div>
-                                </div>
+                                <p class="text-[#638863] dark:text-[#a3c2a3] text-sm mb-4">المستوى: {{ $child->level?->name ?? 'غير محدد' }}</p>
                             </div>
                             <button class="mt-4 w-full py-2 bg-background-light dark:bg-[#112111] text-xs font-bold rounded-lg hover:bg-gray-200 transition-colors">عرض التقرير اليومي</button>
                         </div>
                     </div>
-                    <div class="bg-white dark:bg-[#1a2e1a] rounded-2xl overflow-hidden border border-[#dce5dc] dark:border-[#2d402d] shadow-md flex">
-                        <div class="w-1/3 bg-cover bg-center min-h-[220px]" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDqIszTnJL1xxOpYnBoZA5MvMw3GAKt9E0Xxskj_rQLrt1Or4RXkvHJnf9iumqRX6tvVbVy4K2qZf7WrzsOz8AVRWlFsmLD-pklEaF6yYc6xlEgrHyjpUcw_FpZyMp-cwDsKMKpn-mqGdJ2s0d3bjPoB5S33sEQvcTwjiULoyUsxTH4jyoM9f-2NWERNv18zfGno7vtz1Uxbqkt9QFd2VBVmi2pRqHeKtaxmLTADE2UJygrmQqkFQ4grC2QdnmfbGIGbKgTGe0z7nBl')"></div>
-                        <div class="w-2/3 p-6 flex flex-col justify-between">
-                            <div>
-                                <div class="flex justify-between items-start">
-                                    <h4 class="text-xl font-bold">عمر أحمد</h4>
-                                    <span class="px-3 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 text-xs font-bold rounded-full">في الفصل</span>
-                                </div>
-                                <p class="text-[#638863] dark:text-[#a3c2a3] text-sm mb-4">المستوى: حضانة (ب)</p>
-                                <div class="space-y-3">
-                                    <div class="flex items-center gap-2 text-sm">
-                                        <span class="material-symbols-outlined text-primary text-lg">bedtime</span>
-                                        <span>القيلولة: نام لمدة ٤٥ دقيقة</span>
-                                    </div>
-                                    <div class="flex items-center gap-2 text-sm">
-                                        <span class="material-symbols-outlined text-primary text-lg">mood</span>
-                                        <span>المزاج: سعيد ومتفاعل</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="mt-4 w-full py-2 bg-background-light dark:bg-[#112111] text-xs font-bold rounded-lg hover:bg-gray-200 transition-colors">عرض التقرير اليومي</button>
-                        </div>
+                    @empty
+                    <div class="lg:col-span-2 py-16 text-center text-[#638863]">
+                        <span class="material-symbols-outlined text-5xl block mb-3">child_care</span>
+                        <p class="text-lg font-bold">لا يوجد أطفال مسجلين بعد</p>
+                        <p class="text-sm mt-1">يمكنك إضافة طفلك من خلال زر "إضافة طفل" أعلاه.</p>
                     </div>
+                    @endforelse
                 </div>
                 <div class="bg-white dark:bg-[#1a2e1a] rounded-2xl border border-[#dce5dc] dark:border-[#2d402d] overflow-hidden">
-                    <div class="p-6 border-b border-[#dce5dc] dark:border-[#2d402d] flex items-center justify-between">
+                    <div class="p-6 border-b border-[#dce5dc] dark:border-[#2d402d]">
                         <h3 class="text-lg font-bold">آخر التحديثات والأنشطة</h3>
-                        <span class="text-xs text-[#638863]">اليوم، ٢٤ أكتوبر</span>
                     </div>
-                    <div class="p-6">
-                        <div class="relative space-y-8 before:absolute before:right-4 before:top-2 before:bottom-2 before:w-0.5 before:bg-gray-100 dark:before:bg-[#2d402d]">
-                            <div class="relative flex gap-6 items-start pr-10">
-                                <div class="absolute right-2 top-1 w-4 h-4 rounded-full bg-primary border-4 border-white dark:border-[#1a2e1a] z-10"></div>
-                                <div class="flex-1">
-                                    <div class="flex justify-between items-start mb-1">
-                                        <p class="font-bold text-sm">ليلى أحمد - نشاط فني</p>
-                                        <span class="text-[10px] text-[#638863]">منذ ٣٠ دقيقة</span>
-                                    </div>
-                                    <p class="text-sm text-[#638863] dark:text-[#a3c2a3] mb-3">شاركت ليلى في صنع زهور من الورق الملون وأظهرت مهارة رائعة في استخدام المقص الآمن.</p>
-                                    <div class="flex gap-2">
-                                        <div class="w-20 h-20 rounded-lg bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuByufOVs7TgM8TZAo-ile37dmmCDy9Q9457iyeiUZNlC-TEM8lBh7llUzU8ileO_Ggk68QWxa7yLf4goNkWyPXTF6SSULq6mhaN3mnalQ9zIdol3PS17gRzlTDhUI5I1pasHwY-G0ySAKTrNf9euBg-q4v80uzhL9F5ayHxLEW6eS2BUgmLXY25YYOZDsn-jtzF6HkGzMKZbYtd7EcEA-xWPik2UwXZRjJoHyY6AlqaPoyO1tNur7hMjjEqp0LDeFGcbIxd6MysLD61')"></div>
-                                        <div class="w-20 h-20 rounded-lg bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB3MUXutIQ3CMVkAgZkwnLBQIDCk-LjBh7bMq8UqUhS1Ti07Oa9pnYFnXYhYEYQF5G7MvFsgcW5FAbl5eHiw1yjrLihZ1HE4ovd4J-yna-ojgXg-bkwOTCtT4erjFecQ9mX0_deZaVCrHKxTAh3gm5xHcClG8QE6jZ_uUgUo5Plq2-AA8qrRpXzUaZ1UmougrBoNbDPI-9sNByVjL-_BTS3yLCFdYmXZswpNxXwUtASvvk3GDRcdIUILyaPJ5SuwJEGRFQpHcfgwXNH')"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="relative flex gap-6 items-start pr-10">
-                                <div class="absolute right-2 top-1 w-4 h-4 rounded-full bg-primary border-4 border-white dark:border-[#1a2e1a] z-10"></div>
-                                <div class="flex-1">
-                                    <div class="flex justify-between items-start mb-1">
-                                        <p class="font-bold text-sm">ملاحظة سلوكية - عمر أحمد</p>
-                                        <span class="text-[10px] text-[#638863]">منذ ساعتين</span>
-                                    </div>
-                                    <p class="text-sm text-[#638863] dark:text-[#a3c2a3]">عمر كان متعاوناً جداً اليوم في ترتيب الألعاب مع أصدقائه بعد وقت اللعب الحر.</p>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="py-14 text-center text-[#638863]">
+                        <span class="material-symbols-outlined text-5xl block mb-3">notifications_none</span>
+                        <p class="text-base font-bold">لا توجد تحديثات بعد</p>
+                        <p class="text-sm mt-1">ستظهر هنا أنشطة وملاحظات أطفالك فور وصولها.</p>
                     </div>
                 </div>
             </div>
